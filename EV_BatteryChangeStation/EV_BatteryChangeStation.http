@@ -1,0 +1,6 @@
+@EV_BatteryChangeStation_HostAddress = http://localhost:5204
+
+GET {{EV_BatteryChangeStation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
