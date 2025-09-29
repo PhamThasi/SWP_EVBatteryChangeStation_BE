@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EV_BatteryChangeStation_Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d58554a35ffb01ed4b0780233a891cf9e2011f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("EV_BatteryChangeStation_Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EV_BatteryChangeStation_Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
