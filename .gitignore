@@ -138,3 +138,9 @@ Properties/launchSettings.json
 # Visual Studio cache
 .vs/
 .vscode/
+
+# Ignore appsettings files
+appsettings*.json
+**/bin/**
+**/obj/**
+
