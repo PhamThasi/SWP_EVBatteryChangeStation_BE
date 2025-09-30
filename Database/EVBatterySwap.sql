@@ -174,3 +174,74 @@ GO
 DROP DATABASE EVBatterySwap;
 GO
 */
+
+-- ========================
+-- SEED DATA
+-- ========================
+
+-- Role
+select * from Role
+INSERT INTO Role (RoleName, Status) VALUES
+(N'Admin', 1),
+(N'Staff', 1),
+(N'Customer', 1);
+
+-- Station
+INSERT INTO Station (Address, PhoneNumber, Status, AccountName, BatteryQuality) VALUES
+(N'123 Lê Lợi, Hà Nội', '0901234567', 1, N'StationHN01', N'Good'),
+(N'456 Nguyễn Huệ, TP.HCM', '0902345678', 1, N'StationHCM01', N'Excellent');
+
+-- Account
+INSERT INTO Account (AccountName, FullName, Password, Email, Gender, Address, PhoneNumber, DateOfBirth, Status, RoleID, StationID)
+VALUES
+(N'admin01', N'Nguyễn Văn Admin', 'admin@123', 'admin01@gmail.com', N'Nam', N'Hà Nội', '0911111111', '1980-01-01', 1, 1, NULL),
+(N'staffHN', N'Lê Thị Staff', 'staff@123', 'staffHN@gmail.com', N'Nữ', N'Hà Nội', '0922222222', '1990-05-10', 1, 2, 1),
+(N'staffHCM', N'Trần Văn Staff', 'staff@123', 'staffHCM@gmail.com', N'Nam', N'TP.HCM', '0933333333', '1992-07-15', 1, 2, 2),
+(N'customer01', N'Phạm Minh Khách', 'cus@123', 'customer01@gmail.com', N'Nam', N'Hà Nội', '0944444444', '2000-02-20', 1, 3, NULL);
+
+-- Subscription
+INSERT INTO Subscription (Name, Price, ExtraFee, Description, DurationPackage, IsActive, AccountID)
+VALUES
+(N'Gói cơ bản', 500000, 50000, N'Dùng 30 ngày, giới hạn 10 lần đổi pin', 30, 1, 4),
+(N'Gói nâng cao', 1000000, 100000, N'Dùng 30 ngày, không giới hạn đổi pin', 30, 1, 4);
+
+-- Car
+INSERT INTO Car (Model, BatteryType, Producer)
+VALUES
+(N'VinFast E34', N'Lithium-ion', N'VinFast'),
+(N'Tesla Model 3', N'Lithium-ion', N'Tesla');
+
+-- Battery
+INSERT INTO Battery (Capacity, LastUsed, Status, StateOfHealth, PercentUse, TypeBattery, BatterySwapDate, InsuranceDate, StationID)
+VALUES
+(50.0, GETDATE(), 1, 95.5, 70.2, N'Lithium-ion', GETDATE(), '2026-01-01', 1),
+(60.0, GETDATE(), 1, 97.0, 80.1, N'Lithium-ion', GETDATE(), '2026-01-01', 1),
+(55.0, GETDATE(), 1, 90.0, 65.0, N'Lithium-ion', GETDATE(), '2026-01-01', 2);
+
+-- Booking
+INSERT INTO Booking (DateTime, Notes, Status, StationID, VehicleID, AccountID)
+VALUES
+(GETDATE(), N'Đổi pin lần 1', 1, 1, 1, 4),
+(GETDATE(), N'Đổi pin lần 2', 1, 2, 2, 4);
+
+-- SupportRequest
+INSERT INTO SupportRequest (IssueType, Description, Status, AccountID, StaffID, ResponseText, ResponseDate)
+VALUES
+(N'Vấn đề thanh toán', N'Tôi bị trừ tiền 2 lần', 1, 4, 2, N'Đã hoàn tiền', GETDATE()),
+(N'Booking lỗi', N'Không thể đặt lịch', 1, 4, 3, N'Đã xử lý, mời thử lại', GETDATE());
+
+-- Feedback
+INSERT INTO Feedback (Rating, Comment, AccountID, BookingID)
+VALUES
+(5, N'Dịch vụ rất tốt', 4, 1),
+(4, N'Ổn nhưng cần cải thiện tốc độ xử lý', 4, 2);
+
+-- SwappingTransaction
+INSERT INTO SwappingTransaction (Notes, StaffID, OldBatteryID, VehicleID, NewBatteryID)
+VALUES
+(N'Đổi pin thành công', 2, 1, 1, 2),
+(N'Đổi pin nhanh chóng', 3, 3, 2, 1);
+
+-- Cập nhật Payment liên kết với Transaction
+UPDATE Payment SET TransactionID = 1 WHERE PaymentID = 1;
+UPDATE Payment SET TransactionID = 2 WHERE PaymentID = 2;

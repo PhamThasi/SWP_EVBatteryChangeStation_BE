@@ -39,8 +39,7 @@ x64/
 *.vspscc
 *.vssscc
 .builds
-*.pidb
-*.log
+*.pidb  
 *.svclog
 *.scc
 
@@ -131,3 +130,11 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+# App configuration
+appsettings.json
+appsettings.*.json
+Properties/launchSettings.json
+
+# Visual Studio cache
+.vs/
+.vscode/

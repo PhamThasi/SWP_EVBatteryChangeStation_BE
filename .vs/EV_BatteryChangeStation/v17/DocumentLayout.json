@@ -1,7 +1,28 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_service\\internalservice\\service\\authenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\internalservice\\service\\authenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_common\\dtos\\authencationdto\\loginresponddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\dtos\\authencationdto\\loginresponddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation\\controllers\\authencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\controllers\\authencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_common\\dtos\\authencationdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\dtos\\authencationdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_common\\dtos\\accountdto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\dtos\\accountdto\\accountdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginRespondDTO.cs",
+              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginRespondDTO.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginRespondDTO.cs",
+              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginRespondDTO.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginRespondDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:45:24.188Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
@@ -24,8 +58,56 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AccountDTO.cs",
+              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AccountDTO\\AccountDTO.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\DTOs\\AccountDTO\\AccountDTO.cs",
+              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AccountDTO\\AccountDTO.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\DTOs\\AccountDTO\\AccountDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:41:58.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthenController.cs",
+              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
+              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAqwCYAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:31:14.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthenService.cs",
+              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
+              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAUwEMAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:24:31.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
+              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:21:13.576Z",
+              "EditorCaption": ""
             }
           ]
         }

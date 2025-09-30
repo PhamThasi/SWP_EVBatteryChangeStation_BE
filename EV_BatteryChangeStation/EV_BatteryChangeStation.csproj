@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EV_BatteryChangeStation_Common\EV_BatteryChangeStation_Common.csproj" />
     <ProjectReference Include="..\EV_BatteryChangeStation_Service\EV_BatteryChangeStation_Service.csproj" />
   </ItemGroup>
