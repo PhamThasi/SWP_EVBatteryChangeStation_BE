@@ -319,6 +319,12 @@ public partial class EvbatterySwapContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+        modelBuilder.Entity<Role>().HasData(
+        new Role { RoleId = 1, RoleName = "Admin" },
+        new Role { RoleId = 2, RoleName = "Staff" },
+        new Role { RoleId = 3, RoleName = "Customer" }
+    );
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

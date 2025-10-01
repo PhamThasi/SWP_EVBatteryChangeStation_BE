@@ -1,6 +1,8 @@
 ﻿using EV_BatteryChangeStation.Services;
 using EV_BatteryChangeStation_Common.Configuration;
+using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Service.Service;
+using Microsoft.EntityFrameworkCore;
 using static EV_BatteryChangeStation_Common.Configuration.EmailSettings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Đăng ký DbContext với DI
+builder.Services.AddDbContext<EvbatterySwapContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Đăng ký cấu hình EmailSettings (đọc từ appsettings.json)
 builder.Services.Configure<EmailSettings>(

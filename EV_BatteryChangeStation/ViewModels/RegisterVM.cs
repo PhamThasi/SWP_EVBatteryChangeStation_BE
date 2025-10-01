@@ -42,6 +42,7 @@ namespace EV_BatteryChangeStation.ViewModels
         [Display(Name = "Date of Birth")]
         public DateOnly? DateOfBirth { get; set; }
 
+
         public string? OTP { get; set; }
     }
 }
