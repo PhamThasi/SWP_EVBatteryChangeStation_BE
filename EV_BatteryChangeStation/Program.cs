@@ -30,6 +30,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var email = builder.Configuration["EmailSettings:Email"];
+var appPassword = builder.Configuration["EmailSettings:AppPassword"];
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

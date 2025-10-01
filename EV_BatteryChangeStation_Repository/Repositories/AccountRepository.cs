@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,6 +56,11 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return await _context.Accounts
                 .Include(r => r.Role)
                 .FirstOrDefaultAsync(a => a.AccountName.ToLower() == keyword || a.Email.ToLower() == keyword);
+        }
+
+        public async Task<Account?> FindAsync(Expression<Func<Account, bool>> predicate)
+        {
+            return await _context.Accounts.FirstOrDefaultAsync(predicate);
         }
     }
 }

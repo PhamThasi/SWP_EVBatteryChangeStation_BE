@@ -25,6 +25,7 @@ namespace EV_BatteryChangeStation_Repository.Base
         void PrepareCreate(T entity);
         void PrepareUpdate(T entity);
         void PrepareRemove(T entity);
+        void Add(T entity);
         int Save();
         Task<int> SaveAsync();
         IQueryable<T> GetAllQueryable();
