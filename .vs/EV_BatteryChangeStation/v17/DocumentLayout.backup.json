@@ -1,30 +1,126 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\",
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\views\\customer\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\views\\customer\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_service\\internalservice\\service\\authenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\internalservice\\service\\authenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation\\controllers\\authencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\controllers\\authencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_service\\internalservice\\iservice\\iauthenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\internalservice\\iservice\\iauthenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\dbcontext\\evbatteryswapcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\dbcontext\\evbatteryswapcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_repository\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_common\\configuration\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\configuration\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|d:\\swp\\project_swp\\swp_evbatterychangestation_be\\ev_batterychangestation_common\\dtos\\authencationdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\dtos\\authencationdto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\viewmodels\\registervm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\viewmodels\\registervm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_common\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\ev_batterychangestation.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\ev_batterychangestation.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\ev_batterychangestation.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\ev_batterychangestation.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\ev_batterychangestation_repository.csproj.backup.tmp||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\ev_batterychangestation_repository.csproj.backup.tmp||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\ev_batterychangestation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\ev_batterychangestation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_common\\ev_batterychangestation_common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B2DDFDBB-DE5B-4C77-8F71-E16AA38FB2BD}|EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj|solutionrelative:ev_batterychangestation_common\\ev_batterychangestation_common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\ev_batterychangestation_service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\ev_batterychangestation_service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\ev_batterychangestation_repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\ev_batterychangestation_repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\swappingtransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\swappingtransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\battery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\battery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\station.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\station.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\entities\\supportrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|solutionrelative:ev_batterychangestation_repository\\entities\\supportrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -49,82 +145,379 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthenController.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation\\Controllers\\AuthenController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAqwCYAAABCAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwCUAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:31:14.179Z",
+              "WhenOpened": "2025-09-29T10:49:21.28Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EmailSettings.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\Configuration\\EmailSettings.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\Configuration\\EmailSettings.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\Configuration\\EmailSettings.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\Configuration\\EmailSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T14:18:22.542Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AuthenService.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation_Service\\InternalService\\Service\\AuthenService.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAIwCcAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:24:31.891Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\appsettings.json",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\appsettings.json",
+              "RelativeToolTip": "EV_BatteryChangeStation\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-28T06:22:54.249Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginDTO.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation_Common\\DTOs\\AuthencationDTO\\LoginDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "RegisterVM.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\ViewModels\\RegisterVM.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\ViewModels\\RegisterVM.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\ViewModels\\RegisterVM.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation\\ViewModels\\RegisterVM.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAYwCkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:21:13.576Z",
+              "WhenOpened": "2025-09-30T07:18:35.815Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IAuthenService.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\IService\\IAuthenService.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\InternalService\\IService\\IAuthenService.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\InternalService\\IService\\IAuthenService.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation_Service\\InternalService\\IService\\IAuthenService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "EvbatterySwapContext.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\DBContext\\EvbatterySwapContext.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\DBContext\\EvbatterySwapContext.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\DBContext\\EvbatterySwapContext.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\DBContext\\EvbatterySwapContext.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAIwCMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:18:15.15Z",
+              "WhenOpened": "2025-09-29T06:35:59.405Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AccountRepository.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\Repositories\\AccountRepository.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Repositories\\AccountRepository.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\Repositories\\AccountRepository.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Repositories\\AccountRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAADQAAAA2AAAAAAAAAA==",
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T15:14:37.085Z",
+              "WhenOpened": "2025-09-29T10:41:15.104Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Program.cs",
-              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Program.cs",
-              "ToolTip": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\Program.cs",
-              "RelativeToolTip": "EV_BatteryChangeStation\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA8AAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:37:25.423Z",
+              "WhenOpened": "2025-09-29T14:11:55.048Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Program.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Program.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T10:54:29.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
+              "RelativeToolTip": "EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-30T07:56:50.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\Class1.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\Class1.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\Class1.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T06:23:09.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Properties\\launchSettings.json",
+              "RelativeToolTip": "EV_BatteryChangeStation\\Properties\\launchSettings.json",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAABsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-29T14:47:42.079Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Account.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Account.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Account.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Account.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAYwCoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T06:59:53.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EV_BatteryChangeStation",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "RelativeToolTip": "EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-29T06:18:22.675Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "EV_BatteryChangeStation.http",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.http",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\EV_BatteryChangeStation.http",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.http",
+              "RelativeToolTip": "EV_BatteryChangeStation\\EV_BatteryChangeStation.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-09-28T06:22:56.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "EV_BatteryChangeStation_Repository.csproj.Backup.tmp",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj.Backup.tmp",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj.Backup.tmp",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj.Backup.tmp",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj.Backup.tmp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-09-29T06:52:42.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EV_BatteryChangeStation.csproj",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "RelativeToolTip": "EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-28T06:23:15.01Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "EV_BatteryChangeStation_Common.csproj",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+              "RelativeToolTip": "EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-28T06:23:52.523Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "EV_BatteryChangeStation_Service.csproj",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+              "RelativeToolTip": "EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-28T06:23:59.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EV_BatteryChangeStation_Repository.csproj",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-28T06:23:58.466Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SwappingTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\SwappingTransaction.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\SwappingTransaction.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\SwappingTransaction.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\SwappingTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:24.409Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Booking.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Booking.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Booking.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Booking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:29.067Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Class1.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Class1.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Class1.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T06:23:12.214Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Battery.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Battery.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Battery.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Battery.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Battery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:29.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Car.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Car.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Car.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Car.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Car.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:28.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Feedback.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Feedback.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Feedback.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Feedback.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Feedback.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:27.942Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Payment.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Payment.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Payment.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Payment.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Payment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:27.385Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Role.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Role.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Role.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Role.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:26.904Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Station.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Station.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Station.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Station.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Station.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:26.192Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Subscription.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Subscription.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\Subscription.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\Subscription.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Subscription.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:25.701Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "SupportRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\SupportRequest.cs",
+              "RelativeDocumentMoniker": "EV_BatteryChangeStation_Repository\\Entities\\SupportRequest.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\Entities\\SupportRequest.cs",
+              "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\SupportRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T07:27:25.076Z"
             }
           ]
         }

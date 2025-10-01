@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {}
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {}
   },
   "projects": {
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
         "projectName": "EV_BatteryChangeStation_Common",
-        "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
-        "packagesPath": "C:\\Users\\THAI\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THAI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -65,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

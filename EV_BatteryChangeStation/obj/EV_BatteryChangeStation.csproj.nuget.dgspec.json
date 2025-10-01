@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj": {}
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj": {}
   },
   "projects": {
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj": {
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
         "projectName": "EV_BatteryChangeStation",
-        "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
-        "packagesPath": "C:\\Users\\THAI\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THAI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,17 +26,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
-                "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj"
+              "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj"
               },
-              "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj": {
-                "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj"
+              "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj"
               }
             }
           }
@@ -51,12 +52,16 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
@@ -81,24 +86,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
         "projectName": "EV_BatteryChangeStation_Common",
-        "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
-        "packagesPath": "C:\\Users\\THAI\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THAI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -107,6 +112,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -125,7 +131,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -146,24 +152,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj": {
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
         "projectName": "EV_BatteryChangeStation_Repository",
-        "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
-        "packagesPath": "C:\\Users\\THAI\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THAI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -172,14 +178,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
-                "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj"
+              "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Common\\EV_BatteryChangeStation_Common.csproj"
               }
             }
           }
@@ -194,23 +201,15 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[8.0.20, )"
             },
@@ -226,11 +225,11 @@
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.9, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[8.0.1, )"
+              "version": "[9.0.9, )"
             }
           },
           "imports": [
@@ -249,24 +248,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj": {
+    "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
         "projectName": "EV_BatteryChangeStation_Service",
-        "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
-        "packagesPath": "C:\\Users\\THAI\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Service\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\THAI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -275,14 +274,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj": {
-                "projectPath": "D:\\SWP\\Project_SWP\\SWP_EVBatteryChangeStation_BE\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj"
+              "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj"
               }
             }
           }
@@ -297,53 +297,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Hashids.net": {
-              "target": "Package",
-              "version": "[1.7.0, )"
-            },
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.3.1, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.20, )"
-            },
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.Extensions.Configuration.Json": {
-              "target": "Package",
-              "version": "[8.0.1, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -360,7 +318,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
