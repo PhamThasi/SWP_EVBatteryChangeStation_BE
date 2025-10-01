@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EV_BatteryChangeStation_Common")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b87e820419966b39098a162ef845a44fb37922b6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e59aec052bede738f05f78810952d15eaa49d30b")]
 [assembly: System.Reflection.AssemblyProductAttribute("EV_BatteryChangeStation_Common")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EV_BatteryChangeStation_Common")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

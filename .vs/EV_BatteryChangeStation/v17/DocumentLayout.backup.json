@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4577854-156E-4E78-A410-0EF8CC0B8BD2}|EV_BatteryChangeStation\\EV_BatteryChangeStation.csproj|solutionrelative:ev_batterychangestation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD64D8-AFF6-405B-B065-81C18E12E1DA}|EV_BatteryChangeStation_Service\\EV_BatteryChangeStation_Service.csproj|solutionrelative:ev_batterychangestation_service\\service\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FCE8F12A-8916-4F7E-AC82-9824DE2FE08A}|EV_BatteryChangeStation_Repository\\EV_BatteryChangeStation_Repository.csproj|c:\\users\\admin\\downloads\\swp_evbatterychangestation_be-dev\\swp_evbatterychangestation_be-dev\\ev_batterychangestation_repository\\dbcontext\\evbatteryswapcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -130,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -150,13 +150,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Controllers\\AuthController.cs",
               "RelativeToolTip": "EV_BatteryChangeStation\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwCUAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-29T10:49:21.28Z",
               "EditorCaption": ""
@@ -171,12 +171,11 @@
               "RelativeToolTip": "EV_BatteryChangeStation_Common\\Configuration\\EmailSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T14:18:22.542Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T14:18:22.542Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\appsettings.json",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation\\appsettings.json",
@@ -184,8 +183,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-28T06:22:54.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T06:22:54.249Z"
             },
             {
               "$type": "Document",
@@ -197,8 +195,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation\\ViewModels\\RegisterVM.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAYwCkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T07:18:35.815Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T07:18:35.815Z"
             },
             {
               "$type": "Document",
@@ -210,25 +207,24 @@
               "RelativeToolTip": "EV_BatteryChangeStation_Repository\\DBContext\\EvbatterySwapContext.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAIwCMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T06:35:59.405Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T06:35:59.405Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "EmailService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
               "RelativeToolTip": "EV_BatteryChangeStation_Service\\Service\\EmailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBUAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-29T10:41:15.104Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "IEmailService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation_Service\\Service\\IEmailService.cs",
@@ -241,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Program.cs",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Program.cs",
@@ -249,12 +245,11 @@
               "RelativeToolTip": "EV_BatteryChangeStation\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T10:54:29.849Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T10:54:29.849Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\SWP_EVBatteryChangeStation_BE-Dev\\SWP_EVBatteryChangeStation_BE-Dev\\EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
               "RelativeDocumentMoniker": "EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
@@ -262,8 +257,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation\\Views\\Customer\\Register.cshtml",
               "ViewState": "AgIAADAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-30T07:56:50.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T07:56:50.519Z"
             },
             {
               "$type": "Document",
@@ -275,8 +269,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation_Common\\Class1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T06:23:09.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T06:23:09.285Z"
             },
             {
               "$type": "Document",
@@ -288,8 +281,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation\\Properties\\launchSettings.json",
               "ViewState": "AgIAABgAAAAAAAAAAAAAABsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-29T14:47:42.079Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T14:47:42.079Z"
             },
             {
               "$type": "Document",
@@ -301,8 +293,7 @@
               "RelativeToolTip": "EV_BatteryChangeStation_Repository\\Entities\\Account.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAAYwCoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T06:59:53.627Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T06:59:53.627Z"
             },
             {
               "$type": "Document",
