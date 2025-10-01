@@ -1,25 +1,29 @@
-﻿using EV_BatteryChangeStation_Repository.UnitOfWork;
-using EV_BatteryChangeStation_Service.InternalService.IService;
-using EV_BatteryChangeStation_Service.InternalService.Service;
-using Microsoft.AspNetCore.Identity;
+﻿using EV_BatteryChangeStation.Services;
+using EV_BatteryChangeStation_Common.Configuration;
+using EV_BatteryChangeStation_Repository.DBContext;
+using EV_BatteryChangeStation_Service.Service;
+using Microsoft.EntityFrameworkCore;
+using static EV_BatteryChangeStation_Common.Configuration.EmailSettings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Đăng ký DbContext với DI
+builder.Services.AddDbContext<EvbatterySwapContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Đăng ký cấu hình EmailSettings (đọc từ appsettings.json)
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+// Đăng ký EmailService
+builder.Services.AddScoped<EmailService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-//đăng kí service
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
-builder.Services.AddScoped<IAuthenService, AuthenService>();
-
-//đăng kí unit of work
-builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
 
