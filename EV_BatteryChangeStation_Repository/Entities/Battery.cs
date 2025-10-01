@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace EV_BatteryChangeStation_Repository.Entities;
+
+public partial class Battery
+{
+    public int BatteryId { get; set; }
+
+    public decimal? Capacity { get; set; }
+
+    public DateTime? LastUsed { get; set; }
+
+    public bool? Status { get; set; }
+
+    public decimal? StateOfHealth { get; set; }
+
+    public decimal? PercentUse { get; set; }
+
+    public string? TypeBattery { get; set; }
+
+    public DateTime? BatterySwapDate { get; set; }
+
+    public DateOnly? InsuranceDate { get; set; }
+
+    public int StationId { get; set; }
+
+    public virtual Station Station { get; set; } = null!;
+
+    public virtual ICollection<SwappingTransaction> SwappingTransactions { get; set; } = new List<SwappingTransaction>();
+}

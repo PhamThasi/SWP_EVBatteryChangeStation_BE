@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace EV_BatteryChangeStation_Repository.Entities;
+
+public partial class Car
+{
+    public int VehicleId { get; set; }
+
+    public string? Model { get; set; }
+
+    public string? BatteryType { get; set; }
+
+    public string? Producer { get; set; }
+
+    public DateTime? CreateDate { get; set; }
+
+    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+    public virtual ICollection<SwappingTransaction> SwappingTransactions { get; set; } = new List<SwappingTransaction>();
+}

@@ -1,0 +1,60 @@
+﻿using EV_BatteryChangeStation_Repository.Base;
+using EV_BatteryChangeStation_Repository.DBContext;
+using EV_BatteryChangeStation_Repository.Entities;  
+using EV_BatteryChangeStation_Repository.IRepositories;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EV_BatteryChangeStation_Repository.Repositories
+{
+    public class AccountRepository : GenericRepository<Account>, IAccountReporitory
+    {
+        public AccountRepository() {}
+
+        public AccountRepository(EvbatterySwapContext context) => _context = context;
+
+        public async Task<Account> GetAccountByAccountName(string accountName)
+        {
+            return await _context.Accounts.Include(r => r.Role)
+                .FirstOrDefaultAsync(a => a.AccountName == accountName);
+        }
+        public async Task<Account> GetAccountByEmail(string email)
+        {
+            return await _context.Accounts.Include(r => r.Role)
+                .FirstOrDefaultAsync(a => a.Email == email);
+        }
+        public async Task<Account> GetAccountByPhoneAsync(string phone)
+        {
+            return await _context.Accounts.Include(r => r.Role)
+                .FirstOrDefaultAsync(a => a.PhoneNumber == phone);
+        }
+        public async Task<Account> GetAllAccount()
+        {
+            return await _context.Accounts.Include(r => r.Role)
+                .FirstOrDefaultAsync();
+        }
+        public async Task<List<Account>> GetAllWithRoleAsync()
+        {
+            return await _context.Accounts.Include(r => r.Role)
+                .ToListAsync();
+        }
+        public async Task<Account?> GetAllWithRoleAndStation(int id)
+        {
+            return await _context.Accounts
+                .Include(r => r.Role)
+                .Include(s => s.Station)
+                .FirstOrDefaultAsync(a => a.AccountId == id);
+        }
+
+        public async Task<Account?> GetByAccountNameOrEmail(string keyword)
+        {
+            return await _context.Accounts
+                .Include(r => r.Role)
+                .FirstOrDefaultAsync(a => a.AccountName.ToLower() == keyword || a.Email.ToLower() == keyword);
+        }
+    }
+}
