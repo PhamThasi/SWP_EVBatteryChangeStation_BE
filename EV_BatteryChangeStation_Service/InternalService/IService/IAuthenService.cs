@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.AuthencationDTO;
+using EV_BatteryChangeStation_Common.DTOs.RegisterDTO;
 using EV_BatteryChangeStation_Service.Base;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     public interface IAuthenService
     {
         public Task<IServiceResult> AuthenticationLogin(LoginDTO login);
+        Task<bool> RegisterAsync(RegisterDTO dto);
+        Task<string> SendOtpAsync(string email);
+        Task<bool> VerifyOtpAsync(VerifyOtpDTO dto);
     }
 }

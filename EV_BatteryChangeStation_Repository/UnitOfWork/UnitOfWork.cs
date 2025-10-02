@@ -27,6 +27,10 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
                 return _accountRepository ??= new AccountRepository(_context);
             }
         }
+        public async Task<int> CommitAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
         public IRoleRepository RoleRepository
         {
             get

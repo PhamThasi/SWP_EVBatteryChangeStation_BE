@@ -127,5 +127,11 @@ namespace EV_BatteryChangeStation_Repository.Base
         {
             return _context.Set<T>().AsQueryable();
         }
+
+        public void Add(T entity)
+        {
+            _context.Add(entity);
+            _context.SaveChanges();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.AuthencationDTO;
+using EV_BatteryChangeStation_Common.DTOs.RegisterDTO;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,21 @@ namespace EV_BatteryChangeStation.Controllers
                     Errors = new List<string> { ex.Message }
                 });
             }
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDTO dto)
+        {
+            var result = await _authenService.RegisterAsync(dto);
+            if (result) return Ok(new { message = "OTP sent to your email." });
+            return BadRequest(new { message = "Email already exists." });
+        }
+
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp(VerifyOtpDTO dto)
+        {
+            var result = await _authenService.VerifyOtpAsync(dto);
+            if (result) return Ok(new { message = "Registration successful." });
+            return BadRequest(new { message = "Invalid OTP." });
         }
     }
 }

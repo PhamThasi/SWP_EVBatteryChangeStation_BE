@@ -1,5 +1,6 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
 using EV_BatteryChangeStation_Repository.Entities;
+using System.Linq.Expressions;
 
 
 namespace EV_BatteryChangeStation_Repository.IRepositories
@@ -13,5 +14,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<List<Account>> GetAllWithRoleAsync();
         Task<Account?> GetAllWithRoleAndStation(int id);
         Task<Account?> GetByAccountNameOrEmail(string keyword);
+        Task<Account?> FindAsync(Expression<Func<Account, bool>> predicate);
     }
 }
