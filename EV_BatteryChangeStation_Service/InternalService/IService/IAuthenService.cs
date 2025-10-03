@@ -12,8 +12,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     public interface IAuthenService
     {
         public Task<IServiceResult> AuthenticationLogin(LoginDTO login);
-        Task<bool> RegisterAsync(RegisterDTO dto);
-        Task<string> SendOtpAsync(string email);
-        Task<bool> VerifyOtpAsync(VerifyOtpDTO dto);
+        public Task<bool> RegisterAsync(RegisterDTO dto);
+        public Task<string> SendOtpAsync(string email);
+        public Task<bool> VerifyOtpAsync(VerifyOtpDTO dto);
     }
 }

@@ -152,7 +152,7 @@ CREATE TABLE SwappingTransaction (
     TransactionID INT PRIMARY KEY IDENTITY(1,1),
     Notes NVARCHAR(255),
     StaffID INT NOT NULL FOREIGN KEY REFERENCES [Account](AccountID),
-    OldBatteryID INT NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
+    OldBatteryID INT NOT NULL,
     VehicleID INT NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
     NewBatteryID INT NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
     CreateDate DATETIME DEFAULT GETDATE(),
@@ -175,9 +175,6 @@ DROP DATABASE EVBatterySwap;
 GO
 */
 
--- ========================
--- SEED DATA
--- ========================
 
 -- Role
 select * from Role

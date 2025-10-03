@@ -4,6 +4,7 @@ using EV_BatteryChangeStation_Common.Enum.ServiceResult;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
+using EV_BatteryChangeStation_Service.ExternalService.IService;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -23,17 +24,20 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<Account> _passwordHasher;
         private static Dictionary<string, string> pendingOtps = new Dictionary<string, string>();
-
-        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration)
+        private readonly IJWTService _jwtService;
+        // khởi tạo các service cần thiết qua dependency injection
+        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration, IJWTService jwtservice)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _jwtService = jwtservice ?? throw new ArgumentNullException(nameof(jwtservice));
         }
+        // đăng nhập
         public async Task<IServiceResult> AuthenticationLogin(LoginDTO login)
         {
             var account = await _unitOfWork.AccountRepository.GetByAccountNameOrEmail(login.Keyword.ToLower());
-            if (account == null)
+            if (account == null) // không tìm thấy tài khoản
             {
                 return new ServiceResult
                 {
@@ -42,7 +46,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Account not found" }
                 };
             }
-            if (account.Status == false)
+            if (account.Status == false) // tài khoản bị khóa
             {
                 return new ServiceResult
                 {
@@ -51,6 +55,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Your account has been baned. Please contact support for more infomation." }
                 };
             }
+            // kiểm tra mật khẩu
             var result = _passwordHasher.VerifyHashedPassword(account, account.Password, login.Password);
             if (result == PasswordVerificationResult.Failed)
             {
@@ -61,26 +66,28 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Password is incorrect" }
                 };
             }
-            var respond = new LoginRespondDTO
+            //lưu lại thông tin đăng nhập
+            LoginRespondDTO tokenDto = new()
             {
                 AccountId = account.AccountId,
                 AccountName = account.AccountName,
                 Email = account.Email,
                 RoleName = account.Role?.RoleName
             };
-            //thiếu jwt token để khi tắt máy vẫn lưu trạng thái đăng nhập
+            var token = _jwtService.GenerateToken(tokenDto);
+            
             return new ServiceResult
             {
                 Status = Const.SUCCESS_LOGIN_CODE,
                 Message = Const.SUCCESS_LOGIN_MSG,
-                Data = respond
+                Data = token
             };
         }
 
         public async Task<bool> RegisterAsync(RegisterDTO dto)
         {
             // kiểm tra email tồn tại chưa
-            var existing = await _unitOfWork.AccountRepository.FindAsync(a => a.Email == dto.Email);
+            var existing = await _unitOfWork.AccountRepository.GetAccountByEmail(dto.Email);
             if (existing != null) return false;
 
             // tạo account nhưng chưa lưu, gửi OTP trước
