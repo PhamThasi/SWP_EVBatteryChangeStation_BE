@@ -2,6 +2,7 @@
 using EV_BatteryChangeStation_Common.DTOs.RegisterDTO;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EV_BatteryChangeStation.Controllers
@@ -59,6 +60,17 @@ namespace EV_BatteryChangeStation.Controllers
             var result = await _authenService.VerifyOtpAsync(dto);
             if (result) return Ok(new { message = "Registration successful." });
             return BadRequest(new { message = "Invalid OTP." });
+        }
+        /// <summary>
+        /// Logout user (revoke JWT token)
+        /// </summary>
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var result = await _authenService.LogoutAsync(token);
+            return StatusCode(result.Status, result);
         }
     }
 }

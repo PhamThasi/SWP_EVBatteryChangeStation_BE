@@ -23,6 +23,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<Account> _passwordHasher;
         private static Dictionary<string, string> pendingOtps = new Dictionary<string, string>();
+        private static readonly List<string> _blacklistedTokens = new();
 
         public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration)
         {
@@ -106,7 +107,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             if (pendingOtps.TryGetValue(dto.Email, out var otp) && otp == dto.OtpCode)
             {
-                // tạo account thật với RoleId mặc định, ví dụ RoleId = 2 (User)
+                // tạo account thật với RoleId mặc định RoleId = 2 (User)
                 var account = new Account
                 {
                     Email = dto.Email,
@@ -117,7 +118,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
 
                 // thêm account vào repository
-                _unitOfWork.AccountRepository.Create(account); // hoặc CreateAsync nếu muốn async
+                _unitOfWork.AccountRepository.Create(account);
 
                 // lưu thay đổi vào database
                 await _unitOfWork.AccountRepository.SaveAsync();
@@ -155,6 +156,25 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 
             client.Send(mail);
             return Task.CompletedTask;
+        }
+
+        public Task<IServiceResult> LogoutAsync(string token)
+        {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _blacklistedTokens.Add(token);
+            }
+
+            return Task.FromResult<IServiceResult>(new ServiceResult
+            {
+                Status = 200,
+                Message = "Logout success. Token has been eliminated."
+            });
+        }
+
+        public bool IsTokenRevoked(string token)
+        {
+            return _blacklistedTokens.Contains(token);
         }
     }
 }

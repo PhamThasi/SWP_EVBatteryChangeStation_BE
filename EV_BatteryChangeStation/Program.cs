@@ -2,6 +2,7 @@
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using EV_BatteryChangeStation_Service.InternalService.Service;
 using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,26 @@ if (app.Environment.IsDevelopment())
 var email = builder.Configuration["EmailSettings:Email"];
 var appPassword = builder.Configuration["EmailSettings:AppPassword"];
 
+//builder.Services.AddAuthentication("Bearer")
+//    .AddJwtBearer("Bearer", options =>
+//    {
+//        options.Events = new JwtBearerEvents
+//        {
+//            OnMessageReceived = context =>
+//            {
+//                var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+//                // Lấy service để check token revoke
+//                var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthenService>();
+//                if (authService.IsTokenRevoked(token))
+//                {
+//                    context.Fail("Token đã bị thu hồi (logout).");
+//                }
+
+//                return Task.CompletedTask;
+//            }
+//        };
+//    });
 
 app.UseHttpsRedirection();
 

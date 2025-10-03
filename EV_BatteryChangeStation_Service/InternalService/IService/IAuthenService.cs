@@ -15,5 +15,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<bool> RegisterAsync(RegisterDTO dto);
         Task<string> SendOtpAsync(string email);
         Task<bool> VerifyOtpAsync(VerifyOtpDTO dto);
+        Task<IServiceResult> LogoutAsync(string token);
+        bool IsTokenRevoked(string token);
     }
 }
