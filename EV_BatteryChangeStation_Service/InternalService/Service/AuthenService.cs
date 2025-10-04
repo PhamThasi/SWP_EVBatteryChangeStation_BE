@@ -25,11 +25,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         private readonly IPasswordHasher<Account> _passwordHasher;
         private static Dictionary<string, string> pendingOtps = new Dictionary<string, string>();
         private readonly IJWTService _jwtService;
+        private static readonly List<string> _blacklistedTokens = new();
+        private static Dictionary<string, RegisterDTO> pendingUsers = new Dictionary<string, RegisterDTO>();
         // khởi tạo các service cần thiết qua dependency injection
         public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration, IJWTService jwtservice)
-        private static readonly List<string> _blacklistedTokens = new();
-
-        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
@@ -96,6 +95,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             // tạo account nhưng chưa lưu, gửi OTP trước
             var otp = GenerateOtp();
             pendingOtps[dto.Email] = otp;
+            pendingUsers[dto.Email] = dto;
 
             // gửi mail OTP
             await SendOtpEmail(dto.Email, otp);
@@ -116,28 +116,32 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             if (pendingOtps.TryGetValue(dto.Email, out var otp) && otp == dto.OtpCode)
             {
-                // tạo account thật với RoleId mặc định RoleId = 2 (User)
+                if (!pendingUsers.TryGetValue(dto.Email, out var registerDto))
+                    return false; // không tìm thấy RegisterDTO tạm
+
+                // tạo account thật
                 var account = new Account
                 {
-                    Email = dto.Email,
-                    AccountName = dto.Email.Split('@')[0],
-                    FullName = dto.Email,
-                    Password = _passwordHasher.HashPassword(null, "123456"),
-                    RoleId = 2 // Role mặc định
+                    Email = registerDto.Email,
+                    AccountName = registerDto.Email.Split('@')[0],
+                    //FullName = registerDto.FullName,
+                    Password = _passwordHasher.HashPassword(null, registerDto.Password),
+                    RoleId = 2, // Role mặc định
+                    Status = true
                 };
 
-                // thêm account vào repository
                 _unitOfWork.AccountRepository.Create(account);
-
-                // lưu thay đổi vào database
                 await _unitOfWork.AccountRepository.SaveAsync();
 
-                // xóa OTP đã dùng
+                // xóa OTP và RegisterDTO tạm
                 pendingOtps.Remove(dto.Email);
+                pendingUsers.Remove(dto.Email);
+
                 return true;
             }
             return false;
         }
+
 
         private string GenerateOtp()
         {

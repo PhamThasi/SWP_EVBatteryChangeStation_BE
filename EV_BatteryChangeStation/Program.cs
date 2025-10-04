@@ -43,6 +43,22 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthenService>();
+
+            if (authService.IsTokenRevoked(token))
+            {
+                context.Fail("Token đã bị thu hồi (logout).");
+            }
+
+            return Task.CompletedTask;
+        }
+    };
 });
 
 // Đăng kí unit of work
@@ -92,22 +108,7 @@ var appPassword = builder.Configuration["EmailSettings:AppPassword"];
 //builder.Services.AddAuthentication("Bearer")
 //    .AddJwtBearer("Bearer", options =>
 //    {
-//        options.Events = new JwtBearerEvents
-//        {
-//            OnMessageReceived = context =>
-//            {
-//                var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-//                // Lấy service để check token revoke
-//                var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthenService>();
-//                if (authService.IsTokenRevoked(token))
-//                {
-//                    context.Fail("Token đã bị thu hồi (logout).");
-//                }
-
-//                return Task.CompletedTask;
-//            }
-//        };
 //    });
 
 app.UseHttpsRedirection();

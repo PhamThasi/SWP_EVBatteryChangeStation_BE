@@ -48,7 +48,8 @@ namespace EV_BatteryChangeStation_Service.ExternalService.Service
                     ? DateTime.UtcNow.AddMinutes(double.Parse(_config["JwtConfig:ExpiresInMinutes"]))
                     : DateTime.UtcNow.AddMinutes(30),
                     Issuer = _config["JwtConfig:Issuer"],
-                    Audience = _config["JwtConfig:Audience"]
+                    Audience = _config["JwtConfig:Audience"],
+                    SigningCredentials = creds
                 };
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var createdToken = tokenHandler.CreateToken(token);

@@ -68,9 +68,21 @@ namespace EV_BatteryChangeStation.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            // Lấy token từ header Authorization
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest(new { message = "Token không hợp lệ" });
+            }
+
+            var token = authHeader.Replace("Bearer ", "");
+
+            // Gọi service để logout (vd: xóa token khỏi DB hoặc blacklist)
             var result = await _authenService.LogoutAsync(token);
+
+            // Trả về status code tương ứng
             return StatusCode(result.Status, result);
         }
+
     }
 }
