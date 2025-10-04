@@ -8,7 +8,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
 {
     public class ViewAccountDTOs
     {
-        public int AccountId { get; set; }
+        public string AccountId { get; set; }
         public string AccountName { get; set; } = null!;
         public string? FullName { get; set; }
         public string Password { get; set; } = null!;
@@ -20,7 +20,5 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
         public bool Status { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public int RoleId { get; set; }
-        public int? StationId { get; set; }
     }
 }

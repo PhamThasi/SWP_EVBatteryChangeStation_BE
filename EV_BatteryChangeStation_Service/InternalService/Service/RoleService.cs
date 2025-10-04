@@ -17,6 +17,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
             _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
+        // Tạo vai trò mới
         public async Task<IServiceResult> CreateRoleAsync(CreateRoleDTO createRole)
         {
             try
@@ -47,7 +48,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        // Xoá vai trò
         public async Task<IServiceResult> DeleteRoleAsync(string encodedId)
         {
             try
@@ -85,7 +86,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        // Lấy tất cả vai trò
         public async Task<IServiceResult> GetAllRolesAsync()
         {
             try
@@ -115,7 +116,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        //lấy tất cả vai trò với mã id được mã hóa
         public async Task<IServiceResult> GetAllRoleByIdDecodeAsync()
         {
             try
@@ -155,7 +156,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        //lấy vai trò dựa vào tên
         public async Task<IServiceResult> GetRoleByNameAsync(string roleName)
         {
             try
@@ -193,7 +194,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        //cập nhật vai trò
         public async Task<IServiceResult> UpdateRoleAsync(UpdateRoleDTO updateRole)
         {
             try
