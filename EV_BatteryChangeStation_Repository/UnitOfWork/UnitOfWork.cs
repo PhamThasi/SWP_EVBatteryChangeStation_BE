@@ -10,6 +10,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
 
         private IAccountReporitory _accountRepository;
         private IRoleRepository _roleRepository;
+        private IStationRepository _stationRepository;
         public UnitOfWork(EvbatterySwapContext context)
         {
             _context = context;
@@ -38,5 +39,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
                 return _roleRepository ??= new RoleRepository(_context);
             }
         }
+        public IStationRepository StationRepository => 
+            _stationRepository ??= new StationRepository(_context);
     }
 }

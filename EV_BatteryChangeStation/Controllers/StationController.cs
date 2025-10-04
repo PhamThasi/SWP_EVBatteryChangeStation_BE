@@ -1,6 +1,8 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.StationDTO;
 using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;
+using EV_BatteryChangeStation_Service.InternalService.IService;
+using EV_BatteryChangeStation_Service.InternalService.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,96 +11,46 @@ using Microsoft.EntityFrameworkCore;
 public class StationController : ControllerBase
 {
     private readonly EvbatterySwapContext _context;
+    private readonly IStationService _stationService;
 
-    public StationController(EvbatterySwapContext context)
+    public StationController(IStationService stationService)
     {
-        _context = context;
+        _stationService = stationService;
     }
 
-    // GET: api/Station
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<StationDTO>>> GetStations()
-    {
-        return await _context.Stations
-            .Select(s => new StationDTO
-            {
-                StationId = s.StationId,
-                Address = s.Address,
-                PhoneNumber = s.PhoneNumber,
-                Status = s.Status,
-                AccountName = s.AccountName,
-                BatteryQuality = s.BatteryQuality
-            })
-            .ToListAsync();
-    }
+    public async Task<ActionResult<IEnumerable<StationDTO>>> GetStations() =>
+        Ok(await _stationService.GetAllAsync());
 
-    // GET: api/Station/5
     [HttpGet("{id}")]
     public async Task<ActionResult<StationDTO>> GetStation(int id)
     {
-        var station = await _context.Stations.FindAsync(id);
+        var station = await _stationService.GetByIdAsync(id);
         if (station == null) return NotFound();
-
-        return new StationDTO
-        {
-            StationId = station.StationId,
-            Address = station.Address,
-            PhoneNumber = station.PhoneNumber,
-            Status = station.Status,
-            AccountName = station.AccountName,
-            BatteryQuality = station.BatteryQuality
-        };
+        return Ok(station);
     }
 
-    // POST: api/Station
     [HttpPost]
     public async Task<ActionResult<StationDTO>> CreateStation(StationDTO dto)
     {
-        var station = new Station
-        {
-            Address = dto.Address,
-            PhoneNumber = dto.PhoneNumber,
-            Status = dto.Status,
-            AccountName = dto.AccountName,
-            BatteryQuality = dto.BatteryQuality
-        };
-
-        _context.Stations.Add(station);
-        await _context.SaveChangesAsync();
-
-        dto.StationId = station.StationId;
-        return CreatedAtAction(nameof(GetStation), new { id = station.StationId }, dto);
+        var created = await _stationService.CreateAsync(dto);
+        return CreatedAtAction(nameof(GetStation), new { id = created.StationId }, created);
     }
 
-    // PUT: api/Station/5
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateStation(int id, StationDTO dto)
     {
         if (id != dto.StationId) return BadRequest();
-
-        var station = await _context.Stations.FindAsync(id);
-        if (station == null) return NotFound();
-
-        station.Address = dto.Address;
-        station.PhoneNumber = dto.PhoneNumber;
-        station.Status = dto.Status;
-        station.AccountName = dto.AccountName;
-        station.BatteryQuality = dto.BatteryQuality;
-
-        await _context.SaveChangesAsync();
+        var updated = await _stationService.UpdateAsync(dto);
+        if (!updated) return NotFound();
         return NoContent();
     }
 
-    // DELETE: api/Station/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStation(int id)
     {
-        var station = await _context.Stations.FindAsync(id);
-        if (station == null) return NotFound();
-
-        _context.Stations.Remove(station);
-        await _context.SaveChangesAsync();
-
+        var deleted = await _stationService.DeleteAsync(id);
+        if (!deleted) return NotFound();
         return NoContent();
     }
 }
