@@ -2,6 +2,7 @@
 using EV_BatteryChangeStation_Common.DTOs.RegisterDTO;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EV_BatteryChangeStation.Controllers
@@ -60,5 +61,28 @@ namespace EV_BatteryChangeStation.Controllers
             if (result) return Ok(new { message = "Registration successful." });
             return BadRequest(new { message = "Invalid OTP." });
         }
+        /// <summary>
+        /// Logout user (revoke JWT token)
+        /// </summary>
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            // Lấy token từ header Authorization
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest(new { message = "Token không hợp lệ" });
+            }
+
+            var token = authHeader.Replace("Bearer ", "");
+
+            // Gọi service để logout (vd: xóa token khỏi DB hoặc blacklist)
+            var result = await _authenService.LogoutAsync(token);
+
+            // Trả về status code tương ứng
+            return StatusCode(result.Status, result);
+        }
+
     }
 }
