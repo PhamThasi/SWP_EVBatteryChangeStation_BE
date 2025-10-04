@@ -54,6 +54,16 @@ public partial class EvbatterySwapContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Station
+        modelBuilder.Entity<Station>(entity =>
+        {
+            entity.HasKey(e => e.StationId);
+            entity.Property(e => e.StationId).HasColumnName("StationID");
+            entity.Property(e => e.AccountName).HasMaxLength(100);
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.BatteryQuality).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+        });
         modelBuilder.Entity<Account>(entity =>
         {
             entity.HasKey(e => e.AccountId).HasName("PK__Account__349DA586C236EBB6");
