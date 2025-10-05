@@ -18,39 +18,53 @@ public class StationController : ControllerBase
         _stationService = stationService;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<StationDTO>>> GetStations() =>
-        Ok(await _stationService.GetAllAsync());
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<StationDTO>> GetStation(int id)
-    {
-        var station = await _stationService.GetByIdAsync(id);
-        if (station == null) return NotFound();
-        return Ok(station);
-    }
-
     [HttpPost]
-    public async Task<ActionResult<StationDTO>> CreateStation(StationDTO dto)
+    public async Task<IActionResult> CreateStation(StationDTO dto)
     {
-        var created = await _stationService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetStation), new { id = created.StationId }, created);
+        var result = await _stationService.CreateAsync(dto);
+        if (result.Status != 200)
+            return BadRequest(result);
+
+        // Ép kiểu data về StationDTO nếu có
+        var createdStation = result.Data as StationDTO;
+        return CreatedAtAction(nameof(GetStation), new { id = createdStation?.StationId }, createdStation);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateStation(int id, StationDTO dto)
     {
         if (id != dto.StationId) return BadRequest();
-        var updated = await _stationService.UpdateAsync(dto);
-        if (!updated) return NotFound();
-        return NoContent();
+
+        var result = await _stationService.UpdateAsync(dto);
+        if (result.Status == 404) return NotFound(result);
+        if (result.Status != 200) return BadRequest(result);
+
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteStation(int id)
     {
-        var deleted = await _stationService.DeleteAsync(id);
-        if (!deleted) return NotFound();
-        return NoContent();
+        var result = await _stationService.DeleteAsync(id);
+        if (result.Status == 404) return NotFound(result);
+        if (result.Status != 200) return BadRequest(result);
+
+        return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetStations()
+    {
+        var result = await _stationService.GetAllAsync();
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetStation(int id)
+    {
+        var result = await _stationService.GetByIdAsync(id);
+        if (result.Status == 404) return NotFound(result);
+        return Ok(result);
+    }
+
 }

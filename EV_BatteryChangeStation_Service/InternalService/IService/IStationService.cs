@@ -1,18 +1,16 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.StationDTO;
-using System;
+using EV_BatteryChangeStation_Service.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Service.InternalService.IService
 {
     public interface IStationService
     {
-        public Task<IEnumerable<StationDTO>> GetAllAsync();
-        public Task<StationDTO> GetByIdAsync(int id);
-        public Task<StationDTO> CreateAsync(StationDTO dto);
-        public Task<bool> UpdateAsync(StationDTO dto);
-        public Task<bool> DeleteAsync(int id);
+        public Task<ServiceResult> GetAllAsync();
+        public Task<ServiceResult> GetByIdAsync(int id);
+        public Task<ServiceResult> CreateAsync(StationDTO dto);
+        public Task<ServiceResult> UpdateAsync(StationDTO dto);
+        public Task<ServiceResult> DeleteAsync(int id);
     }
 }

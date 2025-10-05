@@ -19,7 +19,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Station>> GetAllAsync() =>
+        public async Task<List<Station>> GetAllAsync() =>
             await _context.Stations.ToListAsync();
 
         public async Task<Station> GetByIdAsync(int id) =>
