@@ -98,7 +98,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.StationRepository.Update(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, $"Station updated successfully with station info: {dto.ToString}");
+                return new ServiceResult(200, "Station updated successfully.");
             }
             catch (Exception ex)
             {
