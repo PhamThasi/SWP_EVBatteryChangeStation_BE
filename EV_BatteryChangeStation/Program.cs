@@ -1,15 +1,19 @@
-﻿using EV_BatteryChangeStation_Repository.UnitOfWork;
-using EV_BatteryChangeStation_Service.InternalService.IService;
-using EV_BatteryChangeStation_Service.InternalService.Service;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using EV_BatteryChangeStation_Repository.DBContext;
+using EV_BatteryChangeStation_Repository.IRepositories;
+using EV_BatteryChangeStation_Repository.Repositories;
+using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.ExternalService.IService;
 using EV_BatteryChangeStation_Service.ExternalService.Service;
+using EV_BatteryChangeStation_Service.InternalService.IService;
+using EV_BatteryChangeStation_Service.InternalService.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,7 +62,7 @@ builder.Services.AddAuthentication(options =>
 
             if (authService.IsTokenRevoked(token))
             {
-                context.Fail("Token đã bị thu hồi (logout).");
+                context.Fail("Token has been revoked (logout).");
             }
 
             return Task.CompletedTask;
@@ -109,12 +113,6 @@ if (app.Environment.IsDevelopment())
 // Cấu hình email
 var email = builder.Configuration["EmailSettings:Email"];
 var appPassword = builder.Configuration["EmailSettings:AppPassword"];
-
-//builder.Services.AddAuthentication("Bearer")
-//    .AddJwtBearer("Bearer", options =>
-//    {
-
-//    });
 
 app.UseHttpsRedirection();
 
