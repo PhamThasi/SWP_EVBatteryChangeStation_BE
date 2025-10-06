@@ -17,7 +17,6 @@ namespace EV_BatteryChangeStation_Repository.DBContext
     {
     }
 
-    public virtual DbSet<Account> Accounts { get; set; }
 
         public virtual DbSet<Account> Accounts { get; set; }
 

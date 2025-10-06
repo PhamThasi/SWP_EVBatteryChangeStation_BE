@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
+using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;  
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
