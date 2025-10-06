@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Cấu hình DbContext với connection string
-builder.Services.AddDbContext<EvbatterySwapContext>(options =>
+builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Cấu hình DbContext

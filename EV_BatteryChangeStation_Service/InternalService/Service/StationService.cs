@@ -92,13 +92,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (!string.IsNullOrWhiteSpace(dto.AccountName))
                     station.AccountName = dto.AccountName;
 
-                if (!string.IsNullOrWhiteSpace(dto.BatteryQuanity))
-                    station.BatteryQuality = dto.BatteryQuality; // ✅ Fix: string không dùng HasValue/Value
+                if (dto.BatteryQuantity.HasValue)
+                    station.BatteryQuantity = dto.BatteryQuantity.Value;// ✅ Fix: string không dùng HasValue/Value
 
                 _unitOfWork.StationRepository.Update(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Station updated successfully.");
+                return new ServiceResult(200, $"Station updated successfully with station info: {dto.ToString}");
             }
             catch (Exception ex)
             {

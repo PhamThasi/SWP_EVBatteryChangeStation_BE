@@ -6,19 +6,19 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EvbatterySwapContext _context;
+        private readonly EVBatterySwapContext _context;
 
         private IAccountReporitory _accountRepository;
         private IRoleRepository _roleRepository;
         private IStationRepository _stationRepository;
-        public UnitOfWork(EvbatterySwapContext context)
+        public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
         }
 
         public UnitOfWork()
         {
-            _context = new EvbatterySwapContext();
+            _context = new EVBatterySwapContext();
         }
 
         public IAccountReporitory AccountRepository

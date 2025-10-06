@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class StationController : ControllerBase
 {
-    private readonly EvbatterySwapContext _context;
+    private readonly EVBatterySwapContext _context;
     private readonly IStationService _stationService;
 
     public StationController(IStationService stationService)

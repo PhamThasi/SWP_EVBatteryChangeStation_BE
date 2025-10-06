@@ -12,9 +12,9 @@ namespace EV_BatteryChangeStation_Repository.Repositories
 {
     public class StationRepository : IStationRepository
     {
-        private readonly EvbatterySwapContext _context;
+        private readonly EVBatterySwapContext _context;
 
-        public StationRepository(EvbatterySwapContext context)
+        public StationRepository(EVBatterySwapContext context)
         {
             _context = context;
         }

@@ -5,14 +5,14 @@ namespace EV_BatteryChangeStation_Repository.Base
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected EvbatterySwapContext _context;
+        protected EVBatterySwapContext _context;
 
         public GenericRepository()
         {
-            _context ??= new EvbatterySwapContext();
+            _context ??= new EVBatterySwapContext();
         }
 
-        public GenericRepository(EvbatterySwapContext context)
+        public GenericRepository(EVBatterySwapContext context)
         {
             _context = context;
         }
