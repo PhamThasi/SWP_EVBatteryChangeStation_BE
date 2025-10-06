@@ -11,7 +11,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
     {
         public RoleRepository() {}
 
-        public RoleRepository(EvbatterySwapContext context) => _context = context;
+        public RoleRepository(EVBatterySwapContext context) => _context = context;
 
         public Task<List<Role>> GetAllRoleAsync()
         {
