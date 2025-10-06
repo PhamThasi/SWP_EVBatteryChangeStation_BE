@@ -14,6 +14,10 @@ public partial class EVBatterySwapContext : DbContext
     {
     }
 
+    public EVBatterySwapContext()
+    {
+    }
+
     public virtual DbSet<Account> Accounts { get; set; }
 
     public virtual DbSet<Battery> Batteries { get; set; }

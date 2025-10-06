@@ -1,6 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.RoleDTO;
 using EV_BatteryChangeStation_Repository.Base;
-using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
     {
         public RoleRepository() {}
 
-        public RoleRepository(EvbatterySwapContext context) => _context = context;
+        public RoleRepository(EVBatterySwapContext context) => _context = context;
 
         public Task<List<Role>> GetAllRoleAsync()
         {

@@ -1,4 +1,4 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
+﻿using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using EV_BatteryChangeStation_Repository.Repositories;
 
@@ -6,18 +6,13 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EvbatterySwapContext _context;
+        private readonly EVBatterySwapContext _context;
 
         private IAccountReporitory _accountRepository;
         private IRoleRepository _roleRepository;
-        public UnitOfWork(EvbatterySwapContext context)
+        public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
-        }
-
-        public UnitOfWork()
-        {
-            _context = new EvbatterySwapContext();
         }
 
         public IAccountReporitory AccountRepository

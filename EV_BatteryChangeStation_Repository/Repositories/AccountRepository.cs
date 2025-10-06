@@ -1,5 +1,4 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
-using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;  
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +15,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
     {
         public AccountRepository() {}
 
-        public AccountRepository(EvbatterySwapContext context) => _context = context;
+        public AccountRepository(EVBatterySwapContext context) => _context = context;
 
         public async Task<Account> GetAccountByAccountName(string accountName)
         {

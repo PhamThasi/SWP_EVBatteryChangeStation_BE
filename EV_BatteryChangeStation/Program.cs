@@ -8,9 +8,14 @@ using System.Text;
 using EV_BatteryChangeStation_Service.ExternalService.IService;
 using EV_BatteryChangeStation_Service.ExternalService.Service;
 using Microsoft.OpenApi.Models;
+using EV_BatteryChangeStation_Repository.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<EVBatterySwapContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllers();
