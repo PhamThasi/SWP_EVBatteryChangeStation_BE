@@ -92,7 +92,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (!string.IsNullOrWhiteSpace(dto.AccountName))
                     station.AccountName = dto.AccountName;
 
-                if (!string.IsNullOrWhiteSpace(dto.BatteryQuality))
+                if (!string.IsNullOrWhiteSpace(dto.BatteryQuanity))
                     station.BatteryQuality = dto.BatteryQuality; // ✅ Fix: string không dùng HasValue/Value
 
                 _unitOfWork.StationRepository.Update(station);
