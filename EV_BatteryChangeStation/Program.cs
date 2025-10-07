@@ -16,7 +16,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+//Dang ki Booking
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 // Cấu hình DbContext với connection string
 builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

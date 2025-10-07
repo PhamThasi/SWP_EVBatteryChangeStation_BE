@@ -11,6 +11,8 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private IAccountReporitory _accountRepository;
         private IRoleRepository _roleRepository;
         private IStationRepository _stationRepository;
+        private BookingRepository _bookingRepository;
+
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
@@ -41,5 +43,13 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         }
         public IStationRepository StationRepository => 
             _stationRepository ??= new StationRepository(_context);
+
+        public IBookingRepository BookingRepository
+        {
+            get
+            {
+                return _bookingRepository ??= new BookingRepository(_context);
+            }
+        }
     }
 }
