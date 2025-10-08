@@ -113,13 +113,32 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="200">Lấy account thành công</response>
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
-        /// 
+
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete([FromQuery] string encode)
         {
             if (encode == null)
                 return BadRequest("Gat Data fail");
             var result = await _accountService.DeleteAccountAsync(encode);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
+
+        ///<summary>
+        ///Xóa tài khoản bằng cách thay đổi trạng thái
+        /// </summary>
+        /// <returns>SoftDelete account </returns>
+        /// <response code="200">Soft delete account thành công</response>
+        /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
+        /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
+
+        [HttpDelete("SoftDelete")]
+        public async Task<IActionResult> SoftDelete([FromQuery] string encode)
+        {
+            if (encode == null)
+                return BadRequest("Get Data fail");
+            var result = await _accountService.SoftDeleteAsync(encode);
             if (result.Status == 200)
                 return Ok(result);
             return StatusCode(result.Status, result.Message);

@@ -165,6 +165,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     FullName = a.FullName,
                     Password = a.Password,
                     Address = a.Address,
+                    Status = a.Status,
                     PhoneNumber = a.PhoneNumber,
                     Gender = a.Gender,
                     DateOfBirth = a.DateOfBirth
@@ -261,5 +262,46 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
+        // Xóa mềm tài khoản (chuyển trạng thái sang inactive)
+        public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
+        {
+            try
+            {
+                if (encodedId == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var acc = await _unitOfWork.AccountRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
+                if (acc == null)
+                {
+                    return new ServiceResult()
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = Const.WARNING_NO_DATA_MSG,
+                    };
+                }
+                acc.Status = false;
+                await _unitOfWork.AccountRepository.UpdateAsync(acc);
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_UPDATE_CODE,
+                    Message = Const.SUCCESS_UPDATE_MSG,
+                    Data = acc
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
+
 }

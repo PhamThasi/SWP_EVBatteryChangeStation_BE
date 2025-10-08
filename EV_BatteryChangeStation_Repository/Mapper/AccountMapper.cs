@@ -22,6 +22,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Email = account.Email,
                 PhoneNumber = account.PhoneNumber,
                 DateOfBirth = account.DateOfBirth,
+                Status = account.Status
             };
         }
 

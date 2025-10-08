@@ -13,6 +13,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> CreateRoleAsync(CreateRoleDTO createRole);
         Task<IServiceResult> UpdateRoleAsync(UpdateRoleDTO updateRole);
         Task<IServiceResult> DeleteRoleAsync(string encodedId);
+        Task<IServiceResult> SoftDeleteAsync(string encodedId);
         Task<IServiceResult> GetAllRolesAsync();
         Task<IServiceResult> GetRoleByNameAsync(string roleName);
         Task<IServiceResult> GetAllRoleByIdDecodeAsync();
