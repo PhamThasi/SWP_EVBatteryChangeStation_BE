@@ -8,6 +8,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         IAccountReporitory AccountRepository { get; }
         IRoleRepository RoleRepository { get; }
         IStationRepository StationRepository { get; }
+        IBookingRepository BookingRepository { get; }
         Task<int> CommitAsync();
     }
 }
