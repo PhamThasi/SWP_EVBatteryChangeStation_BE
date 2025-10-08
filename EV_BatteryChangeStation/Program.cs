@@ -19,8 +19,8 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 //Dang ki Booking
-builder.Services.AddScoped<IBookingService, BookingService>();
-builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+//builder.Services.AddScoped<IBookingService, BookingService>();
+//builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 // Cấu hình DbContext với connection string
 builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -32,6 +32,7 @@ builder.Services.AddEndpointsApiExplorer();
 // Đăng kí service
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IBatteryService, BatteryService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IJWTService, JWTService>();

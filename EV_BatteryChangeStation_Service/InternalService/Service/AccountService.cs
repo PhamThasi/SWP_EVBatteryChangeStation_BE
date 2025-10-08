@@ -262,7 +262,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        // Xóa mềm tài khoản (chuyển trạng thái sang inactive)
         public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
         {
             try

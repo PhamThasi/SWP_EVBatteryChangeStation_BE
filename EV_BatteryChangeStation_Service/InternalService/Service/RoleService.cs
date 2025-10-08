@@ -234,7 +234,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
+        // Xoá mềm vai trò
         public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
         {
             try
@@ -250,7 +250,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
                 if (role == null)
                 {
-                    return new ServiceResult()
+                    return new ServiceResult
                     {
                         Status = Const.WARNING_NO_DATA_CODE,
                         Message = Const.WARNING_NO_DATA_MSG,

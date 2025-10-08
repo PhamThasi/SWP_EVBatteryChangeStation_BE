@@ -13,7 +13,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private IRoleRepository _roleRepository;
         private IStationRepository _stationRepository;
         private BookingRepository _bookingRepository;
-
+        private IBatteryRepository _batteryRepository;
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
@@ -50,6 +50,13 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
             get
             {
                 return _bookingRepository ??= new BookingRepository(_context);
+            }
+        }
+        public IBatteryRepository BatteryRepository
+        {
+            get
+            {
+                return _batteryRepository ??= new BatteryRepository(_context);
             }
         }
     }
