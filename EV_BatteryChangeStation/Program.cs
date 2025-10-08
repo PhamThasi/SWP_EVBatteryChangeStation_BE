@@ -75,8 +75,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Đăng kí unit of work
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
-
 // Cấu hình swagger để sử dụng JWT Bearer
 builder.Services.AddSwaggerGen(options =>
 {
