@@ -13,7 +13,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
     {
         public static AccountDTO MapToDTO(this Account account)
         {
-            if (account == null) throw new ArgumentNullException(nameof(account), "CreateAccountDto cannot be null");
+            if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
             return new AccountDTO
             {
                 AccountName = account.AccountName,

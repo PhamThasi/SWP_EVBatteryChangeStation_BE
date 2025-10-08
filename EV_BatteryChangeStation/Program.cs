@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using EV_BatteryChangeStation_Repository.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 
@@ -23,10 +25,6 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Cấu hình DbContext
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IStationRepository, StationRepository>();
-builder.Services.AddScoped<IStationService, StationService>();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

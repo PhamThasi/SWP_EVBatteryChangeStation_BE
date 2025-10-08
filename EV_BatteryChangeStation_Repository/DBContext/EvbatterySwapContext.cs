@@ -13,9 +13,10 @@ namespace EV_BatteryChangeStation_Repository.DBContext
         {
         }
 
-        public EVBatterySwapContext()
-        {
-        }
+    public EVBatterySwapContext()
+    {
+    }
+
 
         public virtual DbSet<Account> Accounts { get; set; }
 
