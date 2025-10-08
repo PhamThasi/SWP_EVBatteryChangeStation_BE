@@ -19,7 +19,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork;
         }
 
-        // 🟢 Lấy tất cả booking còn hoạt động (Status == true)
+        // Lấy tất cả booking còn hoạt động (Status == true)
         public async Task<ServiceResult> GetAllAsync()
         {
             try
@@ -40,7 +40,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // 🟢 Lấy booking theo ID, nhưng không hiển thị nếu đã bị hủy
+        // Lấy booking theo ID, nhưng không hiển thị nếu đã bị hủy
         public async Task<ServiceResult> GetByIdAsync(int id)
         {
             try
@@ -58,7 +58,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // 🟢 Tạo booking mới
+        // Tạo booking mới
         public async Task<ServiceResult> CreateAsync(BookingDTO dto)
         {
             try
@@ -78,7 +78,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // 🟢 Cập nhật thông tin booking (nếu chưa bị hủy)
+        // Cập nhật thông tin booking (nếu chưa bị hủy)
         public async Task<ServiceResult> UpdateAsync(int id, BookingDTO dto)
         {
             try
@@ -99,7 +99,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // 🟢 Xóa mềm (chỉ cập nhật trạng thái)
+        // Xóa mềm (chỉ cập nhật trạng thái)
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             try
@@ -111,7 +111,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 existing.Status = false; // Đánh dấu đã hủy
                 _unitOfWork.BookingRepository.Update(existing);
                 await _unitOfWork.CommitAsync();
-
                 return new ServiceResult(200, "Booking cancelled successfully");
             }
             catch (Exception ex)
