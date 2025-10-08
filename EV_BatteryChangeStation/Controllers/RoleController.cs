@@ -127,5 +127,24 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+        /// <summary>
+        /// xóa vai trò bằng cách thay đổi trạng thái
+        /// </summary>
+        /// <param name="dto">thay đổi thông tin trạng thái vai trò</param>
+        /// <returns>xóa vai trò thông tin vai trò</returns>
+        /// <response code="200">Tạo vai trò thành công</response>
+        /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
+        /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
+        [HttpDelete("SoftDelete")]
+        public async Task<IActionResult> SoftDelete([FromQuery] string encodedId)
+        {
+            if (string.IsNullOrEmpty(encodedId))
+                return BadRequest("Invalid RoleId");
+            var result = await _roleService.SoftDeleteAsync(encodedId);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
     }
 }
