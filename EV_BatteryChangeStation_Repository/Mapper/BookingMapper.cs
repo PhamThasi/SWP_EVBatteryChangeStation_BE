@@ -1,10 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.BookingDTO;
 using EV_BatteryChangeStation_Repository.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Repository.Mapper
 {
@@ -26,12 +21,11 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static Booking ToEntity(BookingDTO dto)
+        public static Booking ToEntity(BookingCreateDTO dto)
         {
             if (dto == null) return null;
             return new Booking
             {
-                BookingId = dto.BookingId,
                 DateTime = dto.DateTime,
                 Notes = dto.Notes,
                 Status = dto.Status,
@@ -42,7 +36,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static void UpdateEntity(Booking entity, BookingDTO dto)
+        public static void UpdateEntity(Booking entity, BookingCreateDTO dto)
         {
             entity.DateTime = dto.DateTime;
             entity.Notes = dto.Notes;

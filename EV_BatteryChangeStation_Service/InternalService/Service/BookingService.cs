@@ -27,10 +27,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 var bookings = await _unitOfWork.BookingRepository.GetAllAsync();
 
                 // Lọc ra chỉ các booking đang hoạt động
-                var activeBookings = bookings
-                    .Where(b => b.Status == true)
-                    .Select(BookingMapper.ToDTO)
-                    .ToList();
+                var activeBookings = bookings.Select(BookingMapper.ToDTO).ToList();
 
                 return new ServiceResult(200, "Success", activeBookings);
             }
@@ -47,7 +44,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var booking = await _unitOfWork.BookingRepository.GetByIdAsync(id);
 
-                if (booking == null || booking.Status == false)
+                if (booking == null)
                     return new ServiceResult(404, "Booking not found or has been cancelled");
 
                 return new ServiceResult(200, "Success", BookingMapper.ToDTO(booking));
@@ -59,7 +56,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Tạo booking mới
-        public async Task<ServiceResult> CreateAsync(BookingDTO dto)
+        public async Task<ServiceResult> CreateAsync(BookingCreateDTO dto)
         {
             try
             {
@@ -79,12 +76,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Cập nhật thông tin booking (nếu chưa bị hủy)
-        public async Task<ServiceResult> UpdateAsync(int id, BookingDTO dto)
+        public async Task<ServiceResult> UpdateAsync(int id, BookingCreateDTO dto)
         {
             try
             {
                 var existing = await _unitOfWork.BookingRepository.GetByIdAsync(id);
-                if (existing == null || existing.Status == false)
+                if (existing == null)
                     return new ServiceResult(404, "Booking not found or has been cancelled");
 
                 BookingMapper.UpdateEntity(existing, dto);
@@ -116,6 +113,25 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             catch (Exception ex)
             {
                 return new ServiceResult(500, "Error cancelling booking", new List<string> { ex.Message });
+            }
+        }
+        // Xóa cứng (hard delete - xóa hẳn khỏi DB)
+        public async Task<ServiceResult> HardDeleteAsync(int id)
+        {
+            try
+            {
+                var existing = await _unitOfWork.BookingRepository.GetByIdAsync(id);
+                if (existing == null)
+                    return new ServiceResult(404, "Booking not found for hard delete");
+
+                _unitOfWork.BookingRepository.Delete(existing);
+                await _unitOfWork.CommitAsync();
+
+                return new ServiceResult(200, "Booking permanently deleted");
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error permanently deleting booking", new List<string> { ex.Message });
             }
         }
     }

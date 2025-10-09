@@ -23,9 +23,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             try
             {
                 var stations = await _unitOfWork.StationRepository.GetAllAsync();
-
-                // Chỉ lấy những station còn hoạt động
-                var activeStations = stations.Where(s => s.Status == true).ToList();
+                var activeStations = stations.ToList();
 
                 if (!activeStations.Any())
                     return new ServiceResult(404, "No active stations found.");
@@ -55,7 +53,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> CreateAsync(StationDTO dto)
+        public async Task<ServiceResult> CreateAsync(StationCreateDTO dto)
         {
             try
             {
@@ -66,7 +64,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.StationRepository.Create(station);
                 await _unitOfWork.CommitAsync();
 
-                dto.StationId = station.StationId;
+                //dto.StationId = station.StationId;
                 return new ServiceResult(201, "Station created successfully.", dto);
             }
             catch (Exception ex)
@@ -75,11 +73,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> UpdateAsync(StationDTO dto)
+        public async Task<ServiceResult> UpdateAsync(int id, StationCreateDTO dto)
         {
             try
             {
-                var station = await _unitOfWork.StationRepository.GetByIdAsync(dto.StationId);
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
                 if (station == null)
                     return new ServiceResult(404, "Station not found for update.");
 
@@ -130,6 +128,24 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             catch (Exception ex)
             {
                 return new ServiceResult(500, $"Error while deactivating station: {ex.Message}");
+            }
+        }
+        public async Task<ServiceResult> HardDeleteAsync(int id)
+        {
+            try
+            {
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
+                if (station == null)
+                    return new ServiceResult(404, "Station not found for hard delete.");
+
+                _unitOfWork.StationRepository.Delete(station); // Xóa hẳn khỏi DB
+                await _unitOfWork.CommitAsync();
+
+                return new ServiceResult(200, "Station deleted permanently.");
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, $"Error while deleting station permanently: {ex.Message}");
             }
         }
     }
