@@ -19,8 +19,8 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 //Dang ki Booking
-//builder.Services.AddScoped<IBookingService, BookingService>();
-//builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 // Cấu hình DbContext với connection string
 builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -77,6 +77,7 @@ builder.Services.AddAuthentication(options =>
 
 // Đăng kí unit of work
 builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Cấu hình swagger để sử dụng JWT Bearer
 builder.Services.AddSwaggerGen(options =>
@@ -109,11 +110,14 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//set up rail way
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 // Cấu hình email
 var email = builder.Configuration["EmailSettings:Email"];
