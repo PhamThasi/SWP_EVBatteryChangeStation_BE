@@ -64,8 +64,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.StationRepository.Create(station);
                 await _unitOfWork.CommitAsync();
 
-                //dto.StationId = station.StationId;
-                return new ServiceResult(201, "Station created successfully.", dto);
+                // Lấy lại entity sau khi thêm (đảm bảo có StationId)
+                var createdStation = await _unitOfWork.StationRepository.GetByIdAsync(station.StationId);
+                var stationDto = createdStation.ToDTO();
+
+                return new ServiceResult(201, "Station created successfully.", stationDto);
             }
             catch (Exception ex)
             {
@@ -81,7 +84,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (station == null)
                     return new ServiceResult(404, "Station not found for update.");
 
-                //  Update only non-empty fields
+                // Cập nhật các trường nếu có giá trị mới
                 if (!string.IsNullOrWhiteSpace(dto.Address))
                     station.Address = dto.Address;
 
@@ -95,12 +98,15 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     station.AccountName = dto.AccountName;
 
                 if (dto.BatteryQuantity.HasValue)
-                    station.BatteryQuantity = dto.BatteryQuantity.Value;//  Fix: string không dùng HasValue/Value
+                    station.BatteryQuantity = dto.BatteryQuantity.Value;
 
                 _unitOfWork.StationRepository.Update(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Station updated successfully.");
+                var updatedStation = await _unitOfWork.StationRepository.GetByIdAsync(id);
+                var stationDto = updatedStation.ToDTO();
+
+                return new ServiceResult(200, "Station updated successfully.", stationDto);
             }
             catch (Exception ex)
             {
@@ -116,8 +122,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (station == null)
                     return new ServiceResult(404, "Station not found for deletion.");
 
-                //  Không xóa record
-                //  Soft delete: chỉ cập nhật trạng thái
+                // Soft delete: chỉ cập nhật trạng thái
                 station.Status = false;
 
                 _unitOfWork.StationRepository.Update(station);
@@ -130,6 +135,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, $"Error while deactivating station: {ex.Message}");
             }
         }
+
         public async Task<ServiceResult> HardDeleteAsync(int id)
         {
             try
@@ -138,7 +144,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (station == null)
                     return new ServiceResult(404, "Station not found for hard delete.");
 
-                _unitOfWork.StationRepository.Delete(station); // Xóa hẳn khỏi DB
+                _unitOfWork.StationRepository.Delete(station);
                 await _unitOfWork.CommitAsync();
 
                 return new ServiceResult(200, "Station deleted permanently.");
