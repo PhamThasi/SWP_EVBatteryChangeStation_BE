@@ -19,11 +19,6 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
             _context = context;
         }
 
-        public UnitOfWork()
-        {
-            _context = new EVBatterySwapContext();
-        }
-
         public IAccountReporitory AccountRepository
         {
             get

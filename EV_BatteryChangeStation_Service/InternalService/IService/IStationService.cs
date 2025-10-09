@@ -9,8 +9,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     {
         public Task<ServiceResult> GetAllAsync();
         public Task<ServiceResult> GetByIdAsync(int id);
-        public Task<ServiceResult> CreateAsync(StationDTO dto);
-        public Task<ServiceResult> UpdateAsync(StationDTO dto);
+        public Task<ServiceResult> CreateAsync(StationCreateDTO dto);
+        public Task<ServiceResult> UpdateAsync(int id, StationCreateDTO dto);
         public Task<ServiceResult> DeleteAsync(int id);
+        public Task<ServiceResult> HardDeleteAsync(int id);
     }
 }

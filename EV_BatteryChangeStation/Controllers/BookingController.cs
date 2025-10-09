@@ -18,7 +18,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// <summary>
         /// Lấy danh sách tất cả lịch đổi pin
         /// </summary>
-        [HttpGet]
+        [HttpGet("SelectAll/")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _bookingService.GetAllAsync();
@@ -28,7 +28,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// <summary>
         /// Lấy thông tin lịch đổi pin theo ID
         /// </summary>
-        [HttpGet("{id}")]
+        [HttpGet("Select/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _bookingService.GetByIdAsync(id);
@@ -38,8 +38,8 @@ namespace EV_BatteryChangeStation.Controllers
         /// <summary>
         /// Tạo mới lịch đổi pin
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] BookingDTO dto)
+        [HttpPost("Create/")]
+        public async Task<IActionResult> Create([FromBody] BookingCreateDTO dto)
         {
             var result = await _bookingService.CreateAsync(dto);
             return StatusCode(result.Status, result);
@@ -48,8 +48,8 @@ namespace EV_BatteryChangeStation.Controllers
         /// <summary>
         /// Cập nhật lịch đổi pin
         /// </summary>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BookingDTO dto)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] BookingCreateDTO dto)
         {
             var result = await _bookingService.UpdateAsync(id, dto);
             return StatusCode(result.Status, result);
@@ -58,11 +58,18 @@ namespace EV_BatteryChangeStation.Controllers
         /// <summary>
         /// Xóa lịch đổi pin
         /// </summary>
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _bookingService.DeleteAsync(id);
             return StatusCode(result.Status, result);
         }
+        [HttpDelete("HardDelete/{id}")]
+        public async Task<IActionResult> HardDelete(int id)
+        {
+            var result = await _bookingService.HardDeleteAsync(id);
+            return StatusCode(result.Status, result);
+        }
+
     }
 }

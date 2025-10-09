@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Common.DTOs.BookingDTO
 {
-    public class BookingDTO : BookingCreateDTO
+    public class BookingCreateDTO
     {
-        public int BookingId { get; set; }
         public DateTime DateTime { get; set; }
         public string? Notes { get; set; }
         public bool? Status { get; set; }
