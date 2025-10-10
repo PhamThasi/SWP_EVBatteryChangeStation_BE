@@ -11,5 +11,6 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         IBookingRepository BookingRepository { get; }
         Task<int> CommitAsync();
         IBatteryRepository BatteryRepository { get; }
+        ICarRepository CarRepository { get; }
     }
 }

@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using EV_BatteryChangeStation_Repository.Base;
+using HashidsNet;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBatteryService, BatteryService>();
+builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
@@ -110,14 +113,11 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//set up rail way
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Urls.Add($"http://0.0.0.0:{port}");
 
 // Cấu hình email
 var email = builder.Configuration["EmailSettings:Email"];

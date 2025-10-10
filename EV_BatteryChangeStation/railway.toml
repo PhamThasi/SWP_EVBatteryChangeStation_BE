@@ -1,6 +1,0 @@
-[build]
-builder = "heroku/buildpacks:20"
-buildCommand = "dotnet publish -c Release -o out"
-
-[start]
-command = "dotnet out/MyApi.dll"
