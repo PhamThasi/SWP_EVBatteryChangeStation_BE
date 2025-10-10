@@ -22,13 +22,12 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static Station ToEntity(this StationDTO dto)
+        public static Station ToEntity(this StationCreateDTO dto)
         {
             if (dto == null) return null;
 
             return new Station
             {
-                StationId = dto.StationId,
                 Address = dto.Address,
                 PhoneNumber = dto.PhoneNumber,
                 Status = dto.Status ?? true,

@@ -20,6 +20,8 @@ using HashidsNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Dang ki Station
+builder.Services.AddScoped<IStationService, StationService>();
 //Dang ki Booking
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
@@ -79,6 +81,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Đăng kí unit of work
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -111,6 +114,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
