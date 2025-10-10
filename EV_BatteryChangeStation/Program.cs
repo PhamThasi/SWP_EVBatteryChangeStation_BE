@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using EV_BatteryChangeStation_Repository.Base;
+using HashidsNet;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,8 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 //Dang ki Station
 builder.Services.AddScoped<IStationService, StationService>();
 //Dang ki Booking
-//builder.Services.AddScoped<IBookingService, BookingService>();
-//builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 // Cấu hình DbContext với connection string
 builder.Services.AddDbContext<EVBatterySwapContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -35,6 +37,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBatteryService, BatteryService>();
+builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
@@ -80,6 +83,8 @@ builder.Services.AddAuthentication(options =>
 // Đăng kí unit of work
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 // Cấu hình swagger để sử dụng JWT Bearer
 builder.Services.AddSwaggerGen(options =>
 {

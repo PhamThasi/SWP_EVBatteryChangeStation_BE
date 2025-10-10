@@ -163,6 +163,9 @@ CREATE TABLE SwappingTransaction (
 ALTER TABLE Payment
 ADD TransactionID INT UNIQUE FOREIGN KEY REFERENCES SwappingTransaction(TransactionID);
 
+ALTER TABLE Car 
+ADD Status NVARCHAR(50) NOT NULL DEFAULT 'Available';
+
 -- ========================
 -- END
 -- ========================
