@@ -1,28 +1,36 @@
-﻿using EV_BatteryChangeStation_Common.DTOs.RoleDTO;
+﻿using EV_BatteryChangeStation_Common.DTOs.CarDTO;
+using EV_BatteryChangeStation_Common.Enum.CarEnum;
 using EV_BatteryChangeStation_Common.Enum.ServiceResult;
+using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using HashidsNet;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
-    public class RoleService : IRoleService
+    public class CarService : ICarService
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly Hashids _hashids;
-        public RoleService(UnitOfWork unitOfWork)
+        public CarService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
             _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
-        // Tạo vai trò mới
-        public async Task<IServiceResult> CreateRoleAsync(CreateRoleDTO createRole)
+        // Add new car
+        public async Task<IServiceResult> AddCarAsync(CreateCarDto createCar)
         {
             try
             {
-                if (createRole == null)
+                if (createCar == null)
                 {
                     return new ServiceResult
                     {
@@ -30,9 +38,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = createRole.toModel();
-                await _unitOfWork.RoleRepository.CreateAsync(role);
-
+                var result = createCar.MaptoCreate();
+                await _unitOfWork.CarRepository.CreateAsync(result);
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_CREATE_CODE,
@@ -48,12 +55,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        // Xoá vai trò
-        public async Task<IServiceResult> DeleteRoleAsync(string encodedId)
+
+        public async Task<IServiceResult> DeleteCarAsync(string carId)
         {
             try
             {
-                if (encodedId == null)
+                if (carId == null)
                 {
                     return new ServiceResult
                     {
@@ -61,8 +68,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
-                if (role == null)
+                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carId));
+                if (decodedId == null)
                 {
                     return new ServiceResult
                     {
@@ -70,7 +77,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
-                await _unitOfWork.RoleRepository.RemoveAsync(role);
+                await _unitOfWork.CarRepository.RemoveAsync(decodedId);
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_DELETE_CODE,
@@ -86,13 +93,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        // Lấy tất cả vai trò
-        public async Task<IServiceResult> GetAllRolesAsync()
+        // Get all cars
+        public async Task<IServiceResult> GetAllCarsAsync()
         {
             try
             {
-                var role = await _unitOfWork.RoleRepository.GetAllRoleAsync();
-                if (role == null || !role.Any())
+                var result = await _unitOfWork.CarRepository.GetAllAsync();
+                if (result == null)
                 {
                     return new ServiceResult
                     {
@@ -100,89 +107,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
-                return new ServiceResult
-                {
-                    Status = Const.SUCCESS_CREATE_CODE,
-                    Message = Const.SUCCESS_CREATE_MSG,
-                    Data = role
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult
-                {
-                    Status = Const.ERROR_EXCEPTION,
-                    Message = ex.Message,
-                };
-            }
-        }
-        //lấy tất cả vai trò với mã id được mã hóa
-        public async Task<IServiceResult> GetAllRoleByIdDecodeAsync()
-        {
-            try
-            {
-                var roles = await _unitOfWork.RoleRepository.GetAllRoleAsync();
-                if (roles == null || !roles.Any())
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.WARNING_NO_DATA_CODE,
-                        Message = Const.WARNING_NO_DATA_MSG,
-                    };
-                }
-
-                var result = roles.Select(r => new ViewRoleDto
-                {
-                    RoleId = _hashids.Encode(r.RoleId), 
-                    RoleName = r.RoleName,
-                    Status = r.Status,
-                    CreateDate = r.CreateDate,
-                    UpdateDate = r.UpdateDate
-                }).ToList();
-
+                var mappedResult = result.Select(car => car.MapToEntity()).ToList();
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_READ_CODE,
                     Message = Const.SUCCESS_READ_MSG,
-                    Data = result
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult
-                {
-                    Status = Const.ERROR_EXCEPTION,
-                    Message = ex.Message
-                };
-            }
-        }
-        //lấy vai trò dựa vào tên
-        public async Task<IServiceResult> GetRoleByNameAsync(string roleName)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(roleName))
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.ERROR_VALIDATION_CODE,
-                        Message = Const.ERROR_INVALID_DATA_MSG,
-                    };
-                }
-                var role = await _unitOfWork.RoleRepository.GetRoleByName(roleName);
-                if (role == null)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.WARNING_NO_DATA_CODE,
-                        Message = Const.WARNING_NO_DATA_MSG,
-                    };
-                }
-                return new ServiceResult
-                {
-                    Status = Const.SUCCESS_READ_CODE,
-                    Message = Const.SUCCESS_READ_MSG,
-                    Data = role.MaptoViewRoleDto()
+                    Data = mappedResult
                 };
             }
             catch(Exception ex)
@@ -194,12 +124,14 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //cập nhật vai trò
-        public async Task<IServiceResult> UpdateRoleAsync(UpdateRoleDTO updateRole)
+
+        // Get owner by car id
+        public async Task<IServiceResult> GetOwnerByCarIdAsync(int carId)
         {
             try
             {
-                if (updateRole == null || updateRole.EncodedId == null)
+                // Kiểm tra đầu vào
+                if (carId <= 0)
                 {
                     return new ServiceResult
                     {
@@ -207,8 +139,54 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(updateRole.EncodedId));
-                if (role == null)
+
+                // Gọi repository
+                var owner = await _unitOfWork.CarRepository.GetOwnerByCarIdAsync(carId);
+
+                // Nếu không tìm thấy dữ liệu
+                if (owner == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = "Không tìm thấy chủ sở hữu của xe này",
+                    };
+                }
+
+                // Thành công
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = owner
+                };
+            }
+            catch (Exception ex)
+            {
+                // Bắt lỗi
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
+
+        // Get car by id
+        public async Task<IServiceResult> GetCarByIdAsync(string carId)
+        {
+            try
+            {
+                if (carId.IsNullOrEmpty())
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carId));
+                if (decodedId == null)
                 {
                     return new ServiceResult
                     {
@@ -216,13 +194,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
-
-                role.ToUpdateRoleFromDTO(updateRole);
-                await _unitOfWork.RoleRepository.UpdateAsync(role);
+                var mappedResult = decodedId.MapToEntity();
                 return new ServiceResult
                 {
-                    Status = Const.SUCCESS_UPDATE_CODE,
-                    Message = Const.SUCCESS_UPDATE_MSG,
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = mappedResult
                 };
             }
             catch (Exception ex)
@@ -234,12 +211,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        // Xoá mềm vai trò
-        public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
+
+        public async Task<IServiceResult> SoftDeleteCarAsync(string carid)
         {
             try
             {
-                if (encodedId == null)
+                if (carid == null)
                 {
                     return new ServiceResult
                     {
@@ -247,8 +224,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
-                if (role == null)
+                var car = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carid));
+                if (car == null)
                 {
                     return new ServiceResult
                     {
@@ -256,13 +233,51 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
-                role.Status = false;
-                await _unitOfWork.RoleRepository.UpdateAsync(role);
+                car.Status = CarEnum.Unavailable.ToString();
+                var result = await _unitOfWork.CarRepository.UpdateAsync(car);
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_DELETE_CODE,
+                    Message = Const.SUCCESS_DELETE_MSG,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
+        // Update car
+        public async Task<IServiceResult> UpdateCarAsync(UpdateCarDto updateCarDto)
+        {
+            try
+            {
+                if (updateCarDto == null || updateCarDto.VehicleId.IsNullOrEmpty())
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var car = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(updateCarDto.VehicleId));
+                if (car == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = Const.WARNING_NO_DATA_MSG,
+                    };
+                }
+                car.MaptoUpdate(updateCarDto);
+                await _unitOfWork.CarRepository.UpdateAsync(car);
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_UPDATE_CODE,
                     Message = Const.SUCCESS_UPDATE_MSG,
-                    Data = role
                 };
             }
             catch (Exception ex)
