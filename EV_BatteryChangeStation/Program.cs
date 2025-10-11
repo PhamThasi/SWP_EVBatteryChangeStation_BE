@@ -20,6 +20,8 @@ using HashidsNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Dang ki FeedBack
+builder.Services.AddScoped<IFeedBackService, FeedBackService>();
 //Dang ki Station
 builder.Services.AddScoped<IStationService, StationService>();
 //Dang ki Booking
