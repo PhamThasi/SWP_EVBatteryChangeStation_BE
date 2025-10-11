@@ -15,6 +15,8 @@ public partial class Car
 
     public DateTime? CreateDate { get; set; }
 
+    public string Status { get; set; } = null!;
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual ICollection<SwappingTransaction> SwappingTransactions { get; set; } = new List<SwappingTransaction>();

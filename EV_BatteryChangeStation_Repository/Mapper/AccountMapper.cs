@@ -13,16 +13,16 @@ namespace EV_BatteryChangeStation_Repository.Mapper
     {
         public static AccountDTO MapToDTO(this Account account)
         {
-            if (account == null) throw new ArgumentNullException(nameof(account), "CreateAccountDto cannot be null");
+            if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
             return new AccountDTO
             {
-                AccountId = account.AccountId,
                 AccountName = account.AccountName,
                 Password = account.Password,
                 Address = account.Address,
                 Email = account.Email,
                 PhoneNumber = account.PhoneNumber,
                 DateOfBirth = account.DateOfBirth,
+                Status = account.Status
             };
         }
 
@@ -39,11 +39,12 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Address = accountDto.Address,
                 Email = accountDto.Email,
                 PhoneNumber = accountDto.PhoneNumber,
-                DateOfBirth = accountDto.DateOfBirth
+                DateOfBirth = accountDto.DateOfBirth,
+                StationId = accountDto.StationId
             };
         }
 
-        public static void MaptoUpdate(this UpdateAccountDTO updateAccount, Account account)
+        public static void MaptoUpdate(this Account account, UpdateAccountDTO updateAccount)
         {
             if (!string.IsNullOrEmpty(updateAccount.AccountName))
             {

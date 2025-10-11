@@ -13,6 +13,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.RegisterDTO
         [Required]
         public string Email { get; set; }
 
+
         [Required]
         public string OtpCode { get; set; }
     }

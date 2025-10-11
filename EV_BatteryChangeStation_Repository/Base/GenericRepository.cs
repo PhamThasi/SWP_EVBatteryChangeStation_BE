@@ -1,22 +1,23 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
+﻿
+using EV_BatteryChangeStation_Repository.DBContext;
+using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EV_BatteryChangeStation_Repository.Base
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected EvbatterySwapContext _context;
+        protected EVBatterySwapContext _context;
 
-        public GenericRepository()
-        {
-            _context ??= new EvbatterySwapContext();
-        }
-
-        public GenericRepository(EvbatterySwapContext context)
+        public GenericRepository(EVBatterySwapContext context)
         {
             _context = context;
         }
-
+        
+        public GenericRepository()
+        {
+            _context ??= new EVBatterySwapContext();
+        }
         public List<T> GetAll()
         {
             return _context.Set<T>().ToList();

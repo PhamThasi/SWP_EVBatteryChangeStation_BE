@@ -4,6 +4,7 @@ using EV_BatteryChangeStation_Common.Enum.ServiceResult;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
+using EV_BatteryChangeStation_Service.ExternalService.IService;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -23,17 +24,22 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<Account> _passwordHasher;
         private static Dictionary<string, string> pendingOtps = new Dictionary<string, string>();
-
-        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration)
+        private readonly IJWTService _jwtService;
+        private static readonly List<string> _blacklistedTokens = new();
+        private static Dictionary<string, RegisterDTO> pendingUsers = new Dictionary<string, RegisterDTO>();
+        // khởi tạo các service cần thiết qua dependency injection
+        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration, IJWTService jwtservice)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _jwtService = jwtservice ?? throw new ArgumentNullException(nameof(jwtservice));
         }
+        // đăng nhập
         public async Task<IServiceResult> AuthenticationLogin(LoginDTO login)
         {
             var account = await _unitOfWork.AccountRepository.GetByAccountNameOrEmail(login.Keyword.ToLower());
-            if (account == null)
+            if (account == null) // không tìm thấy tài khoản
             {
                 return new ServiceResult
                 {
@@ -42,7 +48,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Account not found" }
                 };
             }
-            if (account.Status == false)
+            if (account.Status == false) // tài khoản bị khóa
             {
                 return new ServiceResult
                 {
@@ -51,6 +57,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Your account has been baned. Please contact support for more infomation." }
                 };
             }
+            // kiểm tra mật khẩu
             var result = _passwordHasher.VerifyHashedPassword(account, account.Password, login.Password);
             if (result == PasswordVerificationResult.Failed)
             {
@@ -61,31 +68,34 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Errors = new List<string> { "Password is incorrect" }
                 };
             }
-            var respond = new LoginRespondDTO
+            //lưu lại thông tin đăng nhập
+            LoginRespondDTO tokenDto = new()
             {
                 AccountId = account.AccountId,
                 AccountName = account.AccountName,
                 Email = account.Email,
                 RoleName = account.Role?.RoleName
             };
-            //thiếu jwt token để khi tắt máy vẫn lưu trạng thái đăng nhập
+            var token = _jwtService.GenerateToken(tokenDto);
+            
             return new ServiceResult
             {
                 Status = Const.SUCCESS_LOGIN_CODE,
                 Message = Const.SUCCESS_LOGIN_MSG,
-                Data = respond
+                Data = token
             };
         }
 
         public async Task<bool> RegisterAsync(RegisterDTO dto)
         {
             // kiểm tra email tồn tại chưa
-            var existing = await _unitOfWork.AccountRepository.FindAsync(a => a.Email == dto.Email);
+            var existing = await _unitOfWork.AccountRepository.GetAccountByEmail(dto.Email);
             if (existing != null) return false;
 
             // tạo account nhưng chưa lưu, gửi OTP trước
             var otp = GenerateOtp();
             pendingOtps[dto.Email] = otp;
+            pendingUsers[dto.Email] = dto;
 
             // gửi mail OTP
             await SendOtpEmail(dto.Email, otp);
@@ -106,28 +116,32 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             if (pendingOtps.TryGetValue(dto.Email, out var otp) && otp == dto.OtpCode)
             {
-                // tạo account thật với RoleId mặc định, ví dụ RoleId = 2 (User)
+                if (!pendingUsers.TryGetValue(dto.Email, out var registerDto))
+                    return false; // không tìm thấy RegisterDTO tạm
+
+                // tạo account thật
                 var account = new Account
                 {
-                    Email = dto.Email,
-                    AccountName = dto.Email.Split('@')[0],
-                    FullName = dto.Email,
-                    Password = _passwordHasher.HashPassword(null, "123456"),
-                    RoleId = 2 // Role mặc định
+                    Email = registerDto.Email,
+                    AccountName = registerDto.Email.Split('@')[0],
+                    //FullName = registerDto.FullName,
+                    Password = _passwordHasher.HashPassword(null, registerDto.Password),
+                    RoleId = 2, // Role mặc định
+                    Status = true
                 };
 
-                // thêm account vào repository
-                _unitOfWork.AccountRepository.Create(account); // hoặc CreateAsync nếu muốn async
-
-                // lưu thay đổi vào database
+                _unitOfWork.AccountRepository.Create(account);
                 await _unitOfWork.AccountRepository.SaveAsync();
 
-                // xóa OTP đã dùng
+                // xóa OTP và RegisterDTO tạm
                 pendingOtps.Remove(dto.Email);
+                pendingUsers.Remove(dto.Email);
+
                 return true;
             }
             return false;
         }
+
 
         private string GenerateOtp()
         {
@@ -155,6 +169,25 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 
             client.Send(mail);
             return Task.CompletedTask;
+        }
+
+        public Task<IServiceResult> LogoutAsync(string token)
+        {
+            if (!string.IsNullOrEmpty(token))
+            {
+                _blacklistedTokens.Add(token);
+            }
+
+            return Task.FromResult<IServiceResult>(new ServiceResult
+            {
+                Status = 200,
+                Message = "Logout success. Token has been eliminated."
+            });
+        }
+
+        public bool IsTokenRevoked(string token)
+        {
+            return _blacklistedTokens.Contains(token);
         }
     }
 }

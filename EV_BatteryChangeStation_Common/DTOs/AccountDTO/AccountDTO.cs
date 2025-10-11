@@ -8,12 +8,12 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
 {
     public class AccountDTO
     {
-        public int AccountId { get; set; }
         public string AccountName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string? Email { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
+        public bool? Status { get; set; }
         public DateOnly? DateOfBirth { get; set; }
     }
 }

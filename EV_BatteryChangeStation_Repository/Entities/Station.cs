@@ -15,7 +15,7 @@ public partial class Station
 
     public string? AccountName { get; set; }
 
-    public string? BatteryQuality { get; set; }
+    public int? BatteryQuantity { get; set; }
 
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 

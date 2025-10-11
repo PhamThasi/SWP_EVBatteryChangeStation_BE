@@ -24,7 +24,7 @@ CREATE TABLE Station (
     PhoneNumber NVARCHAR(20),
     Status BIT,
     AccountName NVARCHAR(100),
-    BatteryQuality NVARCHAR(100)
+    BatteryQuantity int
 );
 
 -- ========================
@@ -152,7 +152,7 @@ CREATE TABLE SwappingTransaction (
     TransactionID INT PRIMARY KEY IDENTITY(1,1),
     Notes NVARCHAR(255),
     StaffID INT NOT NULL FOREIGN KEY REFERENCES [Account](AccountID),
-    OldBatteryID INT NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
+    OldBatteryID INT NOT NULL,
     VehicleID INT NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
     NewBatteryID INT NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
     CreateDate DATETIME DEFAULT GETDATE(),
@@ -162,6 +162,9 @@ CREATE TABLE SwappingTransaction (
 -- Bổ sung Payment liên kết với Transaction (nếu cần)
 ALTER TABLE Payment
 ADD TransactionID INT UNIQUE FOREIGN KEY REFERENCES SwappingTransaction(TransactionID);
+
+ALTER TABLE Car 
+ADD Status NVARCHAR(50) NOT NULL DEFAULT 'Available';
 
 -- ========================
 -- END
@@ -175,10 +178,6 @@ DROP DATABASE EVBatterySwap;
 GO
 */
 
--- ========================
--- SEED DATA
--- ========================
-
 -- Role
 select * from Role
 INSERT INTO Role (RoleName, Status) VALUES
@@ -187,9 +186,9 @@ INSERT INTO Role (RoleName, Status) VALUES
 (N'Customer', 1);
 
 -- Station
-INSERT INTO Station (Address, PhoneNumber, Status, AccountName, BatteryQuality) VALUES
-(N'123 Lê Lợi, Hà Nội', '0901234567', 1, N'StationHN01', N'Good'),
-(N'456 Nguyễn Huệ, TP.HCM', '0902345678', 1, N'StationHCM01', N'Excellent');
+INSERT INTO Station (Address, PhoneNumber, Status, AccountName, BatteryQuantity) VALUES
+(N'123 Lê Lợi, Hà Nội', '0901234567', 1, N'StationHN01', N'2'),
+(N'456 Nguyễn Huệ, TP.HCM', '0902345678', 1, N'StationHCM01', N'1');
 
 -- Account
 INSERT INTO Account (AccountName, FullName, Password, Email, Gender, Address, PhoneNumber, DateOfBirth, Status, RoleID, StationID)
@@ -245,3 +244,33 @@ VALUES
 -- Cập nhật Payment liên kết với Transaction
 UPDATE Payment SET TransactionID = 1 WHERE PaymentID = 1;
 UPDATE Payment SET TransactionID = 2 WHERE PaymentID = 2;
+
+-- Khi thêm pin
+CREATE TRIGGER trg_AfterInsert_Battery
+ON Battery
+AFTER INSERT
+AS
+BEGIN
+    UPDATE Station
+    SET BatteryQuantity = BatteryQuantity + 1
+    WHERE StationId IN (SELECT StationId FROM Inserted);
+END
+GO
+
+-- Khi xóa pin
+CREATE TRIGGER trg_AfterDelete_Battery
+ON Battery
+AFTER DELETE
+AS
+BEGIN
+    UPDATE Station
+    SET BatteryQuantity = BatteryQuantity - 1
+    WHERE StationId IN (SELECT StationId FROM Deleted);
+END
+GO
+
+DROP TRIGGER IF EXISTS trg_AfterDelete_Battery;
+GO
+
+DROP TRIGGER IF EXISTS trg_AfterInsert_Battery;
+GO
