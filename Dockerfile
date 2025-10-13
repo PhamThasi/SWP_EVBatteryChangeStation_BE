@@ -18,7 +18,4 @@ EXPOSE 80
 EXPOSE 443
 
 COPY --from=build /app/publish .
-# Copy appsettings.json vào container
-COPY appsettings.json .
-EXPOSE 8080
 ENTRYPOINT ["dotnet", "EV_BatteryChangeStation.dll"]
