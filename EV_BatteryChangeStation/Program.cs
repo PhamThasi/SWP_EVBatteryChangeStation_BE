@@ -19,7 +19,10 @@ using HashidsNet;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+//Dang ki SupportRequest
+builder.Services.AddScoped<ISupportRequestService, SupportRequestService>();
+//Dang ki Subscription
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 //Dang ki FeedBack
 builder.Services.AddScoped<IFeedBackService, FeedBackService>();
 //Dang ki Station

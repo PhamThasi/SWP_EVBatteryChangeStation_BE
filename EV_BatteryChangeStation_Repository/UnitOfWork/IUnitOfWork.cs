@@ -13,5 +13,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         Task<int> CommitAsync();
         IBatteryRepository BatteryRepository { get; }
         ICarRepository CarRepository { get; }
+        ISubscriptionRepository SubscriptionRepository { get; }
+        ISupportRequestRepository SupportRequestRepository { get; }
     }
 }
