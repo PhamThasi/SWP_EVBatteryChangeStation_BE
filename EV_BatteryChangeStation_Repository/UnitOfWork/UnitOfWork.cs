@@ -12,10 +12,12 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private IAccountReporitory _accountRepository;
         private IRoleRepository _roleRepository;
         private IStationRepository _stationRepository;
-        private BookingRepository _bookingRepository;
+        private IBookingRepository _bookingRepository;
         private IFeedBackRepository _feedBackRepository;
         private IBatteryRepository _batteryRepository;
         private ICarRepository _carRepository;
+        private ISubscriptionRepository _subscriptionRepository;
+        private ISupportRequestRepository _supportRequestRepository;
 
         public UnitOfWork(EVBatterySwapContext context)
         {
@@ -65,6 +67,21 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
             get
             {
                 return _carRepository ??= new CarRepository(_context);
+            }
+        }
+
+        public ISubscriptionRepository SubscriptionRepository
+        {
+            get
+            {
+                return _subscriptionRepository ??= new SubscriptionRepository(_context);
+            }
+        }
+        public ISupportRequestRepository SupportRequestRepository
+        {
+            get
+            {
+                return _supportRequestRepository ??= new SupportRequestRepository(_context);
             }
         }
     }
