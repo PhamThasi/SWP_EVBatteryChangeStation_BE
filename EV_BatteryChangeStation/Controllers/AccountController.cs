@@ -59,14 +59,14 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="200">Lấy account thành công</response>
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
-        [HttpGet("GetAllWithIdEncode")]
-        public async Task<IActionResult> GetAllWithIdEncode()
-        {
-            var result = await _accountService.GetAllAccountWithIdDecodeAsync();
-            if (result.Status == 200)
-                return Ok(result);
-            return StatusCode(result.Status, result.Message);
-        }
+        //[HttpGet("GetAllWithIdEncode")]
+        //public async Task<IActionResult> GetAllWithIdEncode()
+        //{
+        //    var result = await _accountService.GetAllAccountWithIdDecodeAsync();
+        //    if (result.Status == 200)
+        //        return Ok(result);
+        //    return StatusCode(result.Status, result.Message);
+        //}
 
         ///<summary>
         ///Lấy tài khoản dựa trên tên

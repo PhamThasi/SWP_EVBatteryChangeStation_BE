@@ -118,6 +118,18 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // URL frontend của bạn
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials(); // nếu cần gửi cookie/token
+        });
+});
+
 var app = builder.Build();
 
 
@@ -133,6 +145,8 @@ var email = builder.Configuration["EmailSettings:Email"];
 var appPassword = builder.Configuration["EmailSettings:AppPassword"];
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthentication();  
 app.UseAuthorization();

@@ -100,11 +100,19 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
+                var result = role.Select(r => new ViewRoleDto
+                {
+                    RoleId = _hashids.Encode(r.RoleId),
+                    RoleName = r.RoleName,
+                    Status = r.Status,
+                    CreateDate = r.CreateDate,
+                    UpdateDate = r.UpdateDate
+                }).ToList();
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_CREATE_CODE,
                     Message = Const.SUCCESS_CREATE_MSG,
-                    Data = role
+                    Data = result
                 };
             }
             catch (Exception ex)
@@ -116,46 +124,46 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //lấy tất cả vai trò với mã id được mã hóa
-        public async Task<IServiceResult> GetAllRoleByIdDecodeAsync()
-        {
-            try
-            {
-                var roles = await _unitOfWork.RoleRepository.GetAllRoleAsync();
-                if (roles == null || !roles.Any())
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.WARNING_NO_DATA_CODE,
-                        Message = Const.WARNING_NO_DATA_MSG,
-                    };
-                }
+        ////lấy tất cả vai trò với mã id được mã hóa
+        //public async Task<IServiceResult> GetAllRoleByIdDecodeAsync()
+        //{
+        //    try
+        //    {
+        //        var roles = await _unitOfWork.RoleRepository.GetAllRoleAsync();
+        //        if (roles == null || !roles.Any())
+        //        {
+        //            return new ServiceResult
+        //            {
+        //                Status = Const.WARNING_NO_DATA_CODE,
+        //                Message = Const.WARNING_NO_DATA_MSG,
+        //            };
+        //        }
 
-                var result = roles.Select(r => new ViewRoleDto
-                {
-                    RoleId = _hashids.Encode(r.RoleId), 
-                    RoleName = r.RoleName,
-                    Status = r.Status,
-                    CreateDate = r.CreateDate,
-                    UpdateDate = r.UpdateDate
-                }).ToList();
+        //        var result = roles.Select(r => new ViewRoleDto
+        //        {
+        //            RoleId = _hashids.Encode(r.RoleId), 
+        //            RoleName = r.RoleName,
+        //            Status = r.Status,
+        //            CreateDate = r.CreateDate,
+        //            UpdateDate = r.UpdateDate
+        //        }).ToList();
 
-                return new ServiceResult
-                {
-                    Status = Const.SUCCESS_READ_CODE,
-                    Message = Const.SUCCESS_READ_MSG,
-                    Data = result
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult
-                {
-                    Status = Const.ERROR_EXCEPTION,
-                    Message = ex.Message
-                };
-            }
-        }
+        //        return new ServiceResult
+        //        {
+        //            Status = Const.SUCCESS_READ_CODE,
+        //            Message = Const.SUCCESS_READ_MSG,
+        //            Data = result
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ServiceResult
+        //        {
+        //            Status = Const.ERROR_EXCEPTION,
+        //            Message = ex.Message
+        //        };
+        //    }
+        //}
         //lấy vai trò dựa vào tên
         public async Task<IServiceResult> GetRoleByNameAsync(string roleName)
         {
