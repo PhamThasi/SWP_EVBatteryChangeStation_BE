@@ -143,50 +143,50 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //Lấy tất cả tài khoản với id mã hóa
-        public async Task<IServiceResult> GetAllAccountWithIdDecodeAsync()
-        {
-            try
-            {
-                var account = await _unitOfWork.AccountRepository.GetAllAsync();
-                if (account == null || !account.Any())
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.ERROR_VALIDATION_CODE,
-                        Message = "No accounts found",
-                        Data = null
-                    };
-                }
-                var result = account.Select(a => new ViewAccountDTOs
-                {
-                    AccountId = _hashids.Encode(a.AccountId),
-                    AccountName = a.AccountName,
-                    FullName = a.FullName,
-                    Password = a.Password,
-                    Address = a.Address,
-                    Status = a.Status,
-                    PhoneNumber = a.PhoneNumber,
-                    Gender = a.Gender,
-                    DateOfBirth = a.DateOfBirth
-                }).ToList();
+        ////Lấy tất cả tài khoản với id mã hóa
+        //public async Task<IServiceResult> GetAllAccountWithIdDecodeAsync()
+        //{
+        //    try
+        //    {
+        //        var account = await _unitOfWork.AccountRepository.GetAllAsync();
+        //        if (account == null || !account.Any())
+        //        {
+        //            return new ServiceResult
+        //            {
+        //                Status = Const.ERROR_VALIDATION_CODE,
+        //                Message = "No accounts found",
+        //                Data = null
+        //            };
+        //        }
+        //        var result = account.Select(a => new ViewAccountDTOs
+        //        {
+        //            AccountId = _hashids.Encode(a.AccountId),
+        //            AccountName = a.AccountName,
+        //            FullName = a.FullName,
+        //            Password = a.Password,
+        //            Address = a.Address,
+        //            Status = a.Status,
+        //            PhoneNumber = a.PhoneNumber,
+        //            Gender = a.Gender,
+        //            DateOfBirth = a.DateOfBirth
+        //        }).ToList();
 
-                return new ServiceResult
-                {
-                    Status = Const.SUCCESS_READ_CODE,
-                    Message = Const.SUCCESS_READ_MSG,
-                    Data = result
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult
-                {
-                    Status = Const.ERROR_VALIDATION_CODE,
-                    Message = ex.Message,
-                };
-            }
-        }
+        //        return new ServiceResult
+        //        {
+        //            Status = Const.SUCCESS_READ_CODE,
+        //            Message = Const.SUCCESS_READ_MSG,
+        //            Data = result
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ServiceResult
+        //        {
+        //            Status = Const.ERROR_VALIDATION_CODE,
+        //            Message = ex.Message,
+        //        };
+        //    }
+        //}
         // Lấy tất cả tài khoản
         public async Task<IServiceResult> GetAllAccountsAsync()
         {
@@ -203,7 +203,18 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Data = null
                     };
                 }
-                var accountDtos = accounts.Select(a => a.MapToDTO());
+                var accountDtos = accounts.Select(a => new ViewAccountDTOs
+                {
+                    AccountId = _hashids.Encode(a.AccountId),
+                    AccountName = a.AccountName,
+                    FullName = a.FullName,
+                    Password = a.Password,
+                    Address = a.Address,
+                    Status = a.Status,
+                    PhoneNumber = a.PhoneNumber,
+                    Gender = a.Gender,
+                    DateOfBirth = a.DateOfBirth
+                }).ToList();
 
                 return new ServiceResult
                 {

@@ -59,14 +59,14 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="200">lấy thông tin thành công</response>
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
-        [HttpGet("GetAllByEncodedId")]
-        public async Task<IActionResult> GetAllByEncodedId()
-        {
-            var result = await _roleService.GetAllRoleByIdDecodeAsync();
-            if (result.Status == 200)
-                return Ok(result);
-            return StatusCode(result.Status, result.Message);
-        }
+        //[HttpGet("GetAllByEncodedId")]
+        //public async Task<IActionResult> GetAllByEncodedId()
+        //{
+        //    var result = await _roleService.GetAllRoleByIdDecodeAsync();
+        //    if (result.Status == 200)
+        //        return Ok(result);
+        //    return StatusCode(result.Status, result.Message);
+        //}
 
         /// <summary>
         /// lấy thông tin vai trò theo tên
