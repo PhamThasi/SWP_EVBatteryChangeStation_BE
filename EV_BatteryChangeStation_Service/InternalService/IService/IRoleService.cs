@@ -16,6 +16,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> SoftDeleteAsync(string encodedId);
         Task<IServiceResult> GetAllRolesAsync();
         Task<IServiceResult> GetRoleByNameAsync(string roleName);
-        Task<IServiceResult> GetAllRoleByIdDecodeAsync();
+        //Task<IServiceResult> GetAllRoleByIdDecodeAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.CarDTO;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EV_BatteryChangeStation.Controllers
 {
@@ -72,9 +73,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Get Account's Car
         /// </summary>
         [HttpGet("GetOwnerByCarIdAsync")]
-        public async Task<IActionResult> GetOwnerByCarIdAsync([FromQuery] int carId)
+        public async Task<IActionResult> GetOwnerByCarIdAsync([FromQuery] string carId)
         {
-            if (carId == 0)
+            if (carId.IsNullOrEmpty())
                 return BadRequest("Invalid Car id");
             var result = await _carService.GetOwnerByCarIdAsync(carId);
             if (result.Status == 200)

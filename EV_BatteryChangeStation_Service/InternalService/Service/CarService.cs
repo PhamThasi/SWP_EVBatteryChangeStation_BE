@@ -126,12 +126,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Get owner by car id
-        public async Task<IServiceResult> GetOwnerByCarIdAsync(int carId)
+        public async Task<IServiceResult> GetOwnerByCarIdAsync(string carId)
         {
             try
             {
                 // Kiểm tra đầu vào
-                if (carId <= 0)
+                if (carId.IsNullOrEmpty())
                 {
                     return new ServiceResult
                     {
@@ -139,9 +139,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-
+                int decodedCarId = _hashids.DecodeSingle(carId);
                 // Gọi repository
-                var owner = await _unitOfWork.CarRepository.GetOwnerByCarIdAsync(carId);
+                var owner = await _unitOfWork.CarRepository.GetOwnerByCarIdAsync(decodedCarId);
 
                 // Nếu không tìm thấy dữ liệu
                 if (owner == null)
