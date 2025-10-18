@@ -21,56 +21,95 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         // Lấy tất cả feedbacks
         public async Task<List<FeedBackDTO>> GetAllAsync()
         {
-            var feedbacks = await _unitOfWork.FeedBackRepository.GetAllAsync();
-            return feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
+            try
+            {
+                var feedbacks = await _unitOfWork.FeedBackRepository.GetAllAsync();
+                return feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log lỗi (nếu có logging)
+                throw new Exception("Đã xảy ra lỗi khi lấy danh sách feedbacks.", ex);
+            }
         }
 
         // Lấy feedback theo ID
         public async Task<FeedBackDTO> GetByIdAsync(int id)
         {
-            var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
-            return feedback?.ToFeedBackDTO();
+            try
+            {
+                var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
+                if (feedback == null)
+                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
+
+                return feedback.ToFeedBackDTO();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi khi lấy thông tin feedback.", ex);
+            }
         }
 
-        // Tạo feedback mới và trả về DTO
+        // Tạo feedback mới
         public async Task<FeedBackDTO> CreateAsync(CreateFeedBackDTO dto)
         {
-            var entity = dto.ToEntity();
-            entity.CreateDate = DateTime.Now; // tự động gán thời gian tạo
+            try
+            {
+                var entity = dto.ToEntity();
+                entity.CreateDate = DateTime.Now; // Tự động gán thời gian tạo
 
-            await _unitOfWork.FeedBackRepository.AddAsync(entity);
-            await _unitOfWork.CommitAsync();
+                await _unitOfWork.FeedBackRepository.AddAsync(entity);
+                await _unitOfWork.CommitAsync();
 
-            return entity.ToFeedBackDTO();
+                return entity.ToFeedBackDTO();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi khi tạo feedback mới.", ex);
+            }
         }
 
-        // Cập nhật feedback theo ID và trả về DTO
+        // Cập nhật feedback
         public async Task<FeedBackDTO> UpdateAsync(int id, UpdateFeedBackDTO dto)
         {
-            var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
-            if (feedback == null)
-                throw new Exception("Feedback not found");
+            try
+            {
+                var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
+                if (feedback == null)
+                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
 
-            feedback.Rating = dto.Rating ?? feedback.Rating;
-            feedback.Comment = dto.Comment ?? feedback.Comment;
-            feedback.AccountId = dto.AccountId ?? feedback.AccountId;
-            feedback.BookingId = dto.BookingId ?? feedback.BookingId;
+                feedback.Rating = dto.Rating ?? feedback.Rating;
+                feedback.Comment = dto.Comment ?? feedback.Comment;
+                feedback.AccountId = dto.AccountId ?? feedback.AccountId;
+                feedback.BookingId = dto.BookingId ?? feedback.BookingId;
 
-            _unitOfWork.FeedBackRepository.Update(feedback);
-            await _unitOfWork.CommitAsync();
+                _unitOfWork.FeedBackRepository.Update(feedback);
+                await _unitOfWork.CommitAsync();
 
-            return feedback.ToFeedBackDTO();
+                return feedback.ToFeedBackDTO();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi khi cập nhật feedback.", ex);
+            }
         }
 
         // Xóa feedback (xóa cứng)
         public async Task DeleteAsync(int id)
         {
-            var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
-            if (feedback == null)
-                throw new Exception("Feedback not found");
+            try
+            {
+                var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
+                if (feedback == null)
+                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
 
-            _unitOfWork.FeedBackRepository.Delete(feedback);
-            await _unitOfWork.CommitAsync();
+                _unitOfWork.FeedBackRepository.Delete(feedback);
+                await _unitOfWork.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã xảy ra lỗi khi xóa feedback.", ex);
+            }
         }
     }
 }
