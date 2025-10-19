@@ -17,5 +17,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> DeleteCarAsync(string carId);
         Task<IServiceResult> SoftDeleteCarAsync(string carid);
         Task<IServiceResult> GetOwnerByCarIdAsync(string carid);
+        Task<IServiceResult> GetCarByNameAsync(string modelName);
     }
 }

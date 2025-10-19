@@ -22,5 +22,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> GetBatteryCountByStationId(int stationId);
         Task<IServiceResult> DeleteBattery(string batteryId);
         Task<IServiceResult> SoftDeleteBaterry(string BatteryId);
+        Task<IServiceResult> GetBatteriesByType(string typeBattery);
     }
 }
