@@ -1,5 +1,4 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
-using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;  
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +17,12 @@ namespace EV_BatteryChangeStation_Repository.Repositories
 
         public AccountRepository(EVBatterySwapContext context) => _context = context;
 
-        public async Task<Account> GetAccountByAccountName(string accountName)
+        public async Task<List<Account>> GetAccountByAccountName(string accountName)
         {
-            return await _context.Accounts.Include(r => r.Role)
-                .FirstOrDefaultAsync(a => a.AccountName == accountName);
+            return await _context.Accounts
+                    .Include(r => r.Role)
+                    .Where(a => a.AccountName.Contains(accountName.ToLower()))
+                    .ToListAsync();
         }
         public async Task<Account> GetAccountByEmail(string email)
         {

@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
 {
     public interface IAccountReporitory : IGenericRepository<Account>
     {
-        Task<Account> GetAccountByAccountName(string accountName);
+        Task<List<Account>> GetAccountByAccountName(string accountName);
         Task<Account> GetAccountByEmail(string email);
         Task<Account> GetAccountByPhoneAsync(string phone);
         Task<Account> GetAllAccount();

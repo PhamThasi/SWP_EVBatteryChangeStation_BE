@@ -154,6 +154,7 @@ CREATE TABLE SwappingTransaction (
     StaffID INT NOT NULL FOREIGN KEY REFERENCES [Account](AccountID),
     OldBatteryID INT NOT NULL,
     VehicleID INT NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
+	Status nvarchar(50) not null Default 'Active',
     NewBatteryID INT NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
     CreateDate DATETIME DEFAULT GETDATE(),
     CONSTRAINT CK_Swap_Battery CHECK (OldBatteryID <> NewBatteryID)
@@ -242,6 +243,11 @@ VALUES
 (N'Đổi pin nhanh chóng', 3, 3, 2, 1);
 
 -- Cập nhật Payment liên kết với Transaction
+INSERT INTO Payment (Price, Method, Status, SubscriptionID, TransactionID)
+VALUES 
+(500000, N'Credit Card', 1, 1, 1),
+(1000000, N'Momo', 1, 2, 2);
+
 UPDATE Payment SET TransactionID = 1 WHERE PaymentID = 1;
 UPDATE Payment SET TransactionID = 2 WHERE PaymentID = 2;
 

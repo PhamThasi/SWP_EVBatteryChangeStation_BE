@@ -8,6 +8,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
 {
     public class AccountDTO
     {
+        public string RoleId { get; set; } = null!;
         public string AccountName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string? Email { get; set; }
