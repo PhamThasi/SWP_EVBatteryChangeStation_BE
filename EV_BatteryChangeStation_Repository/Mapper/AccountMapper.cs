@@ -11,18 +11,25 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class AccountMapper
     {
-        public static AccountDTO MapToDTO(this Account account)
+        private static readonly HashidsNet.Hashids _hashids =
+           new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
+        public static ViewAccountDTOs MapToDTO(this Account account)
         {
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
-            return new AccountDTO
+            return new ViewAccountDTOs
             {
+                RoleId = _hashids.Encode(account.RoleId),
                 AccountName = account.AccountName,
                 Password = account.Password,
                 Address = account.Address,
                 Email = account.Email,
                 PhoneNumber = account.PhoneNumber,
                 DateOfBirth = account.DateOfBirth,
-                Status = account.Status
+                Status = account.Status,
+                FullName = account.FullName,
+                Gender = account.Gender,
+                CreateDate = account.CreateDate,
+                UpdateDate = account.UpdateDate,
             };
         }
 
@@ -78,6 +85,11 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 account.Gender = updateAccount.Gender;
             }
+        }
+        public static List<ViewAccountDTOs> MapToDTO(this List<Account> accounts)
+        {
+            if (accounts == null) throw new ArgumentNullException(nameof(accounts), "cannot be null");
+            return accounts.Select(a => a.MapToDTO()).ToList();
         }
     }
 }

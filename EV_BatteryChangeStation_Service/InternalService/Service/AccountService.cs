@@ -205,6 +205,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 }
                 var accountDtos = accounts.Select(a => new ViewAccountDTOs
                 {
+                    RoleId = _hashids.Encode(a.RoleId),
                     AccountId = _hashids.Encode(a.AccountId),
                     AccountName = a.AccountName,
                     FullName = a.FullName,
