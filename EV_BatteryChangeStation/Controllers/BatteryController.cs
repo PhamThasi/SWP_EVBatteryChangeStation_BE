@@ -143,5 +143,20 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+        /// <summary>
+        /// get batteries by type
+        /// </summary>
+        [HttpGet("GetBatteriesByType")]
+        public async Task<IActionResult> GetBatteriesByType([FromQuery] string typeBattery)
+        {
+            if (string.IsNullOrEmpty(typeBattery))
+                return BadRequest("Invalid battery type data");
+            var result = await _batteryService.GetBatteriesByType(typeBattery);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+
+        }
     }
 }

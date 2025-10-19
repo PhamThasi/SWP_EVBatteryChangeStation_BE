@@ -160,6 +160,46 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
+
+        public async Task<IServiceResult> GetBatteriesByType(string typeBattery)
+        {
+            try
+            {
+                if (typeBattery.IsNullOrEmpty())
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var battery = await _unitOfWork.BatteryRepository.GetBatteriesByType(typeBattery);
+                if (battery == null || !battery.Any())
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = Const.WARNING_NO_DATA_MSG,
+                    };
+                }
+                var batteryDtos = battery.Select(b => b.MapToEntity()).ToList();
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = battery
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
+
         //lấy pin theo id
         public async Task<IServiceResult> GetBatteryById(string batteryId)
         {

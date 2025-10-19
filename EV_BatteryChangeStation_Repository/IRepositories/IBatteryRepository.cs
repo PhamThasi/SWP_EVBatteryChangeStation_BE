@@ -14,5 +14,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<bool?> IsBatteryAvailable(int batteryId);
         Task<List<Battery>> GetBatteryByStationId(int stationId); 
         Task<List<Battery>> GetAllBattery();
+        Task<List<Battery?>> GetBatteriesByType(string typeBattery);
     }
 }

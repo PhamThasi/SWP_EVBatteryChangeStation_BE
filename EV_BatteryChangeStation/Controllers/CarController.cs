@@ -110,5 +110,20 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+        /// <summary>
+        /// get car by model name
+        /// </summary>
+        [HttpGet("GetCarByName")]
+        public async Task<IActionResult> GetCarByName([FromQuery] string modelName)
+        {
+            if (string.IsNullOrEmpty(modelName))
+                return BadRequest("Invalid model name");
+            var result = await _carService.GetCarByNameAsync(modelName);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
+
     }
 }

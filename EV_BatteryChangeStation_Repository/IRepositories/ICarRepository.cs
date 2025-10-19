@@ -11,5 +11,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface ICarRepository : IGenericRepository<Car>
     {
         Task<Account?> GetOwnerByCarIdAsync(int carId);
+        Task<List<Car>> GetCarByNameAsync(string modelName);
     }
 }

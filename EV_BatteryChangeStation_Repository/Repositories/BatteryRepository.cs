@@ -21,6 +21,13 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return battery;
         }
 
+        public Task<List<Battery?>> GetBatteriesByType(string typeBattery)
+        {
+            return _context.Batteries
+                .Where(b => b.TypeBattery.Contains(typeBattery))
+                .ToListAsync();
+        }
+
         //lấy tất cả pin trong trạm
         public async Task<List<Battery>> GetBatteryByStationId(int stationId)
         {
