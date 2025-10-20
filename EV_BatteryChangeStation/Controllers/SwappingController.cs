@@ -62,7 +62,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// </summary>
 
         [HttpGet("GetSwappingByCarId")]
-        public async Task<IActionResult> GetByCarId([FromQuery] string carid)
+        public async Task<IActionResult> GetByCarId([FromQuery] Guid carid)
         {
             var result = await _swappingService.GetTransactionByCarIdAsync(carid);
             if (result.Status == 200)
@@ -75,7 +75,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// </summary>
 
         [HttpGet("GetSwappingById")]
-        public async Task<IActionResult> GetById([FromQuery] string transactionId)
+        public async Task<IActionResult> GetById([FromQuery] Guid transactionId)
         {
             var result = await _swappingService.GetTransactionByIdAsync(transactionId);
             if (result.Status == 200)
@@ -87,7 +87,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// delete swapping
         /// </summary>
         [HttpDelete("DeleteSwapping")]
-        public async Task<IActionResult> Delete([FromQuery] string transactionId)
+        public async Task<IActionResult> Delete([FromQuery] Guid transactionId)
         {
             var result = await _swappingService.DeleteTransactionAsync(transactionId);
             if (result.Status == 200)
@@ -99,7 +99,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// soft delete swapping
         /// </summary>
         [HttpDelete("SoftDeleteSwapping")]
-        public async Task<IActionResult> SoftDelete([FromQuery] string transactionId)
+        public async Task<IActionResult> SoftDelete([FromQuery] Guid transactionId)
         {
             var result = await _swappingService.SoftDeleteTransactionAsync(transactionId);
             if (result.Status == 200)

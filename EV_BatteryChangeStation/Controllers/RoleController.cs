@@ -99,7 +99,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] UpdateRoleDTO dto)
         {
-            if (dto == null || string.IsNullOrEmpty(dto.EncodedId))
+            if (dto == null || dto.RoleId == null)
                 return BadRequest("Invalid role data");
 
             var result = await _roleService.UpdateRoleAsync(dto);
@@ -117,9 +117,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromQuery] string encodedId)
+        public async Task<IActionResult> Delete([FromQuery] Guid encodedId)
         {
-            if (string.IsNullOrEmpty(encodedId))
+            if (encodedId == Guid.Empty)
                 return BadRequest("Invalid RoleId");
 
             var result = await _roleService.DeleteRoleAsync(encodedId);
@@ -137,9 +137,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
         [HttpDelete("SoftDelete")]
-        public async Task<IActionResult> SoftDelete([FromQuery] string encodedId)
+        public async Task<IActionResult> SoftDelete([FromQuery] Guid encodedId)
         {
-            if (string.IsNullOrEmpty(encodedId))
+            if (encodedId == Guid.Empty)
                 return BadRequest("Invalid RoleId");
             var result = await _roleService.SoftDeleteAsync(encodedId);
             if (result.Status == 200)

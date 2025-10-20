@@ -11,11 +11,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     public interface ISwappingService
     {
         Task<IServiceResult> GetAllTransactionsAsync();
-        Task<IServiceResult> GetTransactionByIdAsync(string transactionId);
+        Task<IServiceResult> GetTransactionByIdAsync(Guid transactionId);
         Task<IServiceResult> CreateTransactionAsync(CreateSwappingDto createSwappingDto);
         Task<IServiceResult> UpdateTransactionAsync(UpdateSwappingDto updateSwappingDto);
-        Task<IServiceResult> DeleteTransactionAsync(string transactionId);
-        Task<IServiceResult> SoftDeleteTransactionAsync(string transactionid);
-        Task<IServiceResult> GetTransactionByCarIdAsync(string carid);
+        Task<IServiceResult> DeleteTransactionAsync(Guid transactionId);
+        Task<IServiceResult> SoftDeleteTransactionAsync(Guid transactionid);
+        Task<IServiceResult> GetTransactionByCarIdAsync(Guid carid);
     }
 }

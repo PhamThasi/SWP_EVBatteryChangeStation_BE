@@ -11,12 +11,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     public interface IPaymentService
     {
         Task<IServiceResult> CreatePayment(CreatePaymentDto create);
-        Task<IServiceResult> GetPaymentById(string paymentId);
+        Task<IServiceResult> GetPaymentById(Guid paymentId);
         //Task<IServiceResult> UpdatePayment(string paymentId, UpdatePaymentDto update);
-        Task<IServiceResult> DeletePayment(string paymentId);
-        Task<IServiceResult> SoftDeletePayment(string paymentId);
-        Task<IServiceResult> GetPaymentByAccountId(string accountId);
+        Task<IServiceResult> DeletePayment(Guid paymentId);
+        Task<IServiceResult> SoftDeletePayment(Guid paymentId);
+        Task<IServiceResult> GetPaymentByAccountId(Guid accountId);
         Task<IServiceResult> GetAllPayment();
-        Task<IServiceResult> GetPaymentByTransactionId(string transactionId);
+        Task<IServiceResult> GetPaymentByTransactionId(Guid transactionId);
     }
 }

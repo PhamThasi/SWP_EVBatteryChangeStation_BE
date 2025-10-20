@@ -29,7 +29,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// Lấy thông tin lịch đổi pin theo ID
         /// </summary>
         [HttpGet("Select/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _bookingService.GetByIdAsync(id);
             return StatusCode(result.Status, result);
@@ -49,7 +49,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// Cập nhật lịch đổi pin
         /// </summary>
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BookingCreateDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] BookingCreateDTO dto)
         {
             var result = await _bookingService.UpdateAsync(id, dto);
             return StatusCode(result.Status, result);
@@ -59,13 +59,13 @@ namespace EV_BatteryChangeStation.Controllers
         /// Xóa lịch đổi pin
         /// </summary>
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _bookingService.DeleteAsync(id);
             return StatusCode(result.Status, result);
         }
         [HttpDelete("HardDelete/{id}")]
-        public async Task<IActionResult> HardDelete(int id)
+        public async Task<IActionResult> HardDelete(Guid id)
         {
             var result = await _bookingService.HardDeleteAsync(id);
             return StatusCode(result.Status, result);

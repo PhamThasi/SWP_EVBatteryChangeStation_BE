@@ -115,7 +115,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromQuery] string encode)
+        public async Task<IActionResult> Delete([FromQuery] Guid encode)
         {
             if (encode == null)
                 return BadRequest("Gat Data fail");
@@ -134,7 +134,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
 
         [HttpDelete("SoftDelete")]
-        public async Task<IActionResult> SoftDelete([FromQuery] string encode)
+        public async Task<IActionResult> SoftDelete([FromQuery] Guid encode)
         {
             if (encode == null)
                 return BadRequest("Get Data fail");

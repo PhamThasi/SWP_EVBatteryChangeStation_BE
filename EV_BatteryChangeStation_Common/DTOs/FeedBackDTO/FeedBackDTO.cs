@@ -28,7 +28,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.FeedBackDTO
     {
         public int? Rating { get; set; }
         public string? Comment { get; set; }
-        public Guid AccountId { get; set; }
-        public Guid BookingId { get; set; }
+        public Guid? AccountId { get; set; }
+        public Guid? BookingId { get; set; }
     }
 }

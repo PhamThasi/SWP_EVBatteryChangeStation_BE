@@ -1,6 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.PaymentDTO;
 using EV_BatteryChangeStation_Repository.Entities;
-using HashidsNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +10,22 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class PaymentMapper
     {
-        private static readonly Hashids _hashids = new Hashids("EV_BatteryChangeStation", 10); 
         public static PaymentRespondDto PaymentRespondDto(this Payment payment)
         {
             if (payment == null) return new PaymentRespondDto();
             return new PaymentRespondDto
             {
-                PaymentId = _hashids.Encode(payment.PaymentId),
+                PaymentId = payment.PaymentId,
                 Price = payment.Price,
                 Method = payment.Method,
                 Status = payment.Status,
                 CreateDate = payment.CreateDate,
-                SubscriptionId = payment.SubscriptionId,
-                TransactionId = payment.TransactionId.HasValue
-                    ? _hashids.Encode(payment.TransactionId.Value) : null
+                SubscriptionId = payment.SubscriptionId ?? Guid.Empty,
+                TransactionId = payment.TransactionId ?? Guid.Empty
             };
         }
 
-        public static Payment toPayment(this CreatePaymentDto dto, int? subscriptionId, int? transactionId)
+        public static Payment toPayment(this CreatePaymentDto dto)
         {
             if (dto == null) return new Payment();
             return new Payment
@@ -37,8 +34,8 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Method = dto.Method,
                 Status = dto.Status,
                 CreateDate = DateTime.UtcNow,
-                SubscriptionId = subscriptionId,
-                TransactionId = transactionId
+                SubscriptionId = dto.SubscriptionId,
+                TransactionId = dto.TransactionId
             };
         }
 
@@ -46,13 +43,13 @@ namespace EV_BatteryChangeStation_Repository.Mapper
         {
             if (dto == null || pay == null) return;
             
-            if(dto.SubcriptionId.HasValue)
+            if(dto.SubcriptionId != Guid.Empty)
             {
                 pay.SubscriptionId = dto.SubcriptionId;
             }
-            if (!string.IsNullOrEmpty(dto.TransactionId))
+            if (dto.TransactionId != Guid.Empty)
             {
-                pay.TransactionId = int.Parse(dto.TransactionId);
+                pay.TransactionId = dto.TransactionId;
             }
             if (dto.Price.HasValue)
             {

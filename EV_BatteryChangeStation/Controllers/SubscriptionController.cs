@@ -23,7 +23,7 @@ namespace EV_BatteryChangeStation.Controllers
         }
 
         [HttpGet("Select/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _subscriptionService.GetByIdAsync(id);
             return StatusCode(result.Status, result);
@@ -37,21 +37,21 @@ namespace EV_BatteryChangeStation.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] SubscriptionCreateUpdateDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] SubscriptionCreateUpdateDTO dto)
         {
             var result = await _subscriptionService.UpdateAsync(id, dto);
             return StatusCode(result.Status, result);
         }
 
         [HttpDelete("SoftDelete/{id}")]
-        public async Task<IActionResult> SoftDelete(int id)
+        public async Task<IActionResult> SoftDelete(Guid id)
         {
             var result = await _subscriptionService.SoftDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
 
         [HttpDelete("HardDelete/{id}")]
-        public async Task<IActionResult> HardDelete(int id)
+        public async Task<IActionResult> HardDelete(Guid id)
         {
             var result = await _subscriptionService.HardDeleteAsync(id);
             return StatusCode(result.Status, result);

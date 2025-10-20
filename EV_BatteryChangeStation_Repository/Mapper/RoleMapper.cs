@@ -28,7 +28,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             }
             return new ViewRoleDto
             {
-                RoleId = role.RoleId.ToString(),
+                RoleId = role.RoleId,
                 RoleName = role.RoleName,
                 Status = role.Status,
                 CreateDate = role.CreateDate,

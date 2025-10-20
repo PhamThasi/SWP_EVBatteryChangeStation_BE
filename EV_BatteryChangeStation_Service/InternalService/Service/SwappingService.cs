@@ -6,7 +6,6 @@ using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
-using HashidsNet;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -19,11 +18,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
     public class SwappingService : ISwappingService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly Hashids _hashids;
         public SwappingService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
-            _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
         // Create Swapping Transaction
         public async Task<IServiceResult> CreateTransactionAsync(CreateSwappingDto createSwappingDto)
@@ -56,7 +53,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Delete Swapping Transaction
-        public async Task<IServiceResult> DeleteTransactionAsync(string transactionId)
+        public async Task<IServiceResult> DeleteTransactionAsync(Guid transactionId)
         {
             try
             {
@@ -68,7 +65,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var swaping = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(_hashids.DecodeSingle(transactionId));
+                var swaping = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(transactionId);
                 if (swaping == null)
                 {
                     return new ServiceResult
@@ -125,11 +122,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Get Swapping Transaction by Car Id
-        public async Task<IServiceResult> GetTransactionByCarIdAsync(string carid)
+        public async Task<IServiceResult> GetTransactionByCarIdAsync(Guid carid)
         {
             try
             {
-                if(carid.IsNullOrEmpty())
+                if(carid == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -137,7 +134,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var swapping = await _unitOfWork.SwappingTransactionRepository.getByCarId(_hashids.DecodeSingle(carid));
+                var swapping = await _unitOfWork.SwappingTransactionRepository.getByCarId(carid);
                 if (swapping == null || !swapping.Any())
                 {
                     return new ServiceResult
@@ -164,7 +161,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Get Swapping Transaction by Id
-        public async Task<IServiceResult> GetTransactionByIdAsync(string transactionId)
+        public async Task<IServiceResult> GetTransactionByIdAsync(Guid transactionId)
         {
             try
             {
@@ -176,7 +173,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var swapping = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(_hashids.DecodeSingle(transactionId));
+                var swapping = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(transactionId);
                 if (swapping == null)
                 {
                     return new ServiceResult
@@ -203,7 +200,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Soft Delete Swapping Transaction
-        public async Task<IServiceResult> SoftDeleteTransactionAsync(string transactionid)
+        public async Task<IServiceResult> SoftDeleteTransactionAsync(Guid transactionid)
         {
             try
             {
@@ -215,7 +212,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var swap = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(_hashids.DecodeSingle(transactionid));
+                var swap = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(transactionid);
                 if (swap == null)
                 {
                     return new ServiceResult
@@ -254,7 +251,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var swap = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(_hashids.DecodeSingle(updateSwappingDto.TransactionId));
+                var swap = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(updateSwappingDto.TransactionId);
                 if (swap == null)
                 {
                     return new ServiceResult

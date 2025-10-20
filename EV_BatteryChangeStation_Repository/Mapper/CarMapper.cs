@@ -10,15 +10,13 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class CarMapper
     {
-        private readonly static HashidsNet.Hashids _hashids =
-            new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
 
         public static ViewCarDTO MapToEntity(this Entities.Car car)
         {
             if (car == null) throw new ArgumentNullException(nameof(car), "cannot be null");
             return new ViewCarDTO
             {
-                VehicleId = _hashids.Encode(car.VehicleId),
+                VehicleId = car.VehicleId,
                 Model = car.Model,
                 BatteryType = car.BatteryType,
                 Producer = car.Producer,

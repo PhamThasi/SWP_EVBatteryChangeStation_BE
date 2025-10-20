@@ -18,13 +18,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
     public class AccountService : IAccountService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly HashidsNet.Hashids _hashids;
         private readonly IPasswordHasher<Account> _passwordHasher;
 
         public AccountService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
-            _hashids = new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
             _passwordHasher = passwordHasher ?? throw new ArgumentException(nameof(passwordHasher));
         }
         // Tạo tài khoản mới
@@ -41,11 +39,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Data = null
                     };
                 }
-                // decode roleId từ hashid (nếu roleId truyền lên dạng hash)
-                int roleId = _hashids.DecodeSingle(createAccount.RoleId);
 
                 // map sang entity
-                var account = createAccount.MapToEntity(roleId);
+                var account = createAccount.MapToEntity();
 
                 // hash password trước khi lưu
                 account.Password = _passwordHasher.HashPassword(account, account.Password);
@@ -64,7 +60,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         //xóa tài khoản
-        public async Task<IServiceResult> DeleteAccountAsync(string encodedId)
+        public async Task<IServiceResult> DeleteAccountAsync(Guid encodedId)
         {
             try
             {
@@ -76,7 +72,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG
                     };
                 }
-                var acc = await _unitOfWork.AccountRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
+                var acc = await _unitOfWork.AccountRepository.GetByIdAsync(encodedId);
                 if (acc == null)
                 {
                     return new ServiceResult
@@ -205,8 +201,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 }
                 var accountDtos = accounts.Select(a => new ViewAccountDTOs
                 {
-                    RoleId = _hashids.Encode(a.RoleId),
-                    AccountId = _hashids.Encode(a.AccountId),
+                    RoleId = a.RoleId,
+                    AccountId = a.AccountId,
+                    Email = a.Email,
                     AccountName = a.AccountName,
                     FullName = a.FullName,
                     Password = a.Password,
@@ -247,7 +244,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.FAIL_UPDATE_MSG
                     };
                 }
-                var account = await _unitOfWork.AccountRepository.GetByIdAsync(_hashids.DecodeSingle(updateAccount.AccountId));
+                var account = await _unitOfWork.AccountRepository.GetByIdAsync(updateAccount.AccountId);
                 if (account == null)
                 {
                     return new ServiceResult
@@ -275,7 +272,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xóa mềm tài khoản (chuyển trạng thái sang inactive)
-        public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
+        public async Task<IServiceResult> SoftDeleteAsync(Guid encodedId)
         {
             try
             {
@@ -287,7 +284,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var acc = await _unitOfWork.AccountRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
+                var acc = await _unitOfWork.AccountRepository.GetByIdAsync(encodedId);
                 if (acc == null)
                 {
                     return new ServiceResult()

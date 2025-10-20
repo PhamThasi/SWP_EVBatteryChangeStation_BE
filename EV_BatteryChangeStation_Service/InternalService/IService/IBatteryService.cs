@@ -13,15 +13,15 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
 {
     public interface IBatteryService
     {
-        Task<IServiceResult> IsBatteryAvailable(string batteryId);
+        Task<IServiceResult> IsBatteryAvailable(Guid batteryId);
         Task<IServiceResult> GetAllBattery();
-        Task<IServiceResult> GetBatteryById(string batteryId);
+        Task<IServiceResult> GetBatteryById(Guid batteryId);
         Task<IServiceResult> UpdateBatteryAsync(UpdateBattery updateDTO);
-        Task<IServiceResult> GetAllBatteryByStationId(int stationId);
+        Task<IServiceResult> GetAllBatteryByStationId(Guid stationId);
         Task<IServiceResult> CreateBatteryAsync(CreateBatteryDTO createBattery);
-        Task<IServiceResult> GetBatteryCountByStationId(int stationId);
-        Task<IServiceResult> DeleteBattery(string batteryId);
-        Task<IServiceResult> SoftDeleteBaterry(string BatteryId);
+        Task<IServiceResult> GetBatteryCountByStationId(Guid stationId);
+        Task<IServiceResult> DeleteBattery(Guid batteryId);
+        Task<IServiceResult> SoftDeleteBattery(Guid BatteryId);
         Task<IServiceResult> GetBatteriesByType(string typeBattery);
     }
 }

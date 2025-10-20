@@ -37,7 +37,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> GetByIdAsync(int id)
+        public async Task<ServiceResult> GetByIdAsync(Guid id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> UpdateAsync(int id, StationCreateDTO dto)
+        public async Task<ServiceResult> UpdateAsync(Guid id, StationCreateDTO dto)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> DeleteAsync(int id)
+        public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> HardDeleteAsync(int id)
+        public async Task<ServiceResult> HardDeleteAsync(Guid id)
         {
             try
             {
