@@ -11,8 +11,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class AccountMapper
     {
-        private static readonly HashidsNet.Hashids _hashids =
-           new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
+
         public static ViewAccountDTOs MapToDTO(this Account account)
         {
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");

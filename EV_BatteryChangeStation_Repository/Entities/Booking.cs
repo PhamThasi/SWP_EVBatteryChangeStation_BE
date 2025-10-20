@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Booking
 {
-    public int BookingId { get; set; }
+    public Guid BookingId { get; set; }
 
     public DateTime DateTime { get; set; }
 
@@ -17,11 +17,11 @@ public partial class Booking
 
     public DateTime? CreatedDate { get; set; }
 
-    public int StationId { get; set; }
+    public Guid StationId { get; set; }
 
-    public int VehicleId { get; set; }
+    public Guid VehicleId { get; set; }
 
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     public virtual Account Account { get; set; }
 

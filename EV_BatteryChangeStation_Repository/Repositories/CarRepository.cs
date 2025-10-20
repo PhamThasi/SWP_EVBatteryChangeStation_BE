@@ -24,7 +24,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         }
 
         // Lấy chủ sở hữu xe theo VehicleId (bỏ HashIds)
-        public async Task<Account?> GetOwnerByCarIdAsync(int carId)
+        public async Task<Account?> GetOwnerByCarIdAsync(Guid carId)
         {
             var owner = await _context.Bookings
                 .Include(b => b.Account)

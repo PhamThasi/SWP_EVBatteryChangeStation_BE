@@ -13,7 +13,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
         public string Method { get; set; }
         public bool? Status { get; set; }
         public DateTime? CreateDate { get; set; }
-        public int? SubscriptionId { get; set; }
-        public string? TransactionId { get; set; }
+        public Guid SubscriptionId { get; set; }
+        public Guid TransactionId { get; set; }
     }
 }

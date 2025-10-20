@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Battery
 {
-    public int BatteryId { get; set; }
+    public Guid BatteryId { get; set; }
 
     public decimal? Capacity { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Battery
 
     public DateOnly? InsuranceDate { get; set; }
 
-    public int StationId { get; set; }
+    public Guid StationId { get; set; }
 
     public virtual Station Station { get; set; }
 

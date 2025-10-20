@@ -8,7 +8,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.BatteryDTO
 {
     public class ViewBatteryDTO
     {
-        public string BatteryId { get; set; }
+        public Guid BatteryId { get; set; }
         public decimal? Capacity { get; set; }
         public DateTime? LastUsed { get; set; }
         public bool? Status { get; set; }
@@ -17,6 +17,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.BatteryDTO
         public string TypeBattery { get; set; }
         public DateTime? BatterySwapDate { get; set; }
         public DateOnly? InsuranceDate { get; set; }
-        public int StationId { get; set; }
+        public Guid StationId { get; set; }
     }
 }

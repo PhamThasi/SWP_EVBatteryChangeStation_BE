@@ -10,13 +10,13 @@ namespace EV_BatteryChangeStation_Common.DTOs.SwappingtransactionDto
     {
         public string? Notes { get; set; }
 
-        public string StaffId { get; set; }
+        public Guid StaffId { get; set; }
 
-        public string OldBatteryId { get; set; }
+        public Guid OldBatteryId { get; set; }
 
-        public string VehicleId { get; set; }
+        public Guid VehicleId { get; set; }
 
-        public string NewBatteryId { get; set; }
+        public Guid NewBatteryId { get; set; }
         public string Status { get; set; }
 
         public DateTime? CreateDate { get; set; }

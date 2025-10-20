@@ -44,7 +44,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return await _context.Accounts.Include(r => r.Role)
                 .ToListAsync();
         }
-        public async Task<Account?> GetAllWithRoleAndStation(int id)
+        public async Task<Account?> GetAllWithRoleAndStation(Guid id)
         {
             return await _context.Accounts
                 .Include(r => r.Role)

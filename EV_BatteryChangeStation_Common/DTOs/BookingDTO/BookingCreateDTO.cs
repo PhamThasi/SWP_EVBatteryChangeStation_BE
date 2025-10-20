@@ -12,8 +12,8 @@ namespace EV_BatteryChangeStation_Common.DTOs.BookingDTO
         public string? Notes { get; set; }
         public bool? Status { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public int StationId { get; set; }
-        public int VehicleId { get; set; }
-        public int AccountId { get; set; }
+        public Guid StationId { get; set; }
+        public Guid VehicleId { get; set; }
+        public Guid AccountId { get; set; }
     }
 }

@@ -9,10 +9,10 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
 {
     public class ValidatePaymentDto
     {
-        public string PaymentId { get; set; }
-        [Required]
-        public string? TransactionId { get; set; }
-        [Required]
-        public string? SubcriptionId { get; set; }
+        public Guid PaymentId { get; set; }
+
+        public Guid TransactionId { get; set; }
+
+        public Guid SubcriptionId { get; set; }
     }
 }

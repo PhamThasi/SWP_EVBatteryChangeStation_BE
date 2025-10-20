@@ -7,19 +7,19 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class SwappingTransaction
 {
-    public int TransactionId { get; set; }
+    public Guid TransactionId { get; set; }
 
     public string Notes { get; set; }
 
-    public int StaffId { get; set; }
+    public Guid StaffId { get; set; }
 
-    public int OldBatteryId { get; set; }
+    public Guid OldBatteryId { get; set; }
 
-    public int VehicleId { get; set; }
+    public Guid VehicleId { get; set; }
 
     public string Status { get; set; }
 
-    public int NewBatteryId { get; set; }
+    public Guid NewBatteryId { get; set; }
 
     public DateTime? CreateDate { get; set; }
 

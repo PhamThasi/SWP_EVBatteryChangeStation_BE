@@ -10,7 +10,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface IBookingRepository
     {
         Task<List<Booking>> GetAllAsync();
-        Task<Booking?> GetByIdAsync(int id);
+        Task<Booking?> GetByIdAsync(Guid id);
         Task AddAsync(Booking booking);
         void Update(Booking booking);
         void Delete(Booking booking);

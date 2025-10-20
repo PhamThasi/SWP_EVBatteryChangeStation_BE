@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class SupportRequest
 {
-    public int RequestId { get; set; }
+    public Guid RequestId { get; set; }
 
     public string IssueType { get; set; }
 
@@ -17,9 +17,9 @@ public partial class SupportRequest
 
     public bool? Status { get; set; }
 
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
-    public int? StaffId { get; set; }
+    public Guid? StaffId { get; set; }
 
     public string ResponseText { get; set; }
 

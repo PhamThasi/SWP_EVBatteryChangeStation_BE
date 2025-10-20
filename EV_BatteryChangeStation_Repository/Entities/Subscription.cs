@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Subscription
 {
-    public int SubscriptionId { get; set; }
+    public Guid SubscriptionId { get; set; }
 
     public string Name { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Subscription
 
     public DateTime? UpdateDate { get; set; }
 
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     public virtual Account Account { get; set; }
 

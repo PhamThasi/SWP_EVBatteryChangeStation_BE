@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Payment
 {
-    public int PaymentId { get; set; }
+    public Guid PaymentId { get; set; }
 
     public decimal? Price { get; set; }
 
@@ -17,9 +17,9 @@ public partial class Payment
 
     public DateTime? CreateDate { get; set; }
 
-    public int? SubscriptionId { get; set; }
+    public Guid? SubscriptionId { get; set; }
 
-    public int? TransactionId { get; set; }
+    public Guid? TransactionId { get; set; }
 
     public virtual Subscription Subscription { get; set; }
 

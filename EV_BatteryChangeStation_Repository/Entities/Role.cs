@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Role
 {
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
     public string RoleName { get; set; }
 
