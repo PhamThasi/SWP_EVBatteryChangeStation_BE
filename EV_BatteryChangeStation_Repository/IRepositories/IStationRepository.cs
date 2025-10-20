@@ -10,7 +10,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface IStationRepository
     {
         Task<List<Station>> GetAllAsync();
-        Task<Station> GetByIdAsync(int id);
+        Task<Station> GetByIdAsync(Guid id);
         void Create(Station station);
         void Update(Station station);
         void Delete(Station station);

@@ -14,6 +14,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.BatteryDTO
         public decimal? PercentUse { get; set; } = 0;
         public string TypeBattery { get; set; }
         public DateOnly? InsuranceDate { get; set; }
-        public int StationId { get; set; }
+        public Guid StationId { get; set; }
     }
 }

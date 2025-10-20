@@ -6,7 +6,6 @@ using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
-using HashidsNet;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -19,11 +18,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
     public class CarService : ICarService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly Hashids _hashids;
         public CarService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
-            _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
         // Add new car
         public async Task<IServiceResult> AddCarAsync(CreateCarDto createCar)
@@ -56,7 +53,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<IServiceResult> DeleteCarAsync(string carId)
+        public async Task<IServiceResult> DeleteCarAsync(Guid carId)
         {
             try
             {
@@ -68,7 +65,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carId));
+                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(carId);
                 if (decodedId == null)
                 {
                     return new ServiceResult
@@ -126,12 +123,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Get owner by car id
-        public async Task<IServiceResult> GetOwnerByCarIdAsync(string carId)
+        public async Task<IServiceResult> GetOwnerByCarIdAsync(Guid carId)
         {
             try
             {
                 // Kiểm tra đầu vào
-                if (carId.IsNullOrEmpty())
+                if (carId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -139,9 +136,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                int decodedCarId = _hashids.DecodeSingle(carId);
                 // Gọi repository
-                var owner = await _unitOfWork.CarRepository.GetOwnerByCarIdAsync(decodedCarId);
+                var owner = await _unitOfWork.CarRepository.GetOwnerByCarIdAsync(carId);
 
                 // Nếu không tìm thấy dữ liệu
                 if (owner == null)
@@ -173,11 +169,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Get car by id
-        public async Task<IServiceResult> GetCarByIdAsync(string carId)
+        public async Task<IServiceResult> GetCarByIdAsync(Guid carId)
         {
             try
             {
-                if (carId.IsNullOrEmpty())
+                if (carId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -185,7 +181,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carId));
+                var decodedId = await _unitOfWork.CarRepository.GetByIdAsync(carId);
                 if (decodedId == null)
                 {
                     return new ServiceResult
@@ -212,7 +208,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<IServiceResult> SoftDeleteCarAsync(string carid)
+        public async Task<IServiceResult> SoftDeleteCarAsync(Guid carid)
         {
             try
             {
@@ -224,7 +220,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var car = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(carid));
+                var car = await _unitOfWork.CarRepository.GetByIdAsync(carid);
                 if (car == null)
                 {
                     return new ServiceResult
@@ -255,7 +251,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (updateCarDto == null || updateCarDto.VehicleId.IsNullOrEmpty())
+                if (updateCarDto == null)
                 {
                     return new ServiceResult
                     {
@@ -263,7 +259,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var car = await _unitOfWork.CarRepository.GetByIdAsync(_hashids.DecodeSingle(updateCarDto.VehicleId));
+                var car = await _unitOfWork.CarRepository.GetByIdAsync(updateCarDto.VehicleId);
                 if (car == null)
                 {
                     return new ServiceResult

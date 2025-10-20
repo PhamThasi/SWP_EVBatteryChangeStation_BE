@@ -64,9 +64,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// </summary>
         /// <param name="dto">Lấy thông tin pin theo id</param>
         [HttpGet("GetBatteryById")]
-        public async Task<IActionResult> GetBatteryById([FromQuery] string batteryId)
+        public async Task<IActionResult> GetBatteryById([FromQuery] Guid batteryId)
         {
-            if (string.IsNullOrEmpty(batteryId))
+            if (batteryId == Guid.Empty)
                 return BadRequest("Invalid battery data");
             var result = await _batteryService.GetBatteryById(batteryId);
             if (result.Status == 200)
@@ -78,9 +78,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Lấy tất cả pin theo station id
         /// </summary>
         [HttpGet("GetBatteryByStationId")]
-        public async Task<IActionResult> GetBatteryByStationId([FromQuery] int stationId)
+        public async Task<IActionResult> GetBatteryByStationId([FromQuery] Guid stationId)
         {
-            if (stationId <= 0)
+            if (stationId == null)
                 return BadRequest("Invalid station data");
             var result = await _batteryService.GetAllBatteryByStationId(stationId);
             if (result.Status == 200)
@@ -92,9 +92,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Lấy số lượng pin theo station id
         /// </summary>
         [HttpGet("GetBatteryCountByStationId")]
-        public async Task<IActionResult> GetBatteryCountByStationId([FromQuery] int stationId)
+        public async Task<IActionResult> GetBatteryCountByStationId([FromQuery] Guid stationId)
         {
-            if (stationId <= 0)
+            if (stationId == null)
                 return BadRequest("Invalid station data");
             var result = await _batteryService.GetBatteryCountByStationId(stationId);
             if (result.Status == 200)
@@ -106,9 +106,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Kiểm tra pin có khả năng thay không
         /// </summary>
         [HttpGet("CheckBattery")]
-        public async Task<IActionResult> CheckBattery([FromQuery] string batteryId)
+        public async Task<IActionResult> CheckBattery([FromQuery] Guid batteryId)
         {
-            if (string.IsNullOrEmpty(batteryId))
+            if (batteryId == Guid.Empty)
                 return BadRequest("Invalid battery data");
             var result = await _batteryService.IsBatteryAvailable(batteryId);
             if (result.Status == 200)
@@ -120,9 +120,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Xóa pin vĩnh viễn
         /// </summary>
         [HttpDelete("DeleteBattery")]
-        public async Task<IActionResult> DeleteBattery([FromQuery] string batteryId)
+        public async Task<IActionResult> DeleteBattery([FromQuery] Guid batteryId)
         {
-            if (string.IsNullOrEmpty(batteryId))
+            if (batteryId == Guid.Empty)
                 return BadRequest("Invalid battery data");
             var result = await _batteryService.DeleteBattery(batteryId);
             if (result.Status == 200)
@@ -134,11 +134,11 @@ namespace EV_BatteryChangeStation.Controllers
         /// Xóa pin tạm thời bằng cách đổi trạng thái
         /// </summary>
         [HttpDelete("SoftDelete")]
-        public async Task<IActionResult> SoftDeleteBattery([FromQuery] string batteryId)
+        public async Task<IActionResult> SoftDeleteBattery([FromQuery] Guid batteryId)
         {
-            if (string.IsNullOrEmpty(batteryId))
+            if (batteryId == Guid.Empty)
                 return BadRequest("Invalid battery data");
-            var result = await _batteryService.SoftDeleteBaterry(batteryId);
+            var result = await _batteryService.SoftDeleteBattery(batteryId);
             if (result.Status == 200)
                 return Ok(result);
             return StatusCode(result.Status, result.Message);

@@ -11,14 +11,13 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class AccountMapper
     {
-        private static readonly HashidsNet.Hashids _hashids =
-           new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
+
         public static ViewAccountDTOs MapToDTO(this Account account)
         {
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
             return new ViewAccountDTOs
             {
-                RoleId = _hashids.Encode(account.RoleId),
+                RoleId = account.RoleId,
                 AccountName = account.AccountName,
                 Password = account.Password,
                 Address = account.Address,
@@ -33,13 +32,13 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static Account MapToEntity(this CreateAccountDTO accountDto, int roleId)
+        public static Account MapToEntity(this CreateAccountDTO accountDto)
         {
             if (accountDto == null) throw new ArgumentNullException(nameof(accountDto));
             return new Account
             {
                 FullName = accountDto.FullName,
-                RoleId = roleId, // truyền int từ service sau khi decode
+                RoleId = accountDto.RoleId,
                 Gender = accountDto.Gender,
                 AccountName = accountDto.AccountName,
                 Password = accountDto.Password,
@@ -53,10 +52,10 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 
         public static void MaptoUpdate(this Account account, UpdateAccountDTO updateAccount)
         {
-            if (updateAccount == null) throw new ArgumentNullException(nameof(updateAccount), "cannot be null");
-            if (updateAccount.RoleId != null)
+            if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
+            if(updateAccount.RoleId != Guid.Empty)
             {
-                account.RoleId = int.Parse(_hashids.Decode(updateAccount.RoleId).First().ToString());
+                account.RoleId = updateAccount.RoleId;
             }
             if (!string.IsNullOrEmpty(updateAccount.AccountName))
             {

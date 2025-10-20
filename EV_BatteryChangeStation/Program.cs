@@ -14,7 +14,6 @@ using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using EV_BatteryChangeStation_Repository.Base;
-using HashidsNet;
 
 
 var builder = WebApplication.CreateBuilder(args);

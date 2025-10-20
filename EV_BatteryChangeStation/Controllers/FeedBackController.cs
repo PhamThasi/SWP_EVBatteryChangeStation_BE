@@ -31,7 +31,7 @@ namespace EV_BatteryChangeStation.Controllers
 
         // Lấy feedback theo ID
         [HttpGet("Select/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var feedback = await _feedBackService.GetByIdAsync(id);
             if (feedback == null)
@@ -65,7 +65,7 @@ namespace EV_BatteryChangeStation.Controllers
 
         // Cập nhật feedback
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateFeedBackDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateFeedBackDTO dto)
         {
             var updated = await _feedBackService.UpdateAsync(id, dto);
 
@@ -79,7 +79,7 @@ namespace EV_BatteryChangeStation.Controllers
 
         // Xóa feedback (xóa cứng)
         [HttpDelete("HardDelete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             await _feedBackService.DeleteAsync(id);
             return Ok(new

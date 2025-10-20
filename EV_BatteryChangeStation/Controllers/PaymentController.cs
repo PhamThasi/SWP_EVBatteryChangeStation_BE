@@ -39,9 +39,9 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== GET BY ID ===================
         [HttpGet("get-by-id/{paymentId}")]
-        public async Task<IActionResult> GetPaymentById(string paymentId)
+        public async Task<IActionResult> GetPaymentById(Guid paymentId)
         {
-            if (string.IsNullOrEmpty(paymentId))
+            if (paymentId == Guid.Empty)
                 return BadRequest("Payment ID is required.");
 
             var result = await _paymentService.GetPaymentById(paymentId);
@@ -50,9 +50,9 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== GET BY ACCOUNT ===================
         [HttpGet("get-by-account/{accountId}")]
-        public async Task<IActionResult> GetPaymentByAccountId(string accountId)
+        public async Task<IActionResult> GetPaymentByAccountId(Guid accountId)
         {
-            if (string.IsNullOrEmpty(accountId))
+            if (accountId == Guid.Empty)
                 return BadRequest("Account ID is required.");
 
             var result = await _paymentService.GetPaymentByAccountId(accountId);
@@ -61,9 +61,9 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== GET BY TRANSACTION ===================
         [HttpGet("get-by-transaction/{transactionId}")]
-        public async Task<IActionResult> GetPaymentByTransactionId(string transactionId)
+        public async Task<IActionResult> GetPaymentByTransactionId(Guid transactionId)
         {
-            if (string.IsNullOrEmpty(transactionId))
+            if (transactionId == Guid.Empty)
                 return BadRequest("Transaction ID is required.");
 
             var result = await _paymentService.GetPaymentByTransactionId(transactionId);
@@ -86,9 +86,9 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== DELETE (HARD) ===================
         [HttpDelete("delete/{paymentId}")]
-        public async Task<IActionResult> DeletePayment(string paymentId)
+        public async Task<IActionResult> DeletePayment(Guid paymentId)
         {
-            if (string.IsNullOrEmpty(paymentId))
+            if (paymentId == Guid.Empty)
                 return BadRequest("Payment ID is required.");
 
             var result = await _paymentService.DeletePayment(paymentId);
@@ -97,9 +97,9 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== DELETE (SOFT) ===================
         [HttpPatch("soft-delete/{paymentId}")]
-        public async Task<IActionResult> SoftDeletePayment(string paymentId)
+        public async Task<IActionResult> SoftDeletePayment(Guid paymentId)
         {
-            if (string.IsNullOrEmpty(paymentId))
+            if (paymentId == Guid.Empty)
                 return BadRequest("Payment ID is required.");
 
             var result = await _paymentService.SoftDeletePayment(paymentId);

@@ -11,8 +11,8 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
         Task<List<Payment>> GetAllPaymentDetailAsync();
-        Task<Payment?> GetPaymentWithTransactionIdAsync(int transactionId);
-        Task<List<Payment?>> GetPaymentByAccountIdAsync(int accountId);
+        Task<Payment?> GetPaymentWithTransactionIdAsync(Guid transactionId);
+        Task<List<Payment?>> GetPaymentByAccountIdAsync(Guid accountId);
 
     }
 }

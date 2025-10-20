@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Car
 {
-    public int VehicleId { get; set; }
+    public Guid VehicleId { get; set; }
 
     public string Model { get; set; }
 
@@ -15,9 +15,9 @@ public partial class Car
 
     public string Producer { get; set; }
 
-    public DateTime? CreateDate { get; set; }
-
     public string Status { get; set; }
+
+    public DateTime? CreateDate { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

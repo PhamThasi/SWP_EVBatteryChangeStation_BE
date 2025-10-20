@@ -10,19 +10,17 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class SwappingTransactionMapper 
     {
-        private static readonly HashidsNet.Hashids _hashids =
-            new HashidsNet.Hashids("EV_BatteryChangeStation", 10);
         public static ViewSwappingDto MaptoEntity(this SwappingTransaction swappingTransaction)
         {
             if (swappingTransaction == null) throw new ArgumentNullException(nameof(swappingTransaction), "cannot be null");
             return new ViewSwappingDto
             {
-                TransactionId = _hashids.Encode(swappingTransaction.TransactionId),
+                TransactionId = swappingTransaction.TransactionId,
                 Notes = swappingTransaction.Notes,
-                StaffId = _hashids.Encode(swappingTransaction.StaffId),
-                OldBatteryId = _hashids.Encode(swappingTransaction.OldBatteryId),
-                NewBatteryId = _hashids.Encode(swappingTransaction.NewBatteryId),
-                VehicleId = _hashids.Encode(swappingTransaction.VehicleId),
+                StaffId = swappingTransaction.StaffId,
+                OldBatteryId = swappingTransaction.OldBatteryId,
+                NewBatteryId = swappingTransaction.NewBatteryId,
+                VehicleId = swappingTransaction.VehicleId,
                 Status = swappingTransaction.Status,
                 CreateDate = swappingTransaction.CreateDate
             };
@@ -34,10 +32,10 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             return new SwappingTransaction
             {
                 Notes = createSwappingDto.Notes,
-                StaffId = _hashids.DecodeSingle(createSwappingDto.StaffId),
-                OldBatteryId = _hashids.DecodeSingle(createSwappingDto.OldBatteryId),
-                NewBatteryId = _hashids.DecodeSingle(createSwappingDto.NewBatteryId),
-                VehicleId = _hashids.DecodeSingle(createSwappingDto.VehicleId),
+                StaffId = createSwappingDto.StaffId,
+                OldBatteryId = createSwappingDto.OldBatteryId,   
+                NewBatteryId = createSwappingDto.NewBatteryId,
+                VehicleId = createSwappingDto.VehicleId,
                 Status = createSwappingDto.Status,
                 CreateDate = createSwappingDto.CreateDate
             };
@@ -51,21 +49,21 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 swappingTransaction.Notes = updateSwappingDto.Notes;
             }
-            if (updateSwappingDto.StaffId != null)
+            if (updateSwappingDto.StaffId != Guid.Empty)
             {
-                swappingTransaction.StaffId = _hashids.DecodeSingle(updateSwappingDto.StaffId);
+                swappingTransaction.StaffId = updateSwappingDto.StaffId;
             }
-            if (updateSwappingDto.OldBatteryId != null)
+            if (updateSwappingDto.OldBatteryId != Guid.Empty)
             {
-                swappingTransaction.OldBatteryId = _hashids.DecodeSingle(updateSwappingDto.OldBatteryId);
+                swappingTransaction.OldBatteryId = updateSwappingDto.OldBatteryId;
             }
-            if (updateSwappingDto.NewBatteryId != null)
+            if (updateSwappingDto.NewBatteryId != Guid.Empty)
             {
-                swappingTransaction.NewBatteryId = _hashids.DecodeSingle(updateSwappingDto.NewBatteryId);
+                swappingTransaction.NewBatteryId = updateSwappingDto.NewBatteryId;
             }
-            if (updateSwappingDto.VehicleId != null)
+            if (updateSwappingDto.VehicleId != Guid.Empty)
             {
-                swappingTransaction.VehicleId = _hashids.DecodeSingle(updateSwappingDto.VehicleId);
+                swappingTransaction.VehicleId = updateSwappingDto.VehicleId;
             }
             if (updateSwappingDto.Status != null)
             {

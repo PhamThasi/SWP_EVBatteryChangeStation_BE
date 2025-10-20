@@ -11,6 +11,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface ISwappingTransactionRepository : IGenericRepository<SwappingTransaction>
     {
         Task<List<SwappingTransaction>> GetAllSwappingTransactionDetail();
-        Task<List<SwappingTransaction>> getByCarId(int carId);
+        Task<List<SwappingTransaction>> getByCarId(Guid carId);
     }
 }

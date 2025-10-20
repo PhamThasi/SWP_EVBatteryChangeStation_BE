@@ -8,7 +8,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.RoleDTO
 {
     public class ViewRoleIDEncode
     {
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
         public string RoleName { get; set; } = null!;
     }
 }

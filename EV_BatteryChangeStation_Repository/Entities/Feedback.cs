@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Feedback
 {
-    public int FeedbackId { get; set; }
+    public Guid FeedbackId { get; set; }
 
     public int? Rating { get; set; }
 
@@ -15,9 +15,9 @@ public partial class Feedback
 
     public DateTime? CreateDate { get; set; }
 
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
-    public int BookingId { get; set; }
+    public Guid BookingId { get; set; }
 
     public virtual Account Account { get; set; }
 

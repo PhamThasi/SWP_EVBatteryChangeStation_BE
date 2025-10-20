@@ -8,8 +8,8 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
 {
     public class UpdateAccountDTO
     {
-        public string AccountId { get; set; }
-        public string RoleId { get; set; } = null!;
+        public Guid AccountId { get; set; }
+        public Guid RoleId { get; set; }
         public string AccountName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string? FullName { get; set; }

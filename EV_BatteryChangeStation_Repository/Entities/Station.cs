@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Station
 {
-    public int StationId { get; set; }
+    public Guid StationId { get; set; }
 
     public string Address { get; set; }
 

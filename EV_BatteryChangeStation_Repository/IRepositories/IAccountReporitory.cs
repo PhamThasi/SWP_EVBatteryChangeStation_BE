@@ -12,7 +12,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<Account> GetAccountByPhoneAsync(string phone);
         Task<Account> GetAllAccount();
         Task<List<Account>> GetAllWithRoleAsync();
-        Task<Account?> GetAllWithRoleAndStation(int id);
+        Task<Account?> GetAllWithRoleAndStation(Guid id);
         Task<Account?> GetByAccountNameOrEmail(string keyword);
         Task<Account?> FindAsync(Expression<Func<Account, bool>> predicate);
     }

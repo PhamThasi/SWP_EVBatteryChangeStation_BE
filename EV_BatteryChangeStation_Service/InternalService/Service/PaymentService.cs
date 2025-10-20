@@ -4,7 +4,6 @@ using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
-using HashidsNet;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +16,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
     public class PaymentService : IPaymentService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly Hashids _hashids;
 
         public PaymentService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
 
         // =================== CREATE ===================
@@ -39,17 +36,18 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                // Validate subscriptionId (we're NOT using hashids for subscription)
-                if (create.SubscriptionId == null || create.SubscriptionId <= 0)
+                // ✅ Validate SubscriptionId và TransactionId
+                if (create.SubscriptionId == Guid.Empty || create.TransactionId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
                         Status = Const.FAIL_CREATE_CODE,
-                        Message = "Invalid Subscription ID"
+                        Message = "Invalid Subscription ID or Transaction ID"
                     };
                 }
 
-                var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId.Value);
+                // ✅ Kiểm tra subscription tồn tại
+                var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId);
                 if (subscription == null)
                 {
                     return new ServiceResult
@@ -59,42 +57,26 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
+                // ✅ Kiểm tra transaction tồn tại
+                var transaction = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(create.TransactionId);
+                if (transaction == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = "Transaction not found"
+                    };
+                }
+
                 using var scope = await _unitOfWork.BeginTransactionAsync();
                 try
                 {
-                    int? transactionId = null;
+                    // ✅ Tạo payment mới
+                    var payment = create.toPayment(); // không truyền tham số — mapper tự xử lý
+                    payment.SubscriptionId = create.SubscriptionId;
+                    payment.TransactionId = create.TransactionId;
 
-                    // If TransactionId provided (encoded), decode it and validate existence.
-                    if (!string.IsNullOrEmpty(create.TransactionId))
-                    {
-                        var decoded = _hashids.Decode(create.TransactionId);
-                        if (decoded == null || decoded.Length == 0)
-                        {
-                            return new ServiceResult
-                            {
-                                Status = Const.FAIL_CREATE_CODE,
-                                Message = "Invalid Transaction ID format"
-                            };
-                        }
-
-                        transactionId = decoded[0];
-
-                        // IMPORTANT: use the correct repository name for swapping transactions in your UnitOfWork.
-                        // If your repo is named differently (e.g. SwappingTransactionRepository), change it here.
-                        var swappingTransaction = await _unitOfWork.PaymentRepository.GetByIdAsync(transactionId.Value);
-                        if (swappingTransaction == null)
-                        {
-                            return new ServiceResult
-                            {
-                                Status = Const.WARNING_NO_DATA_CODE,
-                                Message = "Transaction not found"
-                            };
-                        }
-                    }
-
-                    var payment = create.toPayment(create.SubscriptionId, transactionId);
                     await _unitOfWork.PaymentRepository.CreateAsync(payment);
-
                     await scope.CommitAsync();
 
                     return new ServiceResult
@@ -127,6 +109,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
+
 
         // =================== GET ALL ===================
         public async Task<IServiceResult> GetAllPayment()
@@ -164,11 +147,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // =================== GET BY ID ===================
-        public async Task<IServiceResult> GetPaymentById(string paymentId)
+        public async Task<IServiceResult> GetPaymentById(Guid paymentId)
         {
             try
             {
-                if (string.IsNullOrEmpty(paymentId))
+                if (paymentId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -177,8 +160,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var decoded = _hashids.Decode(paymentId);
-                if (decoded == null || decoded.Length == 0)
+                if (paymentId == null)
                 {
                     return new ServiceResult
                     {
@@ -187,8 +169,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var id = decoded.First();
-                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(id);
+                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
                 if (payment == null)
                 {
                     return new ServiceResult
@@ -216,11 +197,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // =================== GET BY ACCOUNT ===================
-        public async Task<IServiceResult> GetPaymentByAccountId(string accountId)
+        public async Task<IServiceResult> GetPaymentByAccountId(Guid accountId)
         {
             try
             {
-                if (string.IsNullOrEmpty(accountId))
+                if (accountId == null)
                 {
                     return new ServiceResult
                     {
@@ -229,8 +210,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var decoded = _hashids.Decode(accountId);
-                if (decoded == null || decoded.Length == 0)
+                if (accountId == null)
                 {
                     return new ServiceResult
                     {
@@ -239,10 +219,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var accountInt = decoded.First();
-                var payments = await _unitOfWork.PaymentRepository.GetPaymentByAccountIdAsync(accountInt);
+                var payments = await _unitOfWork.PaymentRepository.GetPaymentByAccountIdAsync(accountId);
 
-                if (payments == null || payments.Count == 0)
+                if (payments == null)
                 {
                     return new ServiceResult
                     {
@@ -271,11 +250,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // =================== GET BY TRANSACTION ===================
-        public async Task<IServiceResult> GetPaymentByTransactionId(string transactionId)
+        public async Task<IServiceResult> GetPaymentByTransactionId(Guid transactionId)
         {
             try
             {
-                if (string.IsNullOrEmpty(transactionId))
+                if (transactionId == null)
                 {
                     return new ServiceResult
                     {
@@ -284,8 +263,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var decoded = _hashids.Decode(transactionId);
-                if (decoded == null || decoded.Length == 0)
+                if (transactionId == null)
                 {
                     return new ServiceResult
                     {
@@ -294,8 +272,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var txId = decoded.First();
-                var payment = await _unitOfWork.PaymentRepository.GetPaymentWithTransactionIdAsync(txId);
+                var payment = await _unitOfWork.PaymentRepository.GetPaymentWithTransactionIdAsync(transactionId);
 
                 if (payment == null)
                 {
@@ -398,11 +375,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         //}
 
         // =================== DELETE (HARD) ===================
-        public async Task<IServiceResult> DeletePayment(string paymentId)
+        public async Task<IServiceResult> DeletePayment(Guid paymentId)
         {
             try
             {
-                if (string.IsNullOrEmpty(paymentId))
+                if (paymentId == null)
                 {
                     return new ServiceResult
                     {
@@ -411,8 +388,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var decoded = _hashids.Decode(paymentId);
-                if (decoded == null || decoded.Length == 0)
+                if (paymentId == null)
                 {
                     return new ServiceResult
                     {
@@ -421,8 +397,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var id = decoded.First();
-                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(id);
+                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
                 if (payment == null)
                 {
                     return new ServiceResult
@@ -451,11 +426,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // =================== SOFT DELETE ===================
-        public async Task<IServiceResult> SoftDeletePayment(string paymentId)
+        public async Task<IServiceResult> SoftDeletePayment(Guid paymentId)
         {
             try
             {
-                if (string.IsNullOrEmpty(paymentId))
+                if (paymentId == null)
                 {
                     return new ServiceResult
                     {
@@ -464,8 +439,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var decoded = _hashids.Decode(paymentId);
-                if (decoded == null || decoded.Length == 0)
+                if (paymentId == null)
                 {
                     return new ServiceResult
                     {
@@ -474,8 +448,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var id = decoded.First();
-                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(id);
+                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
                 if (payment == null)
                 {
                     return new ServiceResult

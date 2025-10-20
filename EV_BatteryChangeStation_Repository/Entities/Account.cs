@@ -7,7 +7,7 @@ namespace EV_BatteryChangeStation_Repository.Entities;
 
 public partial class Account
 {
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     public string AccountName { get; set; }
 
@@ -31,9 +31,9 @@ public partial class Account
 
     public DateTime? UpdateDate { get; set; }
 
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
-    public int? StationId { get; set; }
+    public Guid? StationId { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

@@ -24,7 +24,7 @@ namespace EV_BatteryChangeStation_API.Controllers
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _service.GetByIdAsync(id);
             return StatusCode(result.Status, result);
@@ -38,21 +38,21 @@ namespace EV_BatteryChangeStation_API.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] SupportRequestCreateUpdateDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] SupportRequestCreateUpdateDTO dto)
         {
             var result = await _service.UpdateAsync(id, dto);
             return StatusCode(result.Status, result);
         }
 
         [HttpPut("SoftDelete/{id}")]
-        public async Task<IActionResult> SoftDelete(int id)
+        public async Task<IActionResult> SoftDelete(Guid id)
         {
             var result = await _service.SoftDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
 
         [HttpDelete("HardDelete/{id}")]
-        public async Task<IActionResult> HardDelete(int id)
+        public async Task<IActionResult> HardDelete(Guid id)
         {
             var result = await _service.HardDeleteAsync(id);
             return StatusCode(result.Status, result);

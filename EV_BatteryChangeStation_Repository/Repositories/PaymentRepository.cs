@@ -23,7 +23,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Payment?>> GetPaymentByAccountIdAsync(int accountId)
+        public async Task<List<Payment?>> GetPaymentByAccountIdAsync(Guid accountId)
         {
             return await _context.Payments
                 .Include(p => p.Subscription)
@@ -33,7 +33,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Payment?> GetPaymentWithTransactionIdAsync(int transactionId)
+        public async Task<Payment?> GetPaymentWithTransactionIdAsync(Guid transactionId)
         {
             return await _context.Payments
                 .Include(p => p.Transaction)

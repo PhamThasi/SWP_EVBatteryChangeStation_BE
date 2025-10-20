@@ -27,7 +27,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<SwappingTransaction>> getByCarId(int carId)
+        public async Task<List<SwappingTransaction>> getByCarId(Guid carId)
         {
             var swap = await _context.SwappingTransactions
                 .Include(carId => carId.Vehicle)

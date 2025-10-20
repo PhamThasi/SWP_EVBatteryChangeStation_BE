@@ -126,7 +126,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     AccountName = registerDto.Email.Split('@')[0],
                     //FullName = registerDto.FullName,
                     Password = _passwordHasher.HashPassword(null, registerDto.Password),
-                    RoleId = 2, // Role mặc định
+                    RoleId = Guid.Parse("8feff853-18cc-4040-b5cd-b8c77642fac59"), // Role mặc định
                     Status = true
                 };
 

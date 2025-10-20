@@ -9,9 +9,8 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
 {
     public class UpdatePaymentDto
     {
-        [Required]
-        public string? TransactionId { get; set; }
-        public int? SubcriptionId { get; set; }
+        public Guid TransactionId { get; set; }
+        public Guid SubcriptionId { get; set; }
         public decimal? Price { get; set; }
         public string Method { get; set; }
         public bool? Status { get; set; }

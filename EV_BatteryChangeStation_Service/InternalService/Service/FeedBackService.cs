@@ -34,7 +34,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Lấy feedback theo ID
-        public async Task<FeedBackDTO> GetByIdAsync(int id)
+        public async Task<FeedBackDTO> GetByIdAsync(Guid id)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Cập nhật feedback
-        public async Task<FeedBackDTO> UpdateAsync(int id, UpdateFeedBackDTO dto)
+        public async Task<FeedBackDTO> UpdateAsync(Guid id, UpdateFeedBackDTO dto)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Xóa feedback (xóa cứng)
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             try
             {
