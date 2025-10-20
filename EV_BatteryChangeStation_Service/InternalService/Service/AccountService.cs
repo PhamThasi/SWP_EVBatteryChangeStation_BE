@@ -208,6 +208,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     RoleId = _hashids.Encode(a.RoleId),
                     AccountId = _hashids.Encode(a.AccountId),
                     AccountName = a.AccountName,
+                    Email = a.Email,
                     FullName = a.FullName,
                     Password = a.Password,
                     Address = a.Address,
