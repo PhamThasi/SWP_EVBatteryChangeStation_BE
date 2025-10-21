@@ -52,10 +52,17 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 
         public static void MaptoUpdate(this Account account, UpdateAccountDTO updateAccount)
         {
+<<<<<<< HEAD
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
             if(updateAccount.RoleId != Guid.Empty)
             {
                 account.RoleId = updateAccount.RoleId;
+=======
+            if (updateAccount == null) throw new ArgumentNullException(nameof(updateAccount), "cannot be null");
+            if (updateAccount.RoleId != null)
+            {
+                account.RoleId = int.Parse(_hashids.Decode(updateAccount.RoleId).First().ToString());
+>>>>>>> dev
             }
             if (!string.IsNullOrEmpty(updateAccount.AccountName))
             {
