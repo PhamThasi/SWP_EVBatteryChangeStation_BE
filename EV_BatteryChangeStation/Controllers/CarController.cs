@@ -75,7 +75,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpGet("GetOwnerByCarIdAsync")]
         public async Task<IActionResult> GetOwnerByCarIdAsync([FromQuery] Guid carId)
         {
-            if (carId == null)
+            if (carId == Guid.Empty)
                 return BadRequest("Invalid Car id");
             var result = await _carService.GetOwnerByCarIdAsync(carId);
             if (result.Status == 200)

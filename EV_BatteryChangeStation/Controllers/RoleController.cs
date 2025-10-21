@@ -99,7 +99,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] UpdateRoleDTO dto)
         {
-            if (dto == null || dto.RoleId == null)
+            if (dto == null || dto.RoleId == Guid.Empty)
                 return BadRequest("Invalid role data");
 
             var result = await _roleService.UpdateRoleAsync(dto);

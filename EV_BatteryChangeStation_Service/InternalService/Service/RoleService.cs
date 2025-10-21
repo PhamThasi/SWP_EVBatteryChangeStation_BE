@@ -50,7 +50,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (encodedId == null)
+                if (encodedId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -244,7 +244,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (encodedId == null)
+                if (encodedId == Guid.Empty)
                 {
                     return new ServiceResult
                     {

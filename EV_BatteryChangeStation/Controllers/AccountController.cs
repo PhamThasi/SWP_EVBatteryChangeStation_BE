@@ -117,7 +117,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete([FromQuery] Guid encode)
         {
-            if (encode == null)
+            if (encode == Guid.Empty)
                 return BadRequest("Gat Data fail");
             var result = await _accountService.DeleteAccountAsync(encode);
             if (result.Status == 200)
@@ -136,7 +136,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpDelete("SoftDelete")]
         public async Task<IActionResult> SoftDelete([FromQuery] Guid encode)
         {
-            if (encode == null)
+            if (encode == Guid.Empty)
                 return BadRequest("Get Data fail");
             var result = await _accountService.SoftDeleteAsync(encode);
             if (result.Status == 200)
