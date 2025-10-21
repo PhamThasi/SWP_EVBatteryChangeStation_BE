@@ -205,7 +205,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     AccountId = a.AccountId,
                     Email = a.Email,
                     AccountName = a.AccountName,
-                    Email = a.Email,
                     FullName = a.FullName,
                     Password = a.Password,
                     Address = a.Address,
