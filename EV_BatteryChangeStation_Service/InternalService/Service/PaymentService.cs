@@ -160,15 +160,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (paymentId == null)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.FAIL_READ_CODE,
-                        Message = "Invalid Payment ID format"
-                    };
-                }
-
                 var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
                 if (payment == null)
                 {
@@ -210,7 +201,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (accountId == null)
+                if (accountId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -263,7 +254,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (transactionId == null)
+                if (transactionId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -388,7 +379,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (paymentId == null)
+                if (paymentId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -439,7 +430,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (paymentId == null)
+                if (paymentId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -477,5 +468,53 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-    }
+        // =================== VALIDATE PAYMENT ===================
+        public async Task<IServiceResult> ValidatePayment(ValidatePaymentDto validate)
+        {
+            try
+            {
+                using var scope = await _unitOfWork.BeginTransactionAsync();
+                try
+                {
+                    var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(validate.PaymentId);
+                    if (payment == null)
+                    {
+                        return new ServiceResult
+                        {
+                            Status = Const.WARNING_NO_DATA_CODE,
+                            Message = "Payment not found"
+                        };
+                    }
+                    if (payment.SubscriptionId != validate.SubcriptionId || payment.TransactionId != validate.TransactionId)
+                    {
+                        return new ServiceResult
+                        {
+                            Status = Const.FAIL_VALIDATE_CODE,
+                            Message = "Payment validation failed"
+                        };
+                    }
+                    return new ServiceResult
+                    {
+                        Status = Const.SUCCESS_READ_CODE,
+                        Message = "Payment validated successfully",
+                        Data = payment.PaymentRespondDto()
+                    };
+                }
+                catch (Exception ex)
+                {
+                    await scope.RollbackAsync();
+                    throw new Exception("Error while validating payment", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+            }
+        }
+     }
 }
+    

@@ -24,6 +24,11 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         {
             _context = context;
         }
+
+        public UnitOfWork()
+        {
+        }
+
         public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
             return await _context.Database.BeginTransactionAsync();
