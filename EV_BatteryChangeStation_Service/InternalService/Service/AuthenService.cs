@@ -119,6 +119,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (!pendingUsers.TryGetValue(dto.Email, out var registerDto))
                     return false; // không tìm thấy RegisterDTO tạm
 
+                // Lấy role "Customer" từ database
+                var customerRole = await _unitOfWork.RoleRepository.GetRoleByName("Customer");
+
+                if (customerRole == null)
+                    throw new Exception("Role 'Customer' not found in database.");
+
                 // tạo account thật
                 var account = new Account
                 {
@@ -126,7 +132,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     AccountName = registerDto.Email.Split('@')[0],
                     //FullName = registerDto.FullName,
                     Password = _passwordHasher.HashPassword(null, registerDto.Password),
-                    RoleId = Guid.Parse("8feff853-18cc-4040-b5cd-b8c77642fac59"), // Role mặc định
+                    RoleId = customerRole.RoleId, // Gán role "Customer" lấy từ DB
                     Status = true
                 };
 
@@ -141,6 +147,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
             return false;
         }
+
 
 
         private string GenerateOtp()
