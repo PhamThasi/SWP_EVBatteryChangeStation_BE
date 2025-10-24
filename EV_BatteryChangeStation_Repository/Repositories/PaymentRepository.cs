@@ -39,5 +39,14 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .Include(p => p.Transaction)
                 .FirstOrDefaultAsync(p => p.TransactionId.Equals(transactionId));
         }
+
+        public async Task<Payment?> GetByGatewayIdAsync(long gatewayId)
+        {
+            return await _context.Payments
+                .Include(p => p.Transaction)
+                .Include(p => p.Subscription)
+                .FirstOrDefaultAsync(t => t.PaymentGateId == gatewayId);
+        }
+
     }
 }

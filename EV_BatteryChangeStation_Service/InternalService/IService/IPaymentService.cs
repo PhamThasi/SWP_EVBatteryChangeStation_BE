@@ -18,5 +18,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> GetPaymentByAccountId(Guid accountId);
         Task<IServiceResult> GetAllPayment();
         Task<IServiceResult> GetPaymentByTransactionId(Guid transactionId);
+        //Task<IServiceResult> ValidatePayment(ValidatePaymentDto validate);
+        Task<IServiceResult> GetByGateWayId(long gateway);
     }
 }

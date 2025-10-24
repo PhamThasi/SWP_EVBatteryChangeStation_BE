@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Repository.IRepositories;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 namespace EV_BatteryChangeStation_Repository.UnitOfWork
@@ -17,5 +18,6 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         ISupportRequestRepository SupportRequestRepository { get; }
         ISwappingTransactionRepository SwappingTransactionRepository { get; }
         IPaymentRepository PaymentRepository { get; }
+        Task<IDbContextTransaction> BeginTransactionAsync();
     }
 }

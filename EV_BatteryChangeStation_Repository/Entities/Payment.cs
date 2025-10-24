@@ -15,6 +15,8 @@ public partial class Payment
 
     public bool? Status { get; set; }
 
+    public long? PaymentGateId { get; set; }
+
     public DateTime? CreateDate { get; set; }
 
     public Guid? SubscriptionId { get; set; }
