@@ -80,7 +80,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpGet("GetBatteryByStationId")]
         public async Task<IActionResult> GetBatteryByStationId([FromQuery] Guid stationId)
         {
-            if (stationId == null)
+            if (stationId == Guid.Empty)
                 return BadRequest("Invalid station data");
             var result = await _batteryService.GetAllBatteryByStationId(stationId);
             if (result.Status == 200)
@@ -94,7 +94,7 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpGet("GetBatteryCountByStationId")]
         public async Task<IActionResult> GetBatteryCountByStationId([FromQuery] Guid stationId)
         {
-            if (stationId == null)
+            if (stationId == Guid.Empty)
                 return BadRequest("Invalid station data");
             var result = await _batteryService.GetBatteryCountByStationId(stationId);
             if (result.Status == 200)

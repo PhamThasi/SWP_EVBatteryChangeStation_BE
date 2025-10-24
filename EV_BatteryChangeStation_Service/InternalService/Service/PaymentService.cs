@@ -192,7 +192,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (accountId == null)
+                if (accountId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -245,7 +245,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (transactionId == null)
+                if (transactionId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -370,7 +370,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (paymentId == null)
+                if (paymentId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -421,7 +421,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (paymentId == null)
+                if (paymentId == Guid.Empty)
                 {
                     return new ServiceResult
                     {

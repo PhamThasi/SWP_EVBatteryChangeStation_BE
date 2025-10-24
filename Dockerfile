@@ -1,21 +1,29 @@
-# ====== STAGE 1: BUILD ======
+# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy toàn bộ solution
-COPY . .
+# Copy all .csproj files
+COPY EV_BatteryChangeStation/EV_BatteryChangeStation.csproj EV_BatteryChangeStation/
+COPY EV_BatteryChangeStation_Common/EV_BatteryChangeStation_Common.csproj EV_BatteryChangeStation_Common/
+COPY EV_BatteryChangeStation_Repository/EV_BatteryChangeStation_Repository.csproj EV_BatteryChangeStation_Repository/
+COPY EV_BatteryChangeStation_Service/EV_BatteryChangeStation_Service.csproj EV_BatteryChangeStation_Service/
 
 # Restore dependencies
-RUN dotnet restore "EV_BatteryChangeStation/EV_BatteryChangeStation.csproj"
+RUN dotnet restore EV_BatteryChangeStation/EV_BatteryChangeStation.csproj
 
-# Build và publish ứng dụng
-RUN dotnet publish "EV_BatteryChangeStation/EV_BatteryChangeStation.csproj" -c Release -o /app/publish
+# Copy everything else
+COPY . .
 
-# ====== STAGE 2: RUNTIME ======
+# Double-check appsettings.json is copied
+RUN ls -la EV_BatteryChangeStation
+
+# Publish the application
+RUN dotnet publish EV_BatteryChangeStation/EV_BatteryChangeStation.csproj -c Release -o /app/out
+
+# Stage 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+COPY --from=build /app/out .
 
-COPY --from=build /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "EV_BatteryChangeStation.dll"]
