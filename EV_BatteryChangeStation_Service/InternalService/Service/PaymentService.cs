@@ -468,45 +468,75 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        // =================== VALIDATE PAYMENT ===================
-        public async Task<IServiceResult> ValidatePayment(ValidatePaymentDto validate)
+        //// =================== VALIDATE PAYMENT ===================
+        //public async Task<IServiceResult> ValidatePayment(ValidatePaymentDto validate)
+        //{
+        //    try
+        //    {
+        //        using var scope = await _unitOfWork.BeginTransactionAsync();
+        //        try
+        //        {
+        //            var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(validate.PaymentId);
+        //            if (payment == null)
+        //            {
+        //                return new ServiceResult
+        //                {
+        //                    Status = Const.WARNING_NO_DATA_CODE,
+        //                    Message = "Payment not found"
+        //                };
+        //            }
+        //            if (payment.SubscriptionId != validate.SubcriptionId || payment.TransactionId != validate.TransactionId)
+        //            {
+        //                return new ServiceResult
+        //                {
+        //                    Status = Const.FAIL_VALIDATE_CODE,
+        //                    Message = "Payment validation failed"
+        //                };
+        //            }
+        //            return new ServiceResult
+        //            {
+        //                Status = Const.SUCCESS_READ_CODE,
+        //                Message = "Payment validated successfully",
+        //                Data = payment.PaymentRespondDto()
+        //            };
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            await scope.RollbackAsync();
+        //            throw new Exception("Error while validating payment", ex);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ServiceResult
+        //        {
+        //            Status = Const.ERROR_EXCEPTION,
+        //            Message = ex.InnerException?.Message ?? ex.Message
+        //        };
+        //    }
+        //}
+        // =================== GET BY GATEWAY ID ===================
+        public async Task<IServiceResult> GetByGateWayId(long gateway)
         {
             try
             {
-                using var scope = await _unitOfWork.BeginTransactionAsync();
-                try
+                var payment = await _unitOfWork.PaymentRepository.GetByGatewayIdAsync(gateway);
+                if (payment == null)
                 {
-                    var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(validate.PaymentId);
-                    if (payment == null)
-                    {
-                        return new ServiceResult
-                        {
-                            Status = Const.WARNING_NO_DATA_CODE,
-                            Message = "Payment not found"
-                        };
-                    }
-                    if (payment.SubscriptionId != validate.SubcriptionId || payment.TransactionId != validate.TransactionId)
-                    {
-                        return new ServiceResult
-                        {
-                            Status = Const.FAIL_VALIDATE_CODE,
-                            Message = "Payment validation failed"
-                        };
-                    }
                     return new ServiceResult
                     {
-                        Status = Const.SUCCESS_READ_CODE,
-                        Message = "Payment validated successfully",
-                        Data = payment.PaymentRespondDto()
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = "Payment not found"
                     };
                 }
-                catch (Exception ex)
+                return new ServiceResult
                 {
-                    await scope.RollbackAsync();
-                    throw new Exception("Error while validating payment", ex);
-                }
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = payment.PaymentRespondDto()
+                };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return new ServiceResult
                 {
@@ -515,6 +545,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-     }
+    }
 }
     

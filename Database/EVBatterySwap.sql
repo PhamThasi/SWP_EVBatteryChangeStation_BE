@@ -76,7 +76,7 @@ CREATE TABLE Payment (
     Status BIT,
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
-    SubscriptionID UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES Subscription(SubscriptionID)
+    SubscriptionID UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Subscription(SubscriptionID)
 );
 
 -- ========================
@@ -201,6 +201,7 @@ GO
 -- ========================
 -- DỮ LIỆU MẪU
 -- ========================
+
 
 -- Role
 DECLARE @roleAdmin UNIQUEIDENTIFIER = NEWID();

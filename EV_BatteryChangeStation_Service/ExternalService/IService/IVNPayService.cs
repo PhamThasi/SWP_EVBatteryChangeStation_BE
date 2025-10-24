@@ -10,7 +10,7 @@ namespace EV_BatteryChangeStation_Service.ExternalService.IService
 {
     public interface IVNPayService
     {
-        Task<IServiceResult> CreatePaymentURL(Guid Transaction, string ipAddress);
+        Task<IServiceResult> CreatePaymentURL(Guid payment, string ipAddress);
         Task<IServiceResult> ValidateRespond(IQueryCollection queryParams);
     }
 }

@@ -105,5 +105,16 @@ namespace EV_BatteryChangeStation_BE.Controllers
             var result = await _paymentService.SoftDeletePayment(paymentId);
             return StatusCode(result.Status, result);
         }
+
+        // =================== GET BY GATEWAY ID ===================
+        [HttpGet("get-by-gateway/{gatewayId}")]
+        public Task<IActionResult> GetByGateWayId(long gatewayid)
+        {
+            if (gatewayid <= 0)
+                return Task.FromResult<IActionResult>(BadRequest("Gateway ID is required."));
+            var result = _paymentService.GetByGateWayId(gatewayid);
+            return result.ContinueWith(task => (IActionResult)StatusCode(task.Result.Status, task.Result));
+        }
+
     }
 }

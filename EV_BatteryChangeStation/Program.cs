@@ -14,6 +14,7 @@ using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using EV_BatteryChangeStation_Repository.Base;
+using VNPAY.NET;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,8 +46,9 @@ builder.Services.AddScoped<ISwappingService, SwappingService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
+builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
-
+builder.Services.AddScoped<IVnpay, Vnpay>();
 // Đăng kí cho JWT service
 var jwtSettings = builder.Configuration.GetSection("JwtConfig"); // lấy từ appsettings.json
 
@@ -86,7 +88,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Đăng kí unit of work
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
