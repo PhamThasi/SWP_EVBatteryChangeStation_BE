@@ -1,5 +1,4 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
-using EV_BatteryChangeStation_Repository.IRepositories;
+﻿using EV_BatteryChangeStation_Repository.IRepositories;
 using EV_BatteryChangeStation_Repository.Repositories;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.ExternalService.IService;
@@ -15,7 +14,6 @@ using EV_BatteryChangeStation_Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using EV_BatteryChangeStation_Repository.Base;
-using HashidsNet;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +41,8 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBatteryService, BatteryService>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<ISwappingService, SwappingService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
@@ -123,7 +123,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // URL frontend của bạn
+            policy.WithOrigins("http://localhost:5205") // URL frontend của bạn
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials(); // nếu cần gửi cookie/token

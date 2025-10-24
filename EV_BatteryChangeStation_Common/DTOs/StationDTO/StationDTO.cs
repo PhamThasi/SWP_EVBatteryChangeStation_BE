@@ -10,7 +10,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.StationDTO
     public class StationDTO : StationCreateDTO
     {
         
-        public int StationId { get; set; }
+        public Guid StationId { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public bool? Status { get; set; }

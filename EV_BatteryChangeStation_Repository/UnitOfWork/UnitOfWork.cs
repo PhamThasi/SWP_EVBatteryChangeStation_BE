@@ -1,7 +1,7 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
-using EV_BatteryChangeStation_Repository.Entities;
+﻿using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using EV_BatteryChangeStation_Repository.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EV_BatteryChangeStation_Repository.UnitOfWork
 {
@@ -18,10 +18,15 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private ICarRepository _carRepository;
         private ISubscriptionRepository _subscriptionRepository;
         private ISupportRequestRepository _supportRequestRepository;
-
+        private ISwappingTransactionRepository _swappingTransactionRepository;
+        private IPaymentRepository _paymentRepository;
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
+        }
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _context.Database.BeginTransactionAsync();
         }
 
         public IAccountReporitory AccountRepository
@@ -82,6 +87,20 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
             get
             {
                 return _supportRequestRepository ??= new SupportRequestRepository(_context);
+            }
+        }
+        public ISwappingTransactionRepository SwappingTransactionRepository
+        {
+            get
+            {
+                return _swappingTransactionRepository ??= new SwappingTransactionRepository(_context);
+            }
+        }
+        public IPaymentRepository PaymentRepository
+        {
+            get
+            {
+                return _paymentRepository ??= new PaymentRepository(_context);
             }
         }
     }

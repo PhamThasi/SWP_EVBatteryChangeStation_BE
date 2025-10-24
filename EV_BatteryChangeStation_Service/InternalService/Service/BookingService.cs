@@ -38,7 +38,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Lấy booking theo ID, nhưng không hiển thị nếu đã bị hủy
-        public async Task<ServiceResult> GetByIdAsync(int id)
+        public async Task<ServiceResult> GetByIdAsync(Guid id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Cập nhật thông tin booking (nếu chưa bị hủy)
-        public async Task<ServiceResult> UpdateAsync(int id, BookingCreateDTO dto)
+        public async Task<ServiceResult> UpdateAsync(Guid id, BookingCreateDTO dto)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         }
 
         // Xóa mềm (chỉ cập nhật trạng thái)
-        public async Task<ServiceResult> DeleteAsync(int id)
+        public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xóa cứng (hard delete - xóa hẳn khỏi DB)
-        public async Task<ServiceResult> HardDeleteAsync(int id)
+        public async Task<ServiceResult> HardDeleteAsync(Guid id)
         {
             try
             {

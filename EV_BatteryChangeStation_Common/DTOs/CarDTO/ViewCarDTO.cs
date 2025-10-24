@@ -8,7 +8,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.CarDTO
 {
     public class ViewCarDTO
     {
-        public string VehicleId { get; set; }
+        public Guid VehicleId { get; set; }
 
         public string Model { get; set; }
 

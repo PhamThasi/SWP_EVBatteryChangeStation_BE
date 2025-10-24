@@ -10,7 +10,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
     public interface IFeedBackRepository
     {
         Task<IEnumerable<Feedback>> GetAllAsync();
-        Task<Feedback> GetByIdAsync(int id);
+        Task<Feedback> GetByIdAsync(Guid id);
         Task AddAsync(Feedback feedback);
         void Update(Feedback feedback);
         void Delete(Feedback feedback);

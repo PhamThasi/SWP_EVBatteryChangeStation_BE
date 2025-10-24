@@ -1,5 +1,4 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
-using EV_BatteryChangeStation_Repository.Entities;
+﻿using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +18,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return await _context.Feedbacks.ToListAsync();
         }
 
-        public async Task<Feedback> GetByIdAsync(int id)
+        public async Task<Feedback> GetByIdAsync(Guid id)
         {
             return await _context.Feedbacks.FirstOrDefaultAsync(f => f.FeedbackId == id);
         }

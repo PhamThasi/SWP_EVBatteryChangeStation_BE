@@ -4,18 +4,15 @@ using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
-using HashidsNet;
 
 namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class RoleService : IRoleService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly Hashids _hashids;
         public RoleService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
-            _hashids = new Hashids("EV_BatteryChangeStation", 10);
         }
         // Tạo vai trò mới
         public async Task<IServiceResult> CreateRoleAsync(CreateRoleDTO createRole)
@@ -49,11 +46,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xoá vai trò
-        public async Task<IServiceResult> DeleteRoleAsync(string encodedId)
+        public async Task<IServiceResult> DeleteRoleAsync(Guid encodedId)
         {
             try
             {
-                if (encodedId == null)
+                if (encodedId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -61,7 +58,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
+                var role = await _unitOfWork.RoleRepository.GetByIdAsync(encodedId);
                 if (role == null)
                 {
                     return new ServiceResult
@@ -102,7 +99,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 }
                 var result = role.Select(r => new ViewRoleDto
                 {
-                    RoleId = _hashids.Encode(r.RoleId),
+                    RoleId = r.RoleId,
                     RoleName = r.RoleName,
                     Status = r.Status,
                     CreateDate = r.CreateDate,
@@ -207,7 +204,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
-                if (updateRole == null || updateRole.EncodedId == null)
+                if (updateRole == null)
                 {
                     return new ServiceResult
                     {
@@ -215,7 +212,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(updateRole.EncodedId));
+                var role = await _unitOfWork.RoleRepository.GetByIdAsync(updateRole.RoleId);
                 if (role == null)
                 {
                     return new ServiceResult
@@ -243,11 +240,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xoá mềm vai trò
-        public async Task<IServiceResult> SoftDeleteAsync(string encodedId)
+        public async Task<IServiceResult> SoftDeleteAsync(Guid encodedId)
         {
             try
             {
-                if (encodedId == null)
+                if (encodedId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -255,7 +252,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(_hashids.DecodeSingle(encodedId));
+                var role = await _unitOfWork.RoleRepository.GetByIdAsync(encodedId);
                 if (role == null)
                 {
                     return new ServiceResult

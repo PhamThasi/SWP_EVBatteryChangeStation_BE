@@ -25,7 +25,7 @@ public class StationController : ControllerBase
     }
 
     [HttpPut("Update/{id}")]
-    public async Task<IActionResult> UpdateStation(int id, [FromBody] StationCreateDTO dto)
+    public async Task<IActionResult> UpdateStation(Guid id, [FromBody] StationCreateDTO dto)
     {
         var result = await _stationService.UpdateAsync(id, dto);
         if (result.Status == 404) return NotFound(result);
@@ -35,7 +35,7 @@ public class StationController : ControllerBase
     }
 
     [HttpDelete("Delete/{id}")]
-    public async Task<IActionResult> DeleteStation(int id)
+    public async Task<IActionResult> DeleteStation(Guid id)
     {
         var result = await _stationService.DeleteAsync(id);
         if (result.Status == 404) return NotFound(result);
@@ -52,7 +52,7 @@ public class StationController : ControllerBase
     }
 
     [HttpGet("Select/{id}")]
-    public async Task<IActionResult> GetStation(int id)
+    public async Task<IActionResult> GetStation(Guid id)
     {
         var result = await _stationService.GetByIdAsync(id);
         if (result.Status == 404) return NotFound(result);
@@ -60,7 +60,7 @@ public class StationController : ControllerBase
     }
 
     [HttpDelete("HardDelete/{id}")]
-    public async Task<IActionResult> HardDeleteStation(int id)
+    public async Task<IActionResult> HardDeleteStation(Guid id)
     {
         var result = await _stationService.HardDeleteAsync(id);
         if (result.Status == 404) return NotFound(result);

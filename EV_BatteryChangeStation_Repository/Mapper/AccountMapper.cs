@@ -11,28 +11,34 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class AccountMapper
     {
-        public static AccountDTO MapToDTO(this Account account)
+
+        public static ViewAccountDTOs MapToDTO(this Account account)
         {
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
-            return new AccountDTO
+            return new ViewAccountDTOs
             {
+                RoleId = account.RoleId,
                 AccountName = account.AccountName,
                 Password = account.Password,
                 Address = account.Address,
                 Email = account.Email,
                 PhoneNumber = account.PhoneNumber,
                 DateOfBirth = account.DateOfBirth,
-                Status = account.Status
+                Status = account.Status,
+                FullName = account.FullName,
+                Gender = account.Gender,
+                CreateDate = account.CreateDate,
+                UpdateDate = account.UpdateDate,
             };
         }
 
-        public static Account MapToEntity(this CreateAccountDTO accountDto, int roleId)
+        public static Account MapToEntity(this CreateAccountDTO accountDto)
         {
             if (accountDto == null) throw new ArgumentNullException(nameof(accountDto));
             return new Account
             {
                 FullName = accountDto.FullName,
-                RoleId = roleId, // truyền int từ service sau khi decode
+                RoleId = accountDto.RoleId,
                 Gender = accountDto.Gender,
                 AccountName = accountDto.AccountName,
                 Password = accountDto.Password,
@@ -46,6 +52,11 @@ namespace EV_BatteryChangeStation_Repository.Mapper
 
         public static void MaptoUpdate(this Account account, UpdateAccountDTO updateAccount)
         {
+            if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
+            if(updateAccount.RoleId != Guid.Empty)
+            {
+                account.RoleId = updateAccount.RoleId;
+            }
             if (!string.IsNullOrEmpty(updateAccount.AccountName))
             {
                 account.AccountName = updateAccount.AccountName;
@@ -78,6 +89,11 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 account.Gender = updateAccount.Gender;
             }
+        }
+        public static List<ViewAccountDTOs> MapToDTO(this List<Account> accounts)
+        {
+            if (accounts == null) throw new ArgumentNullException(nameof(accounts), "cannot be null");
+            return accounts.Select(a => a.MapToDTO()).ToList();
         }
     }
 }

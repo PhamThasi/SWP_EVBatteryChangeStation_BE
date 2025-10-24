@@ -12,10 +12,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
     {
         Task<IServiceResult> AddCarAsync(CreateCarDto createCar);
         Task<IServiceResult> GetAllCarsAsync();
-        Task<IServiceResult> GetCarByIdAsync(string carId);
+        Task<IServiceResult> GetCarByIdAsync(Guid carId);
         Task<IServiceResult> UpdateCarAsync(UpdateCarDto updateCarDto);
-        Task<IServiceResult> DeleteCarAsync(string carId);
-        Task<IServiceResult> SoftDeleteCarAsync(string carid);
-        Task<IServiceResult> GetOwnerByCarIdAsync(string carid);
+        Task<IServiceResult> DeleteCarAsync(Guid carId);
+        Task<IServiceResult> SoftDeleteCarAsync(Guid carid);
+        Task<IServiceResult> GetOwnerByCarIdAsync(Guid carid);
+        Task<IServiceResult> GetCarByNameAsync(string modelName);
     }
 }

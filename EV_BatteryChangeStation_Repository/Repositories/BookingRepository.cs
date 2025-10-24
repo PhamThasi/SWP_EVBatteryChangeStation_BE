@@ -1,5 +1,4 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
-using EV_BatteryChangeStation_Repository.Entities;
+﻿using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +27,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Booking?> GetByIdAsync(int id)
+        public async Task<Booking?> GetByIdAsync(Guid id)
         {
             return await _context.Bookings
                 .Include(b => b.Station)

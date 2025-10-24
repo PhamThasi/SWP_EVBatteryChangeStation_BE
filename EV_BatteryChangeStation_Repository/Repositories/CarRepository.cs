@@ -1,5 +1,4 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
-using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +16,15 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             _context = context;
         }
 
+        public Task<List<Car>> GetCarByNameAsync(string modelName)
+        {
+            return _context.Cars
+                .Where(c => c.Model.Contains(modelName))
+                .ToListAsync();
+        }
+
         // Lấy chủ sở hữu xe theo VehicleId (bỏ HashIds)
-        public async Task<Account?> GetOwnerByCarIdAsync(int carId)
+        public async Task<Account?> GetOwnerByCarIdAsync(Guid carId)
         {
             var owner = await _context.Bookings
                 .Include(b => b.Account)

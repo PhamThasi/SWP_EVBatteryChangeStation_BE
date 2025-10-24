@@ -15,5 +15,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         ICarRepository CarRepository { get; }
         ISubscriptionRepository SubscriptionRepository { get; }
         ISupportRequestRepository SupportRequestRepository { get; }
+        ISwappingTransactionRepository SwappingTransactionRepository { get; }
+        IPaymentRepository PaymentRepository { get; }
     }
 }

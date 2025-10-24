@@ -6,20 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HashidsNet;
 
 namespace EV_BatteryChangeStation_Repository.Mapper
 {
     public static class BatteryMapper
     {
-        private static readonly Hashids _hashids =
-            new Hashids("EV_BatteryChangeStation", 10);
         public static ViewBatteryDTO MapToEntity(this Battery battery)
         {
             if (battery == null) throw new ArgumentNullException(nameof(battery), "cannot be null");
             return new ViewBatteryDTO
             {
-                BatteryId = _hashids.Encode(battery.BatteryId),
+                BatteryId = battery.BatteryId,
                 Capacity = battery.Capacity,
                 LastUsed = battery.LastUsed,
                 Status = battery.Status,

@@ -1,5 +1,4 @@
-﻿using EV_BatteryChangeStation_Repository.DBContext;
-using EV_BatteryChangeStation_Repository.Entities;
+﻿using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,7 +21,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         public async Task<List<Station>> GetAllAsync() =>
             await _context.Stations.ToListAsync();
 
-        public async Task<Station> GetByIdAsync(int id) =>
+        public async Task<Station> GetByIdAsync(Guid id) =>
             await _context.Stations.FindAsync(id);
 
         public void Create(Station station) =>

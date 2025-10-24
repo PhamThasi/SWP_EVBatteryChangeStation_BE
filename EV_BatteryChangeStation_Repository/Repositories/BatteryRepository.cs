@@ -1,5 +1,4 @@
 ﻿using EV_BatteryChangeStation_Repository.Base;
-using EV_BatteryChangeStation_Repository.DBContext;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +21,15 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return battery;
         }
 
+        public Task<List<Battery?>> GetBatteriesByType(string typeBattery)
+        {
+            return _context.Batteries
+                .Where(b => b.TypeBattery.Contains(typeBattery))
+                .ToListAsync();
+        }
+
         //lấy tất cả pin trong trạm
-        public async Task<List<Battery>> GetBatteryByStationId(int stationId)
+        public async Task<List<Battery>> GetBatteryByStationId(Guid stationId)
         {
             var battery = await _context.Batteries
                 .Where(b => b.StationId == stationId)
@@ -32,7 +38,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         }
 
         //kiểm tra số lượng pin trong trạm
-        public async Task<int?> GetBatteryCountByStationId(int stationId)
+        public async Task<int?> GetBatteryCountByStationId(Guid stationId)
         {
             var station = await
                 _context.Stations.Where(s => s.StationId == stationId)
@@ -40,7 +46,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return station;
         }
         //Kiểm tra pin có thể được thay thế
-        public async Task<bool?> IsBatteryAvailable(int batteryId)
+        public async Task<bool?> IsBatteryAvailable(Guid batteryId)
         {
             var isAvailable = await _context.Batteries
                 .AnyAsync(b => b.BatteryId == batteryId && b.Status == true && b.StateOfHealth > 80);

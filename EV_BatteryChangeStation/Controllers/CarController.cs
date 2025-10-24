@@ -59,9 +59,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Get Car By Id
         /// </summary>
         [HttpGet("GetCarById")]
-        public async Task<IActionResult> GetCarById([FromQuery] string carId)
+        public async Task<IActionResult> GetCarById([FromQuery] Guid carId)
         {
-            if (string.IsNullOrEmpty(carId))
+            if (carId == Guid.Empty)
                 return BadRequest("Invalid car id");
             var result = await _carService.GetCarByIdAsync(carId);
             if (result.Status == 200)
@@ -73,9 +73,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Get Account's Car
         /// </summary>
         [HttpGet("GetOwnerByCarIdAsync")]
-        public async Task<IActionResult> GetOwnerByCarIdAsync([FromQuery] string carId)
+        public async Task<IActionResult> GetOwnerByCarIdAsync([FromQuery] Guid carId)
         {
-            if (carId.IsNullOrEmpty())
+            if (carId == Guid.Empty)
                 return BadRequest("Invalid Car id");
             var result = await _carService.GetOwnerByCarIdAsync(carId);
             if (result.Status == 200)
@@ -87,9 +87,9 @@ namespace EV_BatteryChangeStation.Controllers
         /// Delete Car
         /// </summary>
         [HttpDelete("DeleteCar")]
-        public async Task<IActionResult> DeleteCar([FromQuery] string carId)
+        public async Task<IActionResult> DeleteCar([FromQuery] Guid carId)
         {
-            if (string.IsNullOrEmpty(carId))
+            if (carId == Guid.Empty)
                 return BadRequest("Invalid car id");
             var result = await _carService.DeleteCarAsync(carId);
             if (result.Status == 200)
@@ -101,14 +101,29 @@ namespace EV_BatteryChangeStation.Controllers
         /// SoftDelete
         /// </summary>
         [HttpDelete("SoftDeleteCar")]
-        public async Task<IActionResult> SoftDeleteCar([FromQuery] string carId)
+        public async Task<IActionResult> SoftDeleteCar([FromQuery] Guid carId)
         {
-            if (string.IsNullOrEmpty(carId))
+            if (carId == Guid.Empty)
                 return BadRequest("Invalid car id");
             var result = await _carService.SoftDeleteCarAsync(carId);
             if (result.Status == 200)
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+        /// <summary>
+        /// get car by model name
+        /// </summary>
+        [HttpGet("GetCarByName")]
+        public async Task<IActionResult> GetCarByName([FromQuery] string modelName)
+        {
+            if (string.IsNullOrEmpty(modelName))
+                return BadRequest("Invalid model name");
+            var result = await _carService.GetCarByNameAsync(modelName);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
+
     }
 }

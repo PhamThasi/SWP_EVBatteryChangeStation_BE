@@ -10,9 +10,10 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
 {
     public interface IBatteryRepository : IGenericRepository<Battery>
     {
-        Task<int?> GetBatteryCountByStationId(int stationId);
-        Task<bool?> IsBatteryAvailable(int batteryId);
-        Task<List<Battery>> GetBatteryByStationId(int stationId); 
+        Task<int?> GetBatteryCountByStationId(Guid stationId);
+        Task<bool?> IsBatteryAvailable(Guid batteryId);
+        Task<List<Battery>> GetBatteryByStationId(Guid stationId); 
         Task<List<Battery>> GetAllBattery();
+        Task<List<Battery?>> GetBatteriesByType(string typeBattery);
     }
 }

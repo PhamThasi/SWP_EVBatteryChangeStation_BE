@@ -4,7 +4,6 @@ using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
-using HashidsNet;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -17,11 +16,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
     public class BatteryService : IBatteryService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly Hashids _hashids;
         public BatteryService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
-            _hashids = new Hashids("EV_BatteryChangeStation", 10);
+
         }
         // Tạo pin mới
         public async Task<IServiceResult> CreateBatteryAsync(CreateBatteryDTO createBattery)
@@ -54,11 +52,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xoá cứng pin
-        public async Task<IServiceResult> DeleteBattery(string batteryId)
+        public async Task<IServiceResult> DeleteBattery(Guid batteryId)
         {
             try
             {
-                if (batteryId.IsNullOrEmpty())
+                if (batteryId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -66,7 +64,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(_hashids.DecodeSingle(batteryId));
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(batteryId);
                 if (battery == null)
                 {
                     return new ServiceResult
@@ -123,11 +121,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         //lấy tất cả pin trong trạm
-        public async Task<IServiceResult> GetAllBatteryByStationId(int stationId)
+        public async Task<IServiceResult> GetAllBatteryByStationId(Guid stationId)
         {
             try
             {
-                if (stationId == 0)
+                if (stationId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -160,12 +158,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //lấy pin theo id
-        public async Task<IServiceResult> GetBatteryById(string batteryId)
+
+        public async Task<IServiceResult> GetBatteriesByType(string typeBattery)
         {
             try
             {
-                if (batteryId == null)
+                if (typeBattery.IsNullOrEmpty())
                 {
                     return new ServiceResult
                     {
@@ -173,7 +171,47 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(_hashids.DecodeSingle(batteryId));
+                var battery = await _unitOfWork.BatteryRepository.GetBatteriesByType(typeBattery);
+                if (battery == null || !battery.Any())
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = Const.WARNING_NO_DATA_MSG,
+                    };
+                }
+                var batteryDtos = battery.Select(b => b.MapToEntity()).ToList();
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = battery
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
+
+        //lấy pin theo id
+        public async Task<IServiceResult> GetBatteryById(Guid batteryId)
+        {
+            try
+            {
+                if (batteryId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(batteryId);
                 if (battery == null)
                 {
                     return new ServiceResult
@@ -200,11 +238,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         //lấy số lượng pin trong trạm
-        public async Task<IServiceResult> GetBatteryCountByStationId(int stationId)
+        public async Task<IServiceResult> GetBatteryCountByStationId(Guid stationId)
         {
             try
             {
-                if (stationId == 0)
+                if (stationId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -238,11 +276,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Kiểm tra pin có thể hoán đổi được không
-        public async Task<IServiceResult> IsBatteryAvailable(string batteryId)
+        public async Task<IServiceResult> IsBatteryAvailable(Guid batteryId)
         {
             try
             {
-                if (batteryId.IsNullOrEmpty())
+                if (batteryId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -250,7 +288,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(_hashids.DecodeSingle(batteryId));
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(batteryId);
                 if (battery == null)
                 {
                     return new ServiceResult
@@ -277,11 +315,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
         // Xoá mềm pin
-        public async Task<IServiceResult> SoftDeleteBaterry(string BatteryId)
+        public async Task<IServiceResult> SoftDeleteBattery(Guid BatteryId)
         {
             try
             {
-                if (BatteryId == null)
+                if (BatteryId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
@@ -289,7 +327,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(_hashids.DecodeSingle(BatteryId));
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(BatteryId);
                 if (battery == null)
                 {
                     return new ServiceResult
@@ -328,7 +366,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
-                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(_hashids.DecodeSingle(updateDTO.BatteryId));
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(updateDTO.BatteryId);
                 if (battery == null)
                 {
                     return new ServiceResult

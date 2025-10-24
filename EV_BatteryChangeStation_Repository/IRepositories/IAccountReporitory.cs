@@ -7,12 +7,12 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
 {
     public interface IAccountReporitory : IGenericRepository<Account>
     {
-        Task<Account> GetAccountByAccountName(string accountName);
+        Task<List<Account>> GetAccountByAccountName(string accountName);
         Task<Account> GetAccountByEmail(string email);
         Task<Account> GetAccountByPhoneAsync(string phone);
         Task<Account> GetAllAccount();
         Task<List<Account>> GetAllWithRoleAsync();
-        Task<Account?> GetAllWithRoleAndStation(int id);
+        Task<Account?> GetAllWithRoleAndStation(Guid id);
         Task<Account?> GetByAccountNameOrEmail(string keyword);
         Task<Account?> FindAsync(Expression<Func<Account, bool>> predicate);
     }
