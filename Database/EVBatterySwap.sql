@@ -76,7 +76,7 @@ CREATE TABLE Payment (
     Status BIT,
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
-    SubscriptionID UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Subscription(SubscriptionID)
+    SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID)
 );
 
 -- ========================
