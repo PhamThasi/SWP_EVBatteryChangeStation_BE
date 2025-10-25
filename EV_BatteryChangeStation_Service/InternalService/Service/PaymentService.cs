@@ -201,15 +201,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (accountId == Guid.Empty)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.FAIL_READ_CODE,
-                        Message = "Invalid Account ID format"
-                    };
-                }
-
                 var payments = await _unitOfWork.PaymentRepository.GetPaymentByAccountIdAsync(accountId);
 
                 if (payments == null)
@@ -251,15 +242,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     {
                         Status = Const.FAIL_READ_CODE,
                         Message = "Transaction ID is required"
-                    };
-                }
-
-                if (transactionId == Guid.Empty)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.FAIL_READ_CODE,
-                        Message = "Invalid Transaction ID format"
                     };
                 }
 
@@ -379,15 +361,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (paymentId == Guid.Empty)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.FAIL_DELETE_CODE,
-                        Message = "Invalid Payment ID format"
-                    };
-                }
-
                 var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
                 if (payment == null)
                 {
@@ -427,15 +400,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     {
                         Status = Const.FAIL_DELETE_CODE,
                         Message = "Payment ID is required"
-                    };
-                }
-
-                if (paymentId == Guid.Empty)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.FAIL_DELETE_CODE,
-                        Message = "Invalid Payment ID format"
                     };
                 }
 
