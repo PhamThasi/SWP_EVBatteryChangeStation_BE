@@ -1,15 +1,16 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.FeedBackDTO;
-using System.Collections.Generic;
+using EV_BatteryChangeStation_Service.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Service.InternalService.IService
 {
     public interface IFeedBackService
     {
-        Task<List<FeedBackDTO>> GetAllAsync();
-        Task<FeedBackDTO> GetByIdAsync(Guid id);
-        Task<FeedBackDTO> CreateAsync(CreateFeedBackDTO dto);
-        Task<FeedBackDTO> UpdateAsync(Guid id, UpdateFeedBackDTO dto);
-        Task DeleteAsync(Guid id); // chỉ xóa cứng
+        Task<ServiceResult> GetAllAsync();
+        Task<ServiceResult> GetByIdAsync(Guid id);
+        Task<ServiceResult> CreateAsync(CreateFeedBackDTO dto);
+        Task<ServiceResult> UpdateAsync(Guid id, UpdateFeedBackDTO dto);
+        Task<ServiceResult> DeleteAsync(Guid id);
     }
 }

@@ -15,6 +15,7 @@ namespace EV_BatteryChangeStation_Service.Base
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string>? Errors { get; set; }
+        public Enum? ErrorCode { get; set; }
 
         public ServiceResult()
         {
@@ -40,6 +41,13 @@ namespace EV_BatteryChangeStation_Service.Base
             Status = status;
             Message = message;
             Errors = errors;
+        }
+        public ServiceResult(int status, string message, object data, Enum errorCode)
+        {
+            Status = status;
+            Message = message;
+            Data = data;
+            ErrorCode = errorCode;
         }
 
     }
