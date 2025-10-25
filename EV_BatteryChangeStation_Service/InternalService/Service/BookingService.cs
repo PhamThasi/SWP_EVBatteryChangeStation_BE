@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.BookingDTO;
+using EV_BatteryChangeStation_Common.Enum.BookingEnum;
 using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
@@ -19,39 +20,40 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork;
         }
 
-        // Lấy tất cả booking còn hoạt động (Status == true)
+        // Lấy tất cả booking còn hoạt động
         public async Task<ServiceResult> GetAllAsync()
         {
             try
             {
                 var bookings = await _unitOfWork.BookingRepository.GetAllAsync();
+                var activeBookings = bookings
+                    .Where(b => b.Status == true)
+                    .Select(BookingMapper.ToDTO)
+                    .ToList();
 
-                // Lọc ra chỉ các booking đang hoạt động
-                var activeBookings = bookings.Select(BookingMapper.ToDTO).ToList();
-
-                return new ServiceResult(200, "Success", activeBookings);
+                return new ServiceResult(200, "Success", activeBookings, BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error fetching bookings", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error fetching bookings", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
         }
 
-        // Lấy booking theo ID, nhưng không hiển thị nếu đã bị hủy
+        // Lấy booking theo ID
         public async Task<ServiceResult> GetByIdAsync(Guid id)
         {
             try
             {
                 var booking = await _unitOfWork.BookingRepository.GetByIdAsync(id);
 
-                if (booking == null)
-                    return new ServiceResult(404, "Booking not found or has been cancelled");
+                if (booking == null || booking.Status == false)
+                    return new ServiceResult(404, "Booking not found or cancelled", null, BookingErrorCode.BookingNotFound);
 
-                return new ServiceResult(200, "Success", BookingMapper.ToDTO(booking));
+                return new ServiceResult(200, "Success", BookingMapper.ToDTO(booking), BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error fetching booking", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error fetching booking", new List<string> { ex.Message }, BookingErrorCode.UnexpectedError);
             }
         }
 
@@ -60,78 +62,98 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
+                if (dto == null)
+                    return new ServiceResult(400, "Booking data is missing", null, BookingErrorCode.MissingRequiredField);
+
+                if (dto.DateTime < DateTime.Now)
+                    return new ServiceResult(400, "Booking time cannot be in the past", null, BookingErrorCode.TimeInPast);
+
+                var existing = (await _unitOfWork.BookingRepository.GetAllAsync())
+                    .FirstOrDefault(b => b.StationId == dto.StationId && b.DateTime == dto.DateTime && (b.Status ?? false));
+
+                if (existing != null)
+                    return new ServiceResult(409, "Duplicate booking for this time slot", null, BookingErrorCode.DuplicateBooking);
+
                 var entity = BookingMapper.ToEntity(dto);
                 entity.CreatedDate = DateTime.Now;
-                entity.Status = true; // Mặc định là còn hoạt động
+                entity.Status = true;
 
                 await _unitOfWork.BookingRepository.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(201, "Booking created successfully", BookingMapper.ToDTO(entity));
+                return new ServiceResult(201, "Booking created successfully", BookingMapper.ToDTO(entity), BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error creating booking", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error creating booking", new List<string> { ex.Message }, BookingErrorCode.TransactionFailed);
             }
         }
 
-        // Cập nhật thông tin booking (nếu chưa bị hủy)
+        // Cập nhật booking (nếu chưa hủy)
         public async Task<ServiceResult> UpdateAsync(Guid id, BookingCreateDTO dto)
         {
             try
             {
                 var existing = await _unitOfWork.BookingRepository.GetByIdAsync(id);
                 if (existing == null)
-                    return new ServiceResult(404, "Booking not found or has been cancelled");
+                    return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
+
+                if (existing.Status == false)
+                    return new ServiceResult(400, "Cannot update a cancelled booking", null, BookingErrorCode.BookingAlreadyCancelled);
 
                 BookingMapper.UpdateEntity(existing, dto);
                 _unitOfWork.BookingRepository.Update(existing);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Booking updated successfully", BookingMapper.ToDTO(existing));
+                return new ServiceResult(200, "Booking updated successfully", BookingMapper.ToDTO(existing), BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error updating booking", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error updating booking", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
         }
 
-        // Xóa mềm (chỉ cập nhật trạng thái)
+        // Xóa mềm (đánh dấu đã hủy)
         public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
             {
                 var existing = await _unitOfWork.BookingRepository.GetByIdAsync(id);
                 if (existing == null)
-                    return new ServiceResult(404, "Booking not found");
+                    return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
 
-                existing.Status = false; // Đánh dấu đã hủy
+                if (existing.Status == false)
+                    return new ServiceResult(400, "Booking is already cancelled", null, BookingErrorCode.BookingAlreadyCancelled);
+
+                existing.Status = false;
                 _unitOfWork.BookingRepository.Update(existing);
                 await _unitOfWork.CommitAsync();
-                return new ServiceResult(200, "Booking cancelled successfully");
+
+                return new ServiceResult(200, "Booking cancelled successfully", null, BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error cancelling booking", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error cancelling booking", new List<string> { ex.Message }, BookingErrorCode.TransactionFailed);
             }
         }
-        // Xóa cứng (hard delete - xóa hẳn khỏi DB)
+
+        // Xóa cứng (xóa khỏi DB)
         public async Task<ServiceResult> HardDeleteAsync(Guid id)
         {
             try
             {
                 var existing = await _unitOfWork.BookingRepository.GetByIdAsync(id);
                 if (existing == null)
-                    return new ServiceResult(404, "Booking not found for hard delete");
+                    return new ServiceResult(404, "Booking not found for hard delete", null, BookingErrorCode.BookingNotFound);
 
                 _unitOfWork.BookingRepository.Delete(existing);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Booking permanently deleted");
+                return new ServiceResult(200, "Booking permanently deleted", null, BookingErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Error permanently deleting booking", new List<string> { ex.Message });
+                return new ServiceResult(500, "Error permanently deleting booking", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
         }
     }

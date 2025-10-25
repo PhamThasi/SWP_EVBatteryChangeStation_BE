@@ -1,4 +1,5 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.SubscriptionDTO;
+using EV_BatteryChangeStation_Common.Enum.SubscriptionEnum;
 using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
@@ -23,12 +24,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var list = await _unitOfWork.SubscriptionRepository.GetAllAsync();
                 var mapped = list.ToDTOList();
-                return new ServiceResult(200, "Get all successfully", mapped);
+                return new ServiceResult(200, "Get all successfully", mapped, SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                // TODO: Ghi log nếu có logger
-                return new ServiceResult(500, $"Error while getting all subscriptions: {ex.Message}");
+                return new ServiceResult(500, $"Error while getting all subscriptions: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
             }
         }
 
@@ -38,13 +38,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var sub = await _unitOfWork.SubscriptionRepository.GetByIdAsync(id);
                 if (sub == null)
-                    return new ServiceResult(404, "Subscription not found");
+                    return new ServiceResult(404, "Subscription not found", null, SubscriptionErrorCode.SubscriptionNotFound);
 
-                return new ServiceResult(200, "Success", sub.ToDTO());
+                return new ServiceResult(200, "Success", sub.ToDTO(), SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, $"Error while getting subscription by ID: {ex.Message}");
+                return new ServiceResult(500, $"Error while getting subscription by ID: {ex.Message}", null, SubscriptionErrorCode.UnexpectedError);
             }
         }
 
@@ -52,16 +52,21 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         {
             try
             {
+                if (dto == null)
+                    return new ServiceResult(400, "Invalid subscription data", null, SubscriptionErrorCode.MissingRequiredField);
+
                 var entity = dto.ToEntity();
+                entity.CreateDate = DateTime.Now;
+                entity.IsActive = true;
 
                 await _unitOfWork.SubscriptionRepository.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(201, "Created successfully", entity.ToDTO());
+                return new ServiceResult(201, "Created successfully", entity.ToDTO(), SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, $"Error while creating subscription: {ex.Message}");
+                return new ServiceResult(500, $"Error while creating subscription: {ex.Message}", null, SubscriptionErrorCode.TransactionFailed);
             }
         }
 
@@ -71,17 +76,22 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var entity = await _unitOfWork.SubscriptionRepository.GetByIdAsync(id);
                 if (entity == null)
-                    return new ServiceResult(404, "Subscription not found");
+                    return new ServiceResult(404, "Subscription not found", null, SubscriptionErrorCode.SubscriptionNotFound);
+
+                if (entity.IsActive == false)
+                    return new ServiceResult(400, "Cannot update inactive subscription", null, SubscriptionErrorCode.SubscriptionAlreadyExpired);
 
                 entity.UpdateEntity(dto);
+                entity.UpdateDate = DateTime.Now;
+
                 _unitOfWork.SubscriptionRepository.Update(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Updated successfully", entity.ToDTO());
+                return new ServiceResult(200, "Updated successfully", entity.ToDTO(), SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, $"Error while updating subscription: {ex.Message}");
+                return new ServiceResult(500, $"Error while updating subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
             }
         }
 
@@ -91,7 +101,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var entity = await _unitOfWork.SubscriptionRepository.GetByIdAsync(id);
                 if (entity == null)
-                    return new ServiceResult(404, "Subscription not found");
+                    return new ServiceResult(404, "Subscription not found", null, SubscriptionErrorCode.SubscriptionNotFound);
+
+                if (entity.IsActive == false)
+                    return new ServiceResult(400, "Subscription already inactive", null, SubscriptionErrorCode.SubscriptionAlreadyCancelled);
 
                 entity.IsActive = false;
                 entity.UpdateDate = DateTime.Now;
@@ -99,11 +112,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.SubscriptionRepository.Update(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Soft deleted (IsActive = false)");
+                return new ServiceResult(200, "Soft deleted (IsActive = false)", null, SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, $"Error while soft deleting subscription: {ex.Message}");
+                return new ServiceResult(500, $"Error while soft deleting subscription: {ex.Message}", null, SubscriptionErrorCode.TransactionFailed);
             }
         }
 
@@ -113,16 +126,16 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var entity = await _unitOfWork.SubscriptionRepository.GetByIdAsync(id);
                 if (entity == null)
-                    return new ServiceResult(404, "Subscription not found");
+                    return new ServiceResult(404, "Subscription not found", null, SubscriptionErrorCode.SubscriptionNotFound);
 
                 _unitOfWork.SubscriptionRepository.Delete(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Hard deleted");
+                return new ServiceResult(200, "Hard deleted", null, SubscriptionErrorCode.None);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, $"Error while hard deleting subscription: {ex.Message}");
+                return new ServiceResult(500, $"Error while hard deleting subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
             }
         }
     }

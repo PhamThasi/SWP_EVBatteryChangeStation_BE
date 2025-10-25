@@ -11,5 +11,7 @@ namespace EV_BatteryChangeStation_Service.Base
         int Status { get; set; }
         string? Message { get; set; }
         object? Data { get; set; }
+        Enum? ErrorCode { get; set; }
+        List<string>? Errors { get; set; }
     }
 }

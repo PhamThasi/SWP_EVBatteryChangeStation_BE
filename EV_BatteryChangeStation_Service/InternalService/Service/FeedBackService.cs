@@ -1,7 +1,8 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.FeedBackDTO;
-using EV_BatteryChangeStation_Repository.UnitOfWork;
-using EV_BatteryChangeStation_Service.InternalService.IService;
 using EV_BatteryChangeStation_Repository.Mapper;
+using EV_BatteryChangeStation_Repository.UnitOfWork;
+using EV_BatteryChangeStation_Service.Base;
+using EV_BatteryChangeStation_Service.InternalService.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,65 +19,81 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork;
         }
 
-        // Lấy tất cả feedbacks
-        public async Task<List<FeedBackDTO>> GetAllAsync()
+        public async Task<ServiceResult> GetAllAsync()
         {
             try
             {
                 var feedbacks = await _unitOfWork.FeedBackRepository.GetAllAsync();
-                return feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
+                if (feedbacks == null || !feedbacks.Any())
+                    return new ServiceResult(404, "Không có feedback nào được tìm thấy.");
+
+                var data = feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
+                return new ServiceResult(200, "Lấy danh sách feedback thành công.", data);
             }
             catch (Exception ex)
             {
-                // TODO: Log lỗi (nếu có logging)
-                throw new Exception("Đã xảy ra lỗi khi lấy danh sách feedbacks.", ex);
+                return new ServiceResult(500, "Lỗi khi lấy danh sách feedbacks.", ex.Message);
             }
         }
 
-        // Lấy feedback theo ID
-        public async Task<FeedBackDTO> GetByIdAsync(Guid id)
+        public async Task<ServiceResult> GetByIdAsync(Guid id)
         {
             try
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
+                    return new ServiceResult(404, $"Không tìm thấy feedback có ID = {id}");
 
-                return feedback.ToFeedBackDTO();
+                return new ServiceResult(200, "Lấy feedback thành công.", feedback.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                throw new Exception("Đã xảy ra lỗi khi lấy thông tin feedback.", ex);
+                return new ServiceResult(500, "Lỗi khi lấy feedback.", ex.Message);
             }
         }
 
-        // Tạo feedback mới
-        public async Task<FeedBackDTO> CreateAsync(CreateFeedBackDTO dto)
+        public async Task<ServiceResult> CreateAsync(CreateFeedBackDTO dto)
         {
             try
             {
+                if (dto.Rating == null || dto.Rating < 1 || dto.Rating > 5)
+                    return new ServiceResult(400, "Điểm đánh giá (Rating) phải từ 1 đến 5.");
+
+                if (string.IsNullOrWhiteSpace(dto.Comment))
+                    dto.Comment = "Người dùng không để lại bình luận.";
+
+                var account = await _unitOfWork.AccountRepository.GetByIdAsync(dto.AccountId);
+                if (account == null)
+                    return new ServiceResult(404, "Không tồn tại tài khoản này.");
+
+                var booking = await _unitOfWork.BookingRepository.GetByIdAsync(dto.BookingId);
+                if (booking == null)
+                    return new ServiceResult(404, "Không tồn tại booking tương ứng để feedback.");
+
                 var entity = dto.ToEntity();
-                entity.CreateDate = DateTime.Now; // Tự động gán thời gian tạo
+                entity.CreateDate = DateTime.Now;
 
                 await _unitOfWork.FeedBackRepository.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return entity.ToFeedBackDTO();
+                return new ServiceResult(201, "Tạo feedback thành công.", entity.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                throw new Exception("Đã xảy ra lỗi khi tạo feedback mới.", ex);
+                return new ServiceResult(500, "Lỗi khi tạo feedback.", ex.Message);
             }
         }
 
-        // Cập nhật feedback
-        public async Task<FeedBackDTO> UpdateAsync(Guid id, UpdateFeedBackDTO dto)
+        public async Task<ServiceResult> UpdateAsync(Guid id, UpdateFeedBackDTO dto)
         {
             try
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
+                    return new ServiceResult(404, $"Không tìm thấy feedback với ID = {id}");
+
+                if (dto.Rating.HasValue && (dto.Rating < 1 || dto.Rating > 5))
+                    return new ServiceResult(400, "Điểm đánh giá (Rating) phải từ 1 đến 5.");
 
                 feedback.Rating = dto.Rating ?? feedback.Rating;
                 feedback.Comment = dto.Comment ?? feedback.Comment;
@@ -86,29 +103,30 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.FeedBackRepository.Update(feedback);
                 await _unitOfWork.CommitAsync();
 
-                return feedback.ToFeedBackDTO();
+                return new ServiceResult(200, "Cập nhật feedback thành công.", feedback.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                throw new Exception("Đã xảy ra lỗi khi cập nhật feedback.", ex);
+                return new ServiceResult(500, "Lỗi khi cập nhật feedback.", ex.Message);
             }
         }
 
-        // Xóa feedback (xóa cứng)
-        public async Task DeleteAsync(Guid id)
+        public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    throw new Exception($"Không tìm thấy feedback với ID = {id}.");
+                    return new ServiceResult(404, $"Không tìm thấy feedback với ID = {id}");
 
                 _unitOfWork.FeedBackRepository.Delete(feedback);
                 await _unitOfWork.CommitAsync();
+
+                return new ServiceResult(200, "Xóa feedback thành công.");
             }
             catch (Exception ex)
             {
-                throw new Exception("Đã xảy ra lỗi khi xóa feedback.", ex);
+                return new ServiceResult(500, "Lỗi khi xóa feedback.", ex.Message);
             }
         }
     }
