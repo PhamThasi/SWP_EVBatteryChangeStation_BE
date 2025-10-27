@@ -13,7 +13,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.SubscriptionDTO
         public decimal? ExtraFee { get; set; }
         public string? Description { get; set; }
         public int? DurationPackage { get; set; }
-        public Guid AccountId { get; set; }
+        public Guid? AccountId { get; set; }
     }
     public class SubscriptionViewDTO
     {
@@ -26,6 +26,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.SubscriptionDTO
         public bool? IsActive { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public Guid AccountId { get; set; }
+        public Guid? AccountId { get; set; }
     }
 }

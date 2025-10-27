@@ -25,7 +25,7 @@ public partial class Subscription
 
     public DateTime? UpdateDate { get; set; }
 
-    public Guid AccountId { get; set; }
+    public Guid? AccountId { get; set; }
 
     public virtual Account Account { get; set; }
 

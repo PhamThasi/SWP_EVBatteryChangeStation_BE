@@ -63,7 +63,7 @@ CREATE TABLE Subscription (
     IsActive BIT DEFAULT 1,
     CreateDate DATETIME DEFAULT GETDATE(),
     UpdateDate DATETIME NULL,
-    AccountID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID)
+    AccountID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Account(AccountID)
 );
 
 -- ========================
@@ -73,7 +73,7 @@ CREATE TABLE Payment (
     PaymentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Price DECIMAL(18,2),
     Method NVARCHAR(50),
-    Status BIT,
+    Status BIT default (0),
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
     SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID)
@@ -343,9 +343,9 @@ VALUES
 
 INSERT INTO Payment (PaymentID, Price, Method, Status, SubscriptionID, TransactionID, PaymentGateId)
 VALUES 
-(NEWID(), 500000, N'Credit Card', 1, @subBasic, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 1000000, N'Momo', 1, @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 600000, N'Momo', 1, @subBasic, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 500000, N'Credit Card', 0, @subBasic, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 1000000, N'Momo', 0, @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 600000, N'Momo', 0, @subBasic, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
 (NEWID(), 700000, N'VNPAY', 1, @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
 (NEWID(), 800000, N'Credit Card', 1, @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
 
