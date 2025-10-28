@@ -23,6 +23,17 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Car?>> GetCarsByOwnerIdAsync(Guid ownerId)
+        {
+            var cars = await _context.Bookings
+                .Include(b => b.Vehicle)
+                .Where(b => b.AccountId == ownerId)
+                .Select(b => b.Vehicle)
+                .Distinct()
+                .ToListAsync();
+            return cars;
+        }
+
         // Lấy chủ sở hữu xe theo VehicleId (bỏ HashIds)
         public async Task<Account?> GetOwnerByCarIdAsync(Guid carId)
         {
@@ -35,5 +46,6 @@ namespace EV_BatteryChangeStation_Repository.Repositories
 
             return owner;
         }
+
     }
 }

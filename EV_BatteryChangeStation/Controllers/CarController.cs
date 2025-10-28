@@ -125,5 +125,20 @@ namespace EV_BatteryChangeStation.Controllers
             return StatusCode(result.Status, result.Message);
         }
 
+
+        /// <summary>
+        /// get car by owner id
+        /// </summary>
+
+        [HttpGet("GetCarByOwner")]
+        public async Task<IActionResult> GetCarsByOwnerId([FromQuery] Guid ownerId)
+        {
+            if (ownerId == Guid.Empty)
+                return BadRequest("Invalid owner id");
+            var result = await _carService.GetCarsByOwnerIdAsync(ownerId);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
     }
 }
