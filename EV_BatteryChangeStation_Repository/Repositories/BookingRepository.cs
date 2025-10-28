@@ -50,5 +50,12 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         {
             _context.Bookings.Remove(booking);
         }
+
+        public async Task<List<Booking>> GetByAccountIdAsync(Guid accountId)
+        {
+            return await _context.Bookings
+                .Where(b => b.AccountId == accountId && b.Status == true)
+                .ToListAsync();
+        }
     }
 }
