@@ -41,6 +41,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 {
                     Status = Const.SUCCESS_CREATE_CODE,
                     Message = Const.SUCCESS_CREATE_MSG,
+                    Data = result
                 };
             }
             catch (Exception ex)
