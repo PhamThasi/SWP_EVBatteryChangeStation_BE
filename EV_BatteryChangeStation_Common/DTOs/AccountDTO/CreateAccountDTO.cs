@@ -16,6 +16,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
         public string? Gender { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
+        public DateTime? CreateDate { get; set; }
         public DateOnly? DateOfBirth { get; set; }
         public Guid StationId { get; set; }
     }

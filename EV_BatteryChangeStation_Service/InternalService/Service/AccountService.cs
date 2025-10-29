@@ -255,6 +255,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 }
 
                 account.MaptoUpdate(updateAccount);
+                account.Password = _passwordHasher.HashPassword(account, updateAccount.Password);
                 await _unitOfWork.AccountRepository.UpdateAsync(account);
                 return new ServiceResult
                 {

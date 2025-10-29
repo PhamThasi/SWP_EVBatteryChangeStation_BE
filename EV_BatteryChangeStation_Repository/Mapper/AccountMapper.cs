@@ -46,7 +46,8 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Email = accountDto.Email,
                 PhoneNumber = accountDto.PhoneNumber,
                 DateOfBirth = accountDto.DateOfBirth,
-                StationId = accountDto.StationId
+                StationId = accountDto.StationId,
+                CreateDate = DateTime.UtcNow,
             };
         }
 
@@ -55,7 +56,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             if (account == null) throw new ArgumentNullException(nameof(account), "cannot be null");
             if(updateAccount.RoleId != Guid.Empty)
             {
-                account.RoleId = updateAccount.RoleId;
+                account.RoleId = updateAccount.RoleId.Value;
             }
             if (!string.IsNullOrEmpty(updateAccount.AccountName))
             {
@@ -89,6 +90,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 account.Gender = updateAccount.Gender;
             }
+            account.UpdateDate = DateTime.UtcNow;
         }
         public static List<ViewAccountDTOs> MapToDTO(this List<Account> accounts)
         {
