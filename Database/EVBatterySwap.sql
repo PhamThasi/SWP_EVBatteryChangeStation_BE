@@ -222,10 +222,10 @@ DECLARE @stationHP UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO Station (StationID, Address, PhoneNumber, Status, AccountName, BatteryQuantity)
 VALUES
-(@stationHN, N'123 Lê Lợi, Hà Nội', '0901234567', 1, N'StationHN01', 2),
-(@stationHCM, N'456 Nguyễn Huệ, TP.HCM', '0902345678', 1, N'StationHCM01', 1),
-(@stationDN, N'789 Trần Phú, Đà Nẵng', '0903456789', 1, N'StationDN01', 0),
-(@stationHP, N'321 Lạch Tray, Hải Phòng', '0904567890', 1, N'StationHP01', 0);
+(@stationHN,  N'Số 123 Lê Lợi, Phường Tràng Tiền, Quận Hoàn Kiếm, Thành phố Hà Nội', '0901234567', 1, N'StationHN01', 2),
+(@stationHCM, N'Số 456 Nguyễn Huệ, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh',  '0902345678', 1, N'StationHCM01', 1),
+(@stationDN,  N'Số 789 Trần Phú, Phường Hải Châu 1, Quận Hải Châu, Thành phố Đà Nẵng', '0903456789', 1, N'StationDN01', 0),
+(@stationHP,  N'Số 321 Lạch Tray, Phường Lạch Tray, Quận Ngô Quyền, Thành phố Hải Phòng', '0904567890', 1, N'StationHP01', 0);
 
 -- Account
 DECLARE @admin UNIQUEIDENTIFIER = NEWID();
