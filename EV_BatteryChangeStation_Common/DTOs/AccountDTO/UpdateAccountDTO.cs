@@ -9,8 +9,8 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
     public class UpdateAccountDTO
     {
         public Guid AccountId { get; set; }
-        public Guid RoleId { get; set; }
-        public string AccountName { get; set; } = null!;
+        public Guid? RoleId { get; set; }
+        public string? AccountName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string? FullName { get; set; }
         public string? Email { get; set; }
@@ -18,5 +18,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.AccountDto
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public DateOnly? DateOfBirth { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 }
