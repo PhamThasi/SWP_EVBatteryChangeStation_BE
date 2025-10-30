@@ -124,7 +124,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5205") // URL frontend của bạn
+            policy.WithOrigins("http://localhost:3000") // URL frontend của bạn
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials(); // nếu cần gửi cookie/token
