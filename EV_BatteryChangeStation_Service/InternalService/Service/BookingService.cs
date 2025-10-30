@@ -156,5 +156,23 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, "Error permanently deleting booking", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
         }
+
+        public async Task<ServiceResult> GetByAccountIdAsync(Guid accountId)
+        {
+            try
+            {
+                var bookings = await _unitOfWork.BookingRepository.GetByAccountIdAsync(accountId);
+
+                if (bookings == null || !bookings.Any())
+                    return new ServiceResult(404, "No bookings found for this user", null, BookingErrorCode.BookingNotFound);
+
+                var result = bookings.Select(BookingMapper.ToDTO).ToList();
+                return new ServiceResult(200, "Success", result, BookingErrorCode.None);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error fetching user bookings", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
+            }
+        }
     }
 }

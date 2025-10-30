@@ -14,5 +14,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task AddAsync(Booking booking);
         void Update(Booking booking);
         void Delete(Booking booking);
+        Task<List<Booking>> GetByAccountIdAsync(Guid accountId);
     }
 }

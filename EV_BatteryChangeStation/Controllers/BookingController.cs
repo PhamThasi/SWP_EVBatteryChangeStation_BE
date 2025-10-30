@@ -70,6 +70,14 @@ namespace EV_BatteryChangeStation.Controllers
             var result = await _bookingService.HardDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
-
+        /// <summary>
+        /// Lấy danh sách lịch đổi pin theo người dùng
+        /// </summary>
+        [HttpGet("User/{accountId}")]
+        public async Task<IActionResult> GetByAccountId(Guid accountId)
+        {
+            var result = await _bookingService.GetByAccountIdAsync(accountId);
+            return StatusCode(result.Status, result);
+        }
     }
 }

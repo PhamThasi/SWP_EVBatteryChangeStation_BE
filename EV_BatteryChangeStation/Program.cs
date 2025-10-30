@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using EV_BatteryChangeStation_Repository.Entities;
-using Microsoft.EntityFrameworkCore;
 using System.Text;
 using EV_BatteryChangeStation_Repository.Base;
 using VNPAY.NET;
-
+// hiển_: thêm để đăng ký HttpClient cho VietMap controller
+using EV_BatteryChangeStation_BE.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 //Dang ki SupportRequest
@@ -49,6 +49,10 @@ builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddScoped<IVnpay, Vnpay>();
+
+// hiển_: đăng ký HttpClient để controller gọi tới VietMap API qua backend proxy
+builder.Services.AddHttpClient<VietMapProxyController>();
+
 // Đăng kí cho JWT service
 var jwtSettings = builder.Configuration.GetSection("JwtConfig"); // lấy từ appsettings.json
 
@@ -67,7 +71,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "")) // hiển_: tránh nullable warning
     };
 
     options.Events = new JwtBearerEvents
@@ -119,16 +123,16 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// hiển_: chỉnh lại CORS policy cho đúng domain FE
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000") // URL frontend của bạn
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials(); // nếu cần gửi cookie/token
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        // hiển_: không dùng AllowCredentials vì FE không gửi cookie
+    });
 });
 
 var app = builder.Build();
@@ -147,7 +151,8 @@ var appPassword = builder.Configuration["EmailSettings:AppPassword"];
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAllOrigins");
+// hiển_: UseCors phải đặt trước UseAuthentication
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();  
 app.UseAuthorization();
