@@ -18,6 +18,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             return new ViewAccountDTOs
             {
                 RoleId = account.RoleId,
+                AccountId = account.AccountId,
                 AccountName = account.AccountName,
                 Password = account.Password,
                 Address = account.Address,
