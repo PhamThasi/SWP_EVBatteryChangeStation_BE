@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors; // hiển_: thêm để có thể bật [EnableCors]
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_BE.Controllers
 {
+    [EnableCors("AllowFrontend")] // hiển_: bật policy cho controller này
     [Route("api/[controller]")]
     [ApiController]
     public class VietMapProxyController : ControllerBase
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiKey = "YOUR_VIETMAP_API_KEY"; // thay bằng key của bạn
+        private readonly string _apiKey; // hiển_: chuyển từ hardcode sang config để bảo mật
 
-        public VietMapProxyController(HttpClient httpClient)
+        // hiển_: inject IConfiguration để đọc key từ appsettings.json
+        public VietMapProxyController(HttpClient httpClient, IConfiguration config)
         {
             _httpClient = httpClient;
+            _apiKey = config["VietMap:ApiKey"]; 
         }
 
         [HttpGet("geocode")]
@@ -27,6 +31,8 @@ namespace EV_BatteryChangeStation_BE.Controllers
             {
                 var res = await _httpClient.GetAsync(url);
                 var content = await res.Content.ReadAsStringAsync();
+                
+                // hiển_: trả nguyên JSON response từ VietMap
                 return Content(content, "application/json");
             }
             catch (Exception ex)
