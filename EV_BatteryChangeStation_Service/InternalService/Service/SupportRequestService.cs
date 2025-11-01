@@ -136,5 +136,45 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, "Lỗi khi xóa vĩnh viễn yêu cầu hỗ trợ.", ex.Message);
             }
         }
+        public async Task<ServiceResult> GetByAccountIdAsync(Guid accountId)
+        {
+            try
+            {
+                var list = await _unitOfWork.SupportRequestRepository
+                    .GetAllAsync();
+
+                var filtered = list.Where(r => r.AccountId == accountId).ToList();
+
+                if (filtered == null || filtered.Count == 0)
+                    return new ServiceResult(404, "Không có yêu cầu hỗ trợ nào cho tài khoản này.");
+
+                return new ServiceResult(200, "Lấy danh sách yêu cầu theo AccountId thành công.", filtered.ToDTOList());
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Lỗi khi lấy danh sách yêu cầu theo AccountId.", ex.Message);
+            }
+        }
+
+        public async Task<ServiceResult> GetByStaffIdAsync(Guid staffId)
+        {
+            try
+            {
+                var list = await _unitOfWork.SupportRequestRepository
+                    .GetAllAsync();
+
+                var filtered = list.Where(r => r.StaffId == staffId).ToList();
+
+                if (filtered == null || filtered.Count == 0)
+                    return new ServiceResult(404, "Không có yêu cầu hỗ trợ nào do nhân viên này phụ trách.");
+
+                return new ServiceResult(200, "Lấy danh sách yêu cầu theo StaffId thành công.", filtered.ToDTOList());
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Lỗi khi lấy danh sách yêu cầu theo StaffId.", ex.Message);
+            }
+        }
+
     }
 }

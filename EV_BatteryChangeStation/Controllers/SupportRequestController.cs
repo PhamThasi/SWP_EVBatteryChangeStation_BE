@@ -57,5 +57,18 @@ namespace EV_BatteryChangeStation_API.Controllers
             var result = await _service.HardDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
+        [HttpGet("GetByAccount/{accountId}")]
+        public async Task<IActionResult> GetByAccount(Guid accountId)
+        {
+            var result = await _service.GetByAccountIdAsync(accountId);
+            return StatusCode(result.Status, result);
+        }
+
+        [HttpGet("GetByStaff/{staffId}")]
+        public async Task<IActionResult> GetByStaff(Guid staffId)
+        {
+            var result = await _service.GetByStaffIdAsync(staffId);
+            return StatusCode(result.Status, result);
+        }
     }
 }
