@@ -31,14 +31,14 @@ namespace EV_BatteryChangeStation_API.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] SupportRequestCreateUpdateDTO dto)
+        public async Task<IActionResult> Create([FromBody] SupportRequestCreateDTO dto)
         {
             var result = await _service.CreateAsync(dto);
             return StatusCode(result.Status, result);
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] SupportRequestCreateUpdateDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] SupportRequestUpdateDTO dto)
         {
             var result = await _service.UpdateAsync(id, dto);
             return StatusCode(result.Status, result);

@@ -4,7 +4,6 @@ using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation_Service.InternalService.Service
@@ -50,7 +49,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> CreateAsync(SupportRequestCreateUpdateDTO dto)
+        public async Task<ServiceResult> CreateAsync(SupportRequestCreateDTO dto)
         {
             try
             {
@@ -76,7 +75,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        public async Task<ServiceResult> UpdateAsync(Guid id, SupportRequestCreateUpdateDTO dto)
+        public async Task<ServiceResult> UpdateAsync(Guid id, SupportRequestUpdateDTO dto)
         {
             try
             {
@@ -97,6 +96,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, "Lỗi khi cập nhật yêu cầu hỗ trợ.", ex.Message);
             }
         }
+
 
         public async Task<ServiceResult> SoftDeleteAsync(Guid id)
         {
