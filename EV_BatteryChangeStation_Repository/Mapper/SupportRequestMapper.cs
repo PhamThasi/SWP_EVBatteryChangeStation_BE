@@ -26,7 +26,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static SupportRequest ToEntity(this SupportRequestCreateUpdateDTO dto)
+        public static SupportRequest ToEntity(this SupportRequestCreateDTO dto)
         {
             if (dto == null) return null;
 
@@ -35,7 +35,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 IssueType = dto.IssueType,
                 Description = dto.Description,
                 AccountId = dto.AccountId,
-                StaffId = dto.StaffId,
                 ResponseText = dto.ResponseText,
                 CreateDate = DateTime.Now,
                 ResponseDate = dto.ResponseText != null ? DateTime.Now : null,
@@ -43,7 +42,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             };
         }
 
-        public static void UpdateEntity(this SupportRequest req, SupportRequestCreateUpdateDTO dto)
+        public static void UpdateEntity(this SupportRequest req, SupportRequestUpdateDTO dto)
         {
             if (dto == null || req == null) return;
 
@@ -51,13 +50,13 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             req.Description = dto.Description;
             req.StaffId = dto.StaffId;
 
-            // Nếu có cập nhật phản hồi thì tự cập nhật ResponseDate
             if (!string.IsNullOrWhiteSpace(dto.ResponseText))
             {
                 req.ResponseText = dto.ResponseText;
                 req.ResponseDate = DateTime.Now;
             }
         }
+
 
         public static List<SupportRequestViewDTO> ToDTOList(this IEnumerable<SupportRequest> list)
         {
