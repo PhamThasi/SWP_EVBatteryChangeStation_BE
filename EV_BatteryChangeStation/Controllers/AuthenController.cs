@@ -84,5 +84,35 @@ namespace EV_BatteryChangeStation.Controllers
             return StatusCode(result.Status, result);
         }
 
+        /// <summary>
+        /// Gửi OTP để đặt lại mật khẩu (Forgot Password)
+        /// </summary>
+        [HttpPost("forgot-password/send-otp")]
+        public async Task<IActionResult> ForgotPasswordSendOtp([FromBody] ForgotPasswordRequestDTO dto)
+        {
+            var result = await _authenService.ForgotPasswordSendOtpAsync(dto);
+            return StatusCode(result.Status, result);
+        }
+
+        /// <summary>
+        /// Xác thực OTP cho quên mật khẩu
+        /// </summary>
+        [HttpPost("forgot-password/verify-otp")]
+        public async Task<IActionResult> VerifyForgotPasswordOtp([FromBody] VerifyForgotOtpDTO dto)
+        {
+            var result = await _authenService.VerifyForgotPasswordOtpAsync(dto);
+            return StatusCode(result.Status, result);
+        }
+
+
+        /// <summary>
+        /// Đặt lại mật khẩu sau khi xác thực OTP thành công
+        /// </summary>
+        [HttpPost("forgot-password/reset")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO dto)
+        {
+            var result = await _authenService.ResetPasswordAsync(dto);
+            return StatusCode(result.Status, result);
+        }
     }
 }
