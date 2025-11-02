@@ -1,6 +1,8 @@
-﻿using EV_BatteryChangeStation_Common.DTOs.AuthencationDTO;
+﻿using EV_BatteryChangeStation_Common.DTOs;
+using EV_BatteryChangeStation_Common.DTOs.AuthencationDTO;
 using EV_BatteryChangeStation_Common.DTOs.RegisterDTO;
 using EV_BatteryChangeStation_Common.Enum.ServiceResult;
+using EV_BatteryChangeStation_Common.Helper;
 using EV_BatteryChangeStation_Repository.Entities;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
@@ -195,6 +197,108 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         public bool IsTokenRevoked(string token)
         {
             return _blacklistedTokens.Contains(token);
+        }
+
+        public async Task<IServiceResult> ForgotPasswordSendOtpAsync(ForgotPasswordRequestDTO dto)
+        {
+            var account = await _unitOfWork.AccountRepository.GetAccountByEmail(dto.Email);
+            if (account == null)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.WARNING_NO_DATA_CODE,
+                    Message = "Email not found.",
+                    Errors = new List<string> { "No account associated with this email." }
+                };
+            }
+
+            var otp = GenerateOtp();
+            pendingOtps[dto.Email] = otp;
+
+            // Tạo email HTML đẹp bằng MailHelper
+            var autoEmail = await MailHelper.CreateResetPasswordOTPMail(dto.Email, otp);
+            await SendHtmlEmail(autoEmail);
+
+            return new ServiceResult
+            {
+                Status = 200,
+                Message = "OTP has been sent to your email."
+            };
+        }
+
+        private async Task SendHtmlEmail(AutoEmailDTO autoEmail)
+        {
+            string fromEmail = _configuration["EmailSettings:Email"];
+            string password = _configuration["EmailSettings:AppPassword"];
+
+            using var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(fromEmail, password),
+                EnableSsl = true
+            };
+
+            var mail = new MailMessage(new MailAddress(fromEmail), new MailAddress(autoEmail.RecipientEmail))
+            {
+                Subject = autoEmail.Subject,
+                Body = autoEmail.Body,
+                IsBodyHtml = true
+            };
+
+            await client.SendMailAsync(mail);
+        }
+
+
+        public Task<IServiceResult> VerifyForgotPasswordOtpAsync(VerifyForgotOtpDTO dto)
+        {
+            if (pendingOtps.TryGetValue(dto.Email, out var otp) && otp == dto.OtpCode)
+            {
+                return Task.FromResult<IServiceResult>(new ServiceResult
+                {
+                    Status = 200,
+                    Message = "OTP verified successfully."
+                });
+            }
+
+            return Task.FromResult<IServiceResult>(new ServiceResult
+            {
+                Status = 400,
+                Message = "Invalid or expired OTP.",
+                Errors = new List<string> { "OTP code is incorrect." }
+            });
+        }
+
+        public async Task<IServiceResult> ResetPasswordAsync(ResetPasswordDTO dto)
+        {
+            var account = await _unitOfWork.AccountRepository.GetAccountByEmail(dto.Email);
+            if (account == null)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.WARNING_NO_DATA_CODE,
+                    Message = "Account not found."
+                };
+            }
+
+            if (!pendingOtps.ContainsKey(dto.Email))
+            {
+                return new ServiceResult
+                {
+                    Status = 400,
+                    Message = "OTP verification required before resetting password."
+                };
+            }
+
+            account.Password = _passwordHasher.HashPassword(account, dto.NewPassword);
+            _unitOfWork.AccountRepository.Update(account);
+            await _unitOfWork.AccountRepository.SaveAsync();
+
+            pendingOtps.Remove(dto.Email);
+
+            return new ServiceResult
+            {
+                Status = 200,
+                Message = "Password reset successfully."
+            };
         }
     }
 }
