@@ -23,15 +23,24 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Payment?>> GetPaymentByAccountIdAsync(Guid accountId)
+        public async Task<List<Payment>> GetPaymentHistoryByAccountIdAsync(Guid accountId)
         {
             return await _context.Payments
                 .Include(p => p.Subscription)
-                .ThenInclude(s => s.Account)
+                    .ThenInclude(s => s.Account)
                 .Include(p => p.Transaction)
-                .Where(p => p.Subscription.AccountId.Equals(accountId))
+                    .ThenInclude(t => t.Vehicle)
+                .Include(p => p.Transaction)
+                    .ThenInclude(t => t.Staff)
+                .Where(p =>
+                    (p.Subscription != null && p.Subscription.AccountId == accountId) ||
+                    (p.Transaction != null &&
+                     _context.Bookings.Any(b => b.VehicleId == p.Transaction.VehicleId && b.AccountId == accountId))
+                )
+                .OrderByDescending(p => p.CreateDate)
                 .ToListAsync();
         }
+
 
         public async Task<Payment?> GetPaymentWithTransactionIdAsync(Guid transactionId)
         {
