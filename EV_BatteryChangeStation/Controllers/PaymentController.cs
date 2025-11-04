@@ -2,6 +2,7 @@
 using EV_BatteryChangeStation_Service.Base;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Threading.Tasks;
 
@@ -20,12 +21,12 @@ namespace EV_BatteryChangeStation_BE.Controllers
 
         // =================== CREATE ===================
         [HttpPost("create")]
-        public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentDto createPaymentDto)
+        public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentDto create)
         {
-            if (createPaymentDto == null)
+            if (create == null)
                 return BadRequest("Invalid payment data.");
 
-            var result = await _paymentService.CreatePayment(createPaymentDto);
+            var result = await _paymentService.CreatePayment(create);
             return StatusCode(result.Status, result);
         }
 
@@ -71,18 +72,18 @@ namespace EV_BatteryChangeStation_BE.Controllers
         }
 
         //// =================== UPDATE ===================
-        //[HttpPut("update/{paymentId}")]
-        //public async Task<IActionResult> UpdatePayment(string paymentId, [FromBody] UpdatePaymentDto updatePaymentDto)
-        //{
-        //    if (string.IsNullOrEmpty(paymentId))
-        //        return BadRequest("Payment ID is required.");
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdatePayment([FromBody] UpdatePaymentDto updatePaymentDto)
+        {
+            if (updatePaymentDto.PaymentId == Guid.Empty)
+                return BadRequest("Payment ID is required.");
 
-        //    if (updatePaymentDto == null)
-        //        return BadRequest("Invalid update data.");
+            if (updatePaymentDto == null)
+                return BadRequest("Invalid update data.");
 
-        //    var result = await _paymentService.UpdatePayment(paymentId, updatePaymentDto);
-        //    return StatusCode(result.Status, result);
-        //}
+            var result = await _paymentService.UpdatePayment(updatePaymentDto);
+            return StatusCode(result.Status, result);
+        }
 
         // =================== DELETE (HARD) ===================
         [HttpDelete("delete/{paymentId}")]

@@ -22,8 +22,8 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Status = payment.Status,
                 PaymentGateId = payment.PaymentGateId,
                 CreateDate = payment.CreateDate,
-                SubscriptionId = payment.SubscriptionId ?? Guid.Empty,
-                TransactionId = payment.TransactionId ?? Guid.Empty
+                SubscriptionId = payment.SubscriptionId,
+                TransactionId = payment.TransactionId
             };
         }
 
@@ -46,22 +46,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
         {
             if (dto == null || pay == null) return;
             
-            if(dto.SubcriptionId != Guid.Empty)
-            {
-                pay.SubscriptionId = dto.SubcriptionId;
-            }
-            if (dto.TransactionId != Guid.Empty)
-            {
-                pay.TransactionId = dto.TransactionId;
-            }
-            if (dto.Price.HasValue)
-            {
-                pay.Price = dto.Price.Value;
-            }
-            if (!string.IsNullOrEmpty(dto.Method))
-            {
-                pay.Method = dto.Method;
-            }
             if (dto.Status.HasValue)
             {
                 pay.Status = dto.Status;

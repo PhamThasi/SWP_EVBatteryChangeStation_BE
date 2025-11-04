@@ -46,16 +46,16 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                // ✅ Kiểm tra subscription tồn tại
-                var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId);
-                if (subscription == null)
-                {
-                    return new ServiceResult
-                    {
-                        Status = Const.WARNING_NO_DATA_CODE,
-                        Message = "Subscription not found"
-                    };
-                }
+                //// ✅ Kiểm tra subscription tồn tại
+                //var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId);
+                //if (subscription == null)
+                //{
+                //    return new ServiceResult
+                //    {
+                //        Status = Const.WARNING_NO_DATA_CODE,
+                //        Message = "Subscription not found"
+                //    };
+                //}
 
                 // ✅ Kiểm tra transaction tồn tại
                 var transaction = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(create.TransactionId);
@@ -73,7 +73,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 {
                     // ✅ Tạo payment mới
                     var payment = create.toPayment(); // không truyền tham số — mapper tự xử lý
-                    payment.SubscriptionId = create.SubscriptionId;
                     payment.TransactionId = create.TransactionId;
 
                     await _unitOfWork.PaymentRepository.CreateAsync(payment);
@@ -201,7 +200,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                var payments = await _unitOfWork.PaymentRepository.GetPaymentByAccountIdAsync(accountId);
+                var payments = await _unitOfWork.PaymentRepository.GetPaymentHistoryByAccountIdAsync(accountId);
 
                 if (payments == null)
                 {
@@ -273,81 +272,50 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        //// =================== UPDATE ===================
-        //public async Task<IServiceResult> UpdatePayment(string paymentId, UpdatePaymentDto update)
-        //{
-        //    try
-        //    {
-        //        if (string.IsNullOrEmpty(paymentId))
-        //        {
-        //            return new ServiceResult
-        //            {
-        //                Status = Const.FAIL_UPDATE_CODE,
-        //                Message = "Payment ID is required"
-        //            };
-        //        }
+        // =================== UPDATE ===================
+        public async Task<IServiceResult> UpdatePayment(UpdatePaymentDto update)
+        {
+            try
+            {
+                if (update.PaymentId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.FAIL_UPDATE_CODE,
+                        Message = "Payment ID is required"
+                    };
+                }
+                var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(update.PaymentId);
 
-        //        // ✅ Decode PaymentId (vẫn dùng hash)
-        //        var decodedPayment = _hashids.Decode(paymentId);
-        //        if (decodedPayment == null || decodedPayment.Length == 0)
-        //        {
-        //            return new ServiceResult
-        //            {
-        //                Status = Const.FAIL_UPDATE_CODE,
-        //                Message = "Invalid Payment ID format"
-        //            };
-        //        }
-        //        var id = decodedPayment.First();
+                if(payment == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = "Payment not found"
+                    };
+                }
+                payment.UpdateToPayment(update);
+                await _unitOfWork.PaymentRepository.UpdateAsync(payment);
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_UPDATE_CODE,
+                    Message = Const.SUCCESS_UPDATE_MSG,
+                    Data = payment.PaymentRespondDto()
+                };
 
-        //        // ✅ Lấy payment từ DB
-        //        var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(id);
-        //        if (payment == null)
-        //        {
-        //            return new ServiceResult
-        //            {
-        //                Status = Const.WARNING_NO_DATA_CODE,
-        //                Message = "Payment not found"
-        //            };
-        //        }
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+            }
+        }
 
-        //        // ✅ Decode TransactionId nếu có
-        //        if (!string.IsNullOrEmpty(update.TransactionId))
-        //        {
-        //            var decodedTransaction = _hashids.Decode(update.TransactionId);
-        //            if (decodedTransaction == null || decodedTransaction.Length == 0)
-        //            {
-        //                return new ServiceResult
-        //                {
-        //                    Status = Const.FAIL_UPDATE_CODE,
-        //                    Message = "Invalid Transaction ID format"
-        //                };
-        //            }
-
-        //            update.TransactionId = decodedTransaction.First().ToString();
-        //        }
-
-        //        // ✅ Cập nhật dữ liệu
-        //        payment.UpdateToPayment(update);
-        //        await _unitOfWork.PaymentRepository.UpdateAsync(payment);
-
-        //        return new ServiceResult
-        //        {
-        //            Status = Const.SUCCESS_UPDATE_CODE,
-        //            Message = Const.SUCCESS_UPDATE_MSG,
-        //            Data = payment.PaymentRespondDto()
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ServiceResult
-        //        {
-        //            Status = Const.ERROR_EXCEPTION,
-        //            Message = ex.InnerException?.Message ?? ex.Message
-        //        };
-        //    }
-        //}
-
-        // =================== DELETE (HARD) ===================
+        // =================== DELETE(HARD) ===================
         public async Task<IServiceResult> DeletePayment(Guid paymentId)
         {
             try
