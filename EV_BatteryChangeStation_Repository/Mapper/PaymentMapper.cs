@@ -34,7 +34,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 Price = dto.Price,
                 Method = dto.Method,
-                Status = dto.Status,
+                Status = dto.Status ?? false,
                 PaymentGateId = DateTime.UtcNow.Ticks,
                 CreateDate = DateTime.UtcNow,
                 SubscriptionId = dto.SubscriptionId,

@@ -295,6 +295,18 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = "Payment not found"
                     };
                 }
+
+                bool canConfirm = await _unitOfWork.PaymentRepository.CheckPaymentOwnerAsync(update.AccountId, payment);
+                if (!canConfirm)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.FAIL_UPDATE_CODE,
+                        Message = "Account không có quyền xác nhận thanh toán này"
+                    };
+                }
+
+
                 payment.UpdateToPayment(update);
                 await _unitOfWork.PaymentRepository.UpdateAsync(payment);
                 return new ServiceResult

@@ -14,5 +14,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<Payment?> GetPaymentWithTransactionIdAsync(Guid transactionId);
         Task<List<Payment?>> GetPaymentHistoryByAccountIdAsync(Guid accountId);
         Task<Payment?> GetByGatewayIdAsync(long gatewayId);
+        Task<bool> CheckPaymentOwnerAsync(Guid accountId, Payment payment);
     }
 }
