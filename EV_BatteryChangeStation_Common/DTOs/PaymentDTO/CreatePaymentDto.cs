@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
         public decimal? Price { get; set; }
         public string Method { get; set; } = null;
         public long PaymentGateId { get; set; }
+        [DefaultValue(false)]
         public bool? Status { get; set; } = false;
         public DateTime? CreateDate { get; set; }
         public Guid? SubscriptionId { get; set; }

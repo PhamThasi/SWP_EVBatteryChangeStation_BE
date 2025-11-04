@@ -57,5 +57,36 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .FirstOrDefaultAsync(t => t.PaymentGateId == gatewayId);
         }
 
+        public async Task<bool> CheckPaymentOwnerAsync(Guid accountId, Payment payment)
+        {
+            if (payment == null || accountId == Guid.Empty)
+                return false;
+
+            bool isOwner = false;
+
+            // 🧾 1️⃣ Kiểm tra Payment theo Subscription
+            if (payment.SubscriptionId.HasValue)
+            {
+                isOwner = await _context.Subscriptions
+                    .AnyAsync(s => s.SubscriptionId == payment.SubscriptionId && s.AccountId == accountId);
+            }
+
+            // 🚗 2️⃣ Kiểm tra Payment theo Transaction → Vehicle → Booking
+            if (!isOwner && payment.TransactionId.HasValue)
+            {
+                var trans = await _context.SwappingTransactions
+                    .Include(t => t.Vehicle)
+                    .FirstOrDefaultAsync(t => t.TransactionId == payment.TransactionId);
+
+                if (trans?.VehicleId != null && trans.VehicleId != Guid.Empty)
+                {
+                    isOwner = await _context.Bookings
+                        .AnyAsync(b => b.VehicleId == trans.VehicleId && b.AccountId == accountId);
+                }
+            }
+
+            return isOwner;
+        }
+
     }
 }
