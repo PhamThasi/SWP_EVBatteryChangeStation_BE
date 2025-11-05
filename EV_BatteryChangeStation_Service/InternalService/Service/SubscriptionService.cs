@@ -138,5 +138,30 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, $"Error while hard deleting subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
             }
         }
+
+        public async Task<ServiceResult> RestoreAsync(Guid id)
+        {
+            try
+            {
+                var entity = await _unitOfWork.SubscriptionRepository.GetByIdAsync(id);
+                if (entity == null)
+                    return new ServiceResult(404, "Subscription not found", null, SubscriptionErrorCode.SubscriptionNotFound);
+
+                if (entity.IsActive == true)
+                    return new ServiceResult(400, "Subscription is already active", null, SubscriptionErrorCode.None);
+
+                entity.IsActive = true;
+                entity.UpdateDate = DateTime.Now;
+
+                _unitOfWork.SubscriptionRepository.Update(entity);
+                await _unitOfWork.CommitAsync();
+
+                return new ServiceResult(200, "Subscription restored successfully", entity.ToDTO(), SubscriptionErrorCode.None);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, $"Error while restoring subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
+            }
+        }
     }
 }

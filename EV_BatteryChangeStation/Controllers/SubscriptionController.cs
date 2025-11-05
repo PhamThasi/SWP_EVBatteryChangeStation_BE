@@ -56,5 +56,12 @@ namespace EV_BatteryChangeStation.Controllers
             var result = await _subscriptionService.HardDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
+        [HttpPut("Restore/{id}")]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var result = await _subscriptionService.RestoreAsync(id);
+            return StatusCode(result.Status, result);
+        }
+
     }
 }
