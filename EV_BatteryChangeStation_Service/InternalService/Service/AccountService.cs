@@ -17,10 +17,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class AccountService : IAccountService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher<Account> _passwordHasher;
 
-        public AccountService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher)
+        public AccountService(IUnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentException(nameof(passwordHasher));
@@ -301,6 +301,37 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     Status = Const.SUCCESS_UPDATE_CODE,
                     Message = Const.SUCCESS_UPDATE_MSG,
                     Data = acc
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                };
+            }
+        }
+
+        public async Task<IServiceResult> GetAllStaffAccountAsync()
+        {
+            try
+            {
+                var check = await _unitOfWork.AccountRepository.GetAllStaffAsync();
+                if (check == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                var staff = check.MapToDTO();
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = staff
                 };
             }
             catch (Exception ex)

@@ -9,8 +9,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class RoleService : IRoleService
     {
-        private readonly UnitOfWork _unitOfWork;
-        public RoleService(UnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        public RoleService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
         }

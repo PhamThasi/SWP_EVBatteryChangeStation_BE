@@ -20,16 +20,25 @@ namespace EV_BatteryChangeStation.Controllers
         [HttpPost("create-payment")]
         public async Task<IActionResult> CreatePayment(Guid paymentId)
         {
-            string ipAddress = NetworkHelper.GetIpAddress(HttpContext);
-            var result = await _vnPayService.CreatePaymentURL(paymentId, ipAddress);
-            if (result.Status == Const.SUCCESS_CREATE_CODE)
-                return Ok(result);
-            return BadRequest(result);
+            // Thêm try-catch ở đây để an toàn
+            try
+            {
+                string ipAddress = NetworkHelper.GetIpAddress(HttpContext);
+                var result = await _vnPayService.CreatePaymentURL(paymentId, ipAddress);
+                if (result.Status == Const.SUCCESS_CREATE_CODE)
+                    return Ok(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ServiceResult(Const.ERROR_EXCEPTION, $"Controller Error: {ex.Message}"));
+            }
         }
 
         [HttpGet("validate-respond")]
         public async Task<IActionResult> ValidateRespond()
         {
+            // Thêm try-catch ở đây để an toàn
             try
             {
                 var result = await _vnPayService.ValidateRespond(HttpContext.Request.Query);
@@ -39,23 +48,40 @@ namespace EV_BatteryChangeStation.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ServiceResult(Const.FAIL_READ_CODE, ex.Message));
+                return BadRequest(new ServiceResult(Const.FAIL_READ_CODE, $"Controller Error: {ex.Message}"));
             }
         }
 
+        // ========= ĐÂY LÀ HÀM QUAN TRỌNG ĐÃ SỬA ==========
         [HttpGet("vnpay-return")]
         public async Task<IActionResult> VNPayReturn()
         {
-            var queryParams = HttpContext.Request.Query;
-            var result = await _vnPayService.ValidateRespond(queryParams);
-
-            // Kiểm tra nếu có lỗi null để tránh crash
-            if (result == null)
+            // BỌC TOÀN BỘ HÀM TRONG TRY-CATCH
+            // ĐỂ BẮT LỖI SẬP SERVER (ERR_EMPTY_RESPONSE)
+            try
             {
-                return BadRequest("VNPay result is null");
-            }
+                var queryParams = HttpContext.Request.Query;
+                var result = await _vnPayService.ValidateRespond(queryParams);
 
-            return Ok(result);
+                // Kiểm tra nếu có lỗi null để tránh crash
+                if (result == null)
+                {
+                    return BadRequest("VNPay result is null");
+                }
+
+                if (result.Status == Const.SUCCESS_PAYMENT_CODE)
+                    return Ok(result);
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                // NẾU SERVER SẬP, LỖI SẼ HIỆN Ở ĐÂY
+                // Trình duyệt sẽ hiển thị file JSON này thay vì ERR_EMPTY_RESPONSE
+                string errorMessage = ex.InnerException?.Message ?? ex.Message;
+                Console.WriteLine($"FATAL CRASH in VNPayReturn: {errorMessage}");
+                return BadRequest(new ServiceResult(Const.ERROR_EXCEPTION, $"Controller-level error: {errorMessage}"));
+            }
         }
     }
 }

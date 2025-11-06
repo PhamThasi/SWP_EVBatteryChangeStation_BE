@@ -20,13 +20,11 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private ISupportRequestRepository _supportRequestRepository;
         private ISwappingTransactionRepository _swappingTransactionRepository;
         private IPaymentRepository _paymentRepository;
+
+        // ĐÃ XÓA CONSTRUCTOR RỖNG
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
-        }
-
-        public UnitOfWork()
-        {
         }
 
         public async Task<IDbContextTransaction> BeginTransactionAsync()
@@ -52,7 +50,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
                 return _roleRepository ??= new RoleRepository(_context);
             }
         }
-        public IStationRepository StationRepository => 
+        public IStationRepository StationRepository =>
             _stationRepository ??= new StationRepository(_context);
 
         public IBookingRepository BookingRepository

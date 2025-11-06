@@ -15,9 +15,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class PaymentService : IPaymentService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentService(UnitOfWork unitOfWork)
+        public PaymentService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }

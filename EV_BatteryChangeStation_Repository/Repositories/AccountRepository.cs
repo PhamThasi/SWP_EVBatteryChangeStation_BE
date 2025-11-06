@@ -63,5 +63,12 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         {
             return await _context.Accounts.FirstOrDefaultAsync(predicate);
         }
+        public async Task<List<Account>> GetAllStaffAsync()
+        {
+            return await _context.Accounts
+                .Include(r => r.Role)
+                .Where(a => a.Role.RoleName == "Staff")
+                .ToListAsync();
+        }
     }
 }

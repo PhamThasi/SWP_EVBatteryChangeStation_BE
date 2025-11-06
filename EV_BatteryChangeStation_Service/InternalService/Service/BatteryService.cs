@@ -15,8 +15,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class BatteryService : IBatteryService
     {
-        private readonly UnitOfWork _unitOfWork;
-        public BatteryService(UnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        public BatteryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
 

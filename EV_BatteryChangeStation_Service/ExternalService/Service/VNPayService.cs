@@ -90,15 +90,20 @@ namespace EV_BatteryChangeStation_Service.ExternalService.Service
                 };
             }
         }
-
         public async Task<IServiceResult> ValidateRespond(IQueryCollection queryParams)
         {
+            // Khai báo 'scop' ở ngoài để 'catch' có thể truy cập
+            Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction scop = null;
             try
             {
+                // Di chuyển BeginTransaction VÀO TRONG TRY
+                scop = await _unitOfWork.BeginTransactionAsync();
+
                 if (queryParams == null || !queryParams.Any())
                 {
                     return new ServiceResult(Const.FAIL_READ_CODE, "Invalid query parameter");
                 }
+
                 var paymentResult = _vnPay.GetPaymentResult(queryParams);
 
                 if (paymentResult == null)
@@ -106,22 +111,43 @@ namespace EV_BatteryChangeStation_Service.ExternalService.Service
                     return new ServiceResult(Const.FAIL_READ_CODE, " Payment result failed");
                 }
 
-                var gateway = paymentResult.PaymentId;
-                var transaction = await _unitOfWork.PaymentRepository.GetByGatewayIdAsync(gateway);
+                var gatewayId = paymentResult.PaymentId;
+                var transaction = await _unitOfWork.PaymentRepository.GetByGatewayIdAsync(gatewayId);
+
                 if (transaction == null)
                 {
                     return new ServiceResult(Const.FAIL_READ_CODE, "Transaction not found");
                 }
 
-                transaction.UpdateToPaymentVNPay(paymentResult);
-                await _unitOfWork.PaymentRepository.UpdateAsync(transaction);
+                if (paymentResult.IsSuccess)
+                {
+                    transaction.UpdateToPaymentVNPay(paymentResult);
+                    await _unitOfWork.PaymentRepository.UpdateAsync(transaction);
+                }
+                else
+                {
+                    if (scop != null) await scop.RollbackAsync();
+                    return new ServiceResult(Const.FAIL_READ_CODE, $"Payment failed or cancelled. Description: {paymentResult.Description}");
+                }
+
+                await scop.CommitAsync();
 
                 return new ServiceResult(Const.SUCCESS_PAYMENT_CODE, Const.SUCCESS_PAYMENT_MSG, paymentResult);
             }
             catch (Exception ex)
             {
                 string errorMessage = ex.InnerException?.Message ?? ex.Message;
-                Console.WriteLine($"VNPayService.ValidateRespond error: {errorMessage}");
+                Console.WriteLine($"VNPayService.ValidateRespond error (Original): {errorMessage}");
+
+                try
+                {
+                    if (scop != null) await scop.RollbackAsync();
+                }
+                catch (Exception rollbackEx)
+                {
+                    Console.WriteLine($"FATAL: Error during Rollback: {rollbackEx.Message}");
+                }
+
                 return new ServiceResult(Const.ERROR_EXCEPTION, errorMessage);
             }
         }
