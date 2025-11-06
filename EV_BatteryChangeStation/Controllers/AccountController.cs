@@ -143,5 +143,15 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+
+        [HttpGet("GetAllStaffAccount")]
+        public async Task<IActionResult> GetAllStaffAccount()
+        {
+            var result = await _accountService.GetAllStaffAccountAsync();
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
     }
 }

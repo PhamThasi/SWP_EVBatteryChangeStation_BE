@@ -22,7 +22,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
     public class AuthenService : IAuthenService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<Account> _passwordHasher;
         private static Dictionary<string, string> pendingOtps = new Dictionary<string, string>();
@@ -30,7 +30,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
         private static readonly List<string> _blacklistedTokens = new();
         private static Dictionary<string, RegisterDTO> pendingUsers = new Dictionary<string, RegisterDTO>();
         // khởi tạo các service cần thiết qua dependency injection
-        public AuthenService(UnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration, IJWTService jwtservice)
+        public AuthenService(IUnitOfWork unitOfWork, IPasswordHasher<Account> passwordHasher, IConfiguration configuration, IJWTService jwtservice)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
