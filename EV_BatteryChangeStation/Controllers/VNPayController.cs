@@ -58,6 +58,8 @@ namespace EV_BatteryChangeStation.Controllers
         {
             // BỌC TOÀN BỘ HÀM TRONG TRY-CATCH
             // ĐỂ BẮT LỖI SẬP SERVER (ERR_EMPTY_RESPONSE)
+            string frontendSuccessUrl = "http://localhost:3000/payment-success";
+            string frontendFailedUrl = "http://localhost:3000/payment-failed";
             try
             {
                 var queryParams = HttpContext.Request.Query;
@@ -66,13 +68,21 @@ namespace EV_BatteryChangeStation.Controllers
                 // Kiểm tra nếu có lỗi null để tránh crash
                 if (result == null)
                 {
-                    return BadRequest("VNPay result is null");
+                    //return BadRequest("VNPay result is null");
+                    return Redirect(frontendFailedUrl);
                 }
 
                 if (result.Status == Const.SUCCESS_PAYMENT_CODE)
-                    return Ok(result);
+                {
+                    //return Ok(result);
+                    return Redirect(frontendSuccessUrl);
+                }
+                else
+                {
+                    return Redirect(frontendFailedUrl);
+                    //return BadRequest(result);
+                }
 
-                return BadRequest(result);
             }
             catch (Exception ex)
             {
