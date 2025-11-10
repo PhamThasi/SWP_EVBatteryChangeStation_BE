@@ -23,6 +23,14 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
         }
         // Add new car
+        private bool IsValidUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return false;
+
+            return Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+
         public async Task<IServiceResult> AddCarAsync(CreateCarDto createCar)
         {
             try
@@ -33,6 +41,14 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     {
                         Status = Const.ERROR_VALIDATION_CODE,
                         Message = Const.ERROR_INVALID_DATA_MSG,
+                    };
+                }
+                if (!string.IsNullOrEmpty(createCar.Images) && !IsValidUrl(createCar.Images))
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = "Image URL is invalid. Please provide a valid HTTP or HTTPS URL.",
                     };
                 }
                 var result = createCar.MaptoCreate();
@@ -269,6 +285,16 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.WARNING_NO_DATA_MSG,
                     };
                 }
+
+                if (!string.IsNullOrEmpty(updateCarDto.Images) && !IsValidUrl(updateCarDto.Images))
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = "Image URL is invalid. Please provide a valid HTTP or HTTPS URL.",
+                    };
+                }
+
                 car.MaptoUpdate(updateCarDto);
                 await _unitOfWork.CarRepository.UpdateAsync(car);
                 return new ServiceResult

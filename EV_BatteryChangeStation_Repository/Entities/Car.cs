@@ -13,6 +13,8 @@ public partial class Car
 
     public string BatteryType { get; set; }
 
+    public string Images { get; set; }
+
     public string Producer { get; set; }
 
     public string Status { get; set; }

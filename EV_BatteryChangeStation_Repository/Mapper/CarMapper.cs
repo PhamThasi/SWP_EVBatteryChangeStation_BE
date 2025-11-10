@@ -20,6 +20,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Model = car.Model,
                 BatteryType = car.BatteryType,
                 Producer = car.Producer,
+                Images = car.Images,
                 CreateDate = car.CreateDate,
                 Status = car.Status
             };
@@ -33,6 +34,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Model = carCreate.Model,
                 BatteryType = carCreate.BatteryType,
                 Producer = carCreate.Producer,
+                Images = carCreate.Images,
                 CreateDate = carCreate.CreateDate,
                 Status = carCreate.Status
             };
@@ -53,6 +55,10 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             if (!string.IsNullOrEmpty(carUpdate.Producer))
             {
                 car.Producer = carUpdate.Producer;
+            }
+            if (!string.IsNullOrEmpty(carUpdate.Images))
+            {
+                car.Images = carUpdate.Images;
             }
             if (carUpdate.CreateDate.HasValue)
             {
