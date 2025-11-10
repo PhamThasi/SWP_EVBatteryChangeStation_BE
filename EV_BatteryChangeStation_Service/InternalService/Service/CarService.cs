@@ -364,5 +364,43 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 });
             }
         }
+
+        public Task<IServiceResult> GetBatteriesByCarAsync(Guid vehicle)
+        {
+            try
+            {
+                if (vehicle == Guid.Empty)
+                {
+                    return Task.FromResult<IServiceResult>(new ServiceResult
+                    {
+                        Status = Const.ERROR_VALIDATION_CODE,
+                        Message = Const.ERROR_INVALID_DATA_MSG,
+                    });
+                }
+                var result = _unitOfWork.CarRepository.GetBatteriesByCarAsync(vehicle);
+                if (result == null || result.Result.Count == 0)
+                {
+                    return Task.FromResult<IServiceResult>(new ServiceResult
+                    {
+                        Status = Const.WARNING_NO_DATA_CODE,
+                        Message = Const.WARNING_NO_DATA_MSG,
+                    });
+                }
+                return Task.FromResult<IServiceResult>(new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = result.Result
+                });
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult<IServiceResult>(new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message,
+                });
+            }
+        }
     }
 }
