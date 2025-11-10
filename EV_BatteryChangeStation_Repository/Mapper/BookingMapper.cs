@@ -1,5 +1,7 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.BookingDTO;
+using EV_BatteryChangeStation_Common.Enum.BookingEnum;
 using EV_BatteryChangeStation_Repository.Entities;
+using System;
 
 namespace EV_BatteryChangeStation_Repository.Mapper
 {
@@ -13,7 +15,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 BookingId = entity.BookingId,
                 DateTime = entity.DateTime,
                 Notes = entity.Notes,
-                Status = entity.Status,
+                IsApproved = entity.IsApproved, // dùng enum helper
                 CreatedDate = entity.CreatedDate,
                 StationId = entity.StationId,
                 VehicleId = entity.VehicleId,
@@ -24,26 +26,34 @@ namespace EV_BatteryChangeStation_Repository.Mapper
         public static Booking ToEntity(BookingCreateDTO dto)
         {
             if (dto == null) return null;
-            return new Booking
+
+            var entity = new Booking
             {
                 DateTime = dto.DateTime,
                 Notes = dto.Notes,
-                Status = dto.Status,
                 CreatedDate = dto.CreatedDate,
                 StationId = dto.StationId,
                 VehicleId = dto.VehicleId,
-                AccountId = dto.AccountId
+                AccountId = dto.AccountId,
+                IsApproved= dto.IsApproved
             };
+
+            // Gán enum thông qua helper ApprovalStatus
+            //entity.ApprovalStatus = dto.IsApproved; // dto.IsApproved phải là BookingApprovalStatus
+
+            return entity;
         }
 
         public static void UpdateEntity(Booking entity, BookingCreateDTO dto)
         {
             entity.DateTime = dto.DateTime;
             entity.Notes = dto.Notes;
-            entity.Status = dto.Status;
             entity.StationId = dto.StationId;
             entity.VehicleId = dto.VehicleId;
             entity.AccountId = dto.AccountId;
+            entity.IsApproved = dto.IsApproved;
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EV_BatteryChangeStation_Common.Enum.BookingEnum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,11 @@ namespace EV_BatteryChangeStation_Common.DTOs.BookingDTO
     {
         public DateTime DateTime { get; set; }
         public string? Notes { get; set; }
-        public bool? Status { get; set; }
+        public string IsApproved { get; set; } 
         public DateTime? CreatedDate { get; set; }
         public Guid StationId { get; set; }
         public Guid VehicleId { get; set; }
         public Guid AccountId { get; set; }
     }
+
 }
