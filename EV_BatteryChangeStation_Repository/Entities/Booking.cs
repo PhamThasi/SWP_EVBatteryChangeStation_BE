@@ -13,7 +13,7 @@ public partial class Booking
 
     public string Notes { get; set; }
 
-    public bool? Status { get; set; }
+    public string IsApproved { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 

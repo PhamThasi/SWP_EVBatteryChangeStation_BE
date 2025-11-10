@@ -114,7 +114,7 @@ CREATE TABLE Booking (
     BookingID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     DateTime DATETIME NOT NULL,
     Notes NVARCHAR(100),
-    Status BIT,
+	IsApproved Nvarchar(50) not null default N'Pending',
     CreatedDate DATETIME DEFAULT GETDATE(),
     StationID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Station(StationID),
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
@@ -157,7 +157,7 @@ CREATE TABLE SwappingTransaction (
     TransactionID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Notes NVARCHAR(255),
     StaffID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
-    OldBatteryID UNIQUEIDENTIFIER NOT NULL,
+    OldBatteryID UNIQUEIDENTIFIER NULL,
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
     Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
     NewBatteryID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
@@ -297,14 +297,14 @@ DECLARE @book4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @book5 UNIQUEIDENTIFIER = NEWID();
 DECLARE @book6 UNIQUEIDENTIFIER = NEWID();
 
-INSERT INTO Booking (BookingID, DateTime, Notes, Status, StationID, VehicleID, AccountID)
+INSERT INTO Booking (BookingID, DateTime, Notes, IsApproved, StationID, VehicleID, AccountID)
 VALUES
-(@book1, GETDATE(), N'Đổi pin lần 1', 1, @stationHN, @carE34, @customer),
-(@book2, GETDATE(), N'Đổi pin lần 2', 1, @stationHCM, @carTesla, @customer),
-(@book3, GETDATE(), N'Đổi pin VF8', 1, @stationDN, @carVin, @customer2),
-(@book4, GETDATE(), N'Đổi pin BYD', 1, @stationHP, @carBYD, @customer3),
-(@book5, GETDATE(), N'Đổi pin VinFast E34', 1, @stationDN, @carE34, @customer2),
-(@book6, GETDATE(), N'Đổi pin Tesla Model 3', 1, @stationHP, @carTesla, @customer3);
+(@book1, GETDATE(), N'Đổi pin lần 1', N'Approve', @stationHN, @carE34, @customer),
+(@book2, GETDATE(), N'Đổi pin lần 2', N'Approve', @stationHCM, @carTesla, @customer),
+(@book3, GETDATE(), N'Đổi pin VF8', N'Approve', @stationDN, @carVin, @customer2),
+(@book4, GETDATE(), N'Đổi pin BYD', N'Approve', @stationHP, @carBYD, @customer3),
+(@book5, GETDATE(), N'Đổi pin VinFast E34', N'Approve', @stationDN, @carE34, @customer2),
+(@book6, GETDATE(), N'Đổi pin Tesla Model 3', N'Approve', @stationHP, @carTesla, @customer3);
 
 -- SupportRequest
 INSERT INTO SupportRequest (IssueType, Description, Status, AccountID, StaffID, ResponseText, ResponseDate)
