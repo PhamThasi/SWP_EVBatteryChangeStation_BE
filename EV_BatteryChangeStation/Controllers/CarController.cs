@@ -140,5 +140,20 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
         }
+
+        /// <summary>
+        /// Search batteries by car batterytype
+        ///</summary>
+        ///
+        [HttpGet("GetBatteryByCarBatteryType")]
+        public async Task<IActionResult> GetBatteriesByCarAsync([FromQuery] Guid vehicleId)
+        {
+            if (vehicleId == Guid.Empty)
+                return BadRequest("Invalid vehicle id");
+            var result = await _carService.GetBatteriesByCarAsync(vehicleId);
+            if (result.Status == 200)
+                return Ok(result);
+            return StatusCode(result.Status, result.Message);
+        }
     }
 }

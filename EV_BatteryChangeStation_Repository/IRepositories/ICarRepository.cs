@@ -13,5 +13,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<Account?> GetOwnerByCarIdAsync(Guid carId);
         Task<List<Car>> GetCarByNameAsync(string modelName);
         Task<List<Car?>> GetCarsByOwnerIdAsync(Guid ownerId);   
+        Task<List<Battery>> GetBatteriesByCarAsync(Guid vehicleId);
     }
 }

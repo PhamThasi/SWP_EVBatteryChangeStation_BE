@@ -262,14 +262,16 @@ DECLARE @carE34 UNIQUEIDENTIFIER = NEWID();
 DECLARE @carTesla UNIQUEIDENTIFIER = NEWID();
 DECLARE @carVin UNIQUEIDENTIFIER = NEWID();
 DECLARE @carBYD UNIQUEIDENTIFIER = NEWID();
+DECLARE @carSolid UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO Car (VehicleID, Model, BatteryType, Producer)
 VALUES
+
 (@carE34, N'VinFast E34', N'Lithium-ion', N'VinFast'),
 (@carTesla, N'Tesla Model 3', N'Lithium-ion', N'Tesla'),
 (@carVin, N'VinFast VF8', N'Lithium-ion', N'VinFast'),
-(@carBYD, N'BYD Atto 3', N'Lithium-ion', N'BYD');
-
+(@carBYD, N'BYD Atto 3', N'Lithium-ion', N'BYD'),
+(@carSolid, N'SolidCar X1', N'Solid-state', N'SolidCar');
 -- Battery
 DECLARE @batt1 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt2 UNIQUEIDENTIFIER = NEWID();
@@ -278,16 +280,24 @@ DECLARE @batt4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt5 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt6 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt7 UNIQUEIDENTIFIER = NEWID();
-
+DECLARE @battA UNIQUEIDENTIFIER = NEWID();
+DECLARE @battB UNIQUEIDENTIFIER = NEWID();
+DECLARE @battC UNIQUEIDENTIFIER = NEWID();
+DECLARE @battD UNIQUEIDENTIFIER = NEWID();
 INSERT INTO Battery (BatteryID, Capacity, LastUsed, Status, StateOfHealth, PercentUse, TypeBattery, BatterySwapDate, InsuranceDate, StationID)
 VALUES
+
 (@batt1, 50.0, GETDATE(), 1, 95.5, 70.2, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHN),
 (@batt2, 60.0, GETDATE(), 1, 97.0, 80.1, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHN),
 (@batt3, 55.0, GETDATE(), 1, 90.0, 65.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHCM),
 (@batt4, 45.0, GETDATE(), 1, 92.0, 50.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationDN),
 (@batt5, 55.0, GETDATE(), 1, 95.0, 30.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationDN),
 (@batt6, 60.0, GETDATE(), 1, 97.0, 20.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP),
-(@batt7, 50.0, GETDATE(), 1, 90.0, 40.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP);
+(@batt7, 50.0, GETDATE(), 1, 90.0, 40.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP),
+(@battA, 55.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battB, 60.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battC, 50.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battD, 45.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN);
 
 -- Booking
 DECLARE @book1 UNIQUEIDENTIFIER = NEWID();
