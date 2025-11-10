@@ -25,14 +25,14 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var feedbacks = await _unitOfWork.FeedBackRepository.GetAllAsync();
                 if (feedbacks == null || !feedbacks.Any())
-                    return new ServiceResult(404, "Không có feedback nào được tìm thấy.");
+                    return new ServiceResult(404, "No feedbacks found.");
 
                 var data = feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
-                return new ServiceResult(200, "Lấy danh sách feedback thành công.", data);
+                return new ServiceResult(200, "Successfully retrieved feedback list.", data);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy danh sách feedbacks.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving feedbacks.", ex.Message);
             }
         }
 
@@ -42,13 +42,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    return new ServiceResult(404, $"Không tìm thấy feedback có ID = {id}");
+                    return new ServiceResult(404, $"Feedback with ID = {id} not found.");
 
-                return new ServiceResult(200, "Lấy feedback thành công.", feedback.ToFeedBackDTO());
+                return new ServiceResult(200, "Feedback retrieved successfully.", feedback.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy feedback.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving feedback.", ex.Message);
             }
         }
 
@@ -57,18 +57,18 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             try
             {
                 if (dto.Rating == null || dto.Rating < 1 || dto.Rating > 5)
-                    return new ServiceResult(400, "Điểm đánh giá (Rating) phải từ 1 đến 5.");
+                    return new ServiceResult(400, "Rating must be between 1 and 5.");
 
                 if (string.IsNullOrWhiteSpace(dto.Comment))
-                    dto.Comment = "Người dùng không để lại bình luận.";
+                    dto.Comment = "User did not leave a comment.";
 
                 var account = await _unitOfWork.AccountRepository.GetByIdAsync(dto.AccountId);
                 if (account == null)
-                    return new ServiceResult(404, "Không tồn tại tài khoản này.");
+                    return new ServiceResult(404, "This account does not exist.");
 
                 var booking = await _unitOfWork.BookingRepository.GetByIdAsync(dto.BookingId);
                 if (booking == null)
-                    return new ServiceResult(404, "Không tồn tại booking tương ứng để feedback.");
+                    return new ServiceResult(404, "The corresponding booking for feedback does not exist.");
 
                 var entity = dto.ToEntity();
                 entity.CreateDate = DateTime.Now;
@@ -76,11 +76,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 await _unitOfWork.FeedBackRepository.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(201, "Tạo feedback thành công.", entity.ToFeedBackDTO());
+                return new ServiceResult(201, "Feedback created successfully.", entity.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi tạo feedback.", ex.Message);
+                return new ServiceResult(500, "Error while creating feedback.", ex.Message);
             }
         }
 
@@ -90,10 +90,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    return new ServiceResult(404, $"Không tìm thấy feedback với ID = {id}");
+                    return new ServiceResult(404, $"Feedback with ID = {id} not found.");
 
                 if (dto.Rating.HasValue && (dto.Rating < 1 || dto.Rating > 5))
-                    return new ServiceResult(400, "Điểm đánh giá (Rating) phải từ 1 đến 5.");
+                    return new ServiceResult(400, "Rating must be between 1 and 5.");
 
                 feedback.Rating = dto.Rating ?? feedback.Rating;
                 feedback.Comment = dto.Comment ?? feedback.Comment;
@@ -103,11 +103,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.FeedBackRepository.Update(feedback);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Cập nhật feedback thành công.", feedback.ToFeedBackDTO());
+                return new ServiceResult(200, "Feedback updated successfully.", feedback.ToFeedBackDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi cập nhật feedback.", ex.Message);
+                return new ServiceResult(500, "Error while updating feedback.", ex.Message);
             }
         }
 
@@ -117,16 +117,16 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var feedback = await _unitOfWork.FeedBackRepository.GetByIdAsync(id);
                 if (feedback == null)
-                    return new ServiceResult(404, $"Không tìm thấy feedback với ID = {id}");
+                    return new ServiceResult(404, $"Feedback with ID = {id} not found.");
 
                 _unitOfWork.FeedBackRepository.Delete(feedback);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Xóa feedback thành công.");
+                return new ServiceResult(200, "Feedback deleted successfully.");
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi xóa feedback.", ex.Message);
+                return new ServiceResult(500, "Error while deleting feedback.", ex.Message);
             }
         }
     }
