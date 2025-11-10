@@ -146,7 +146,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     return new ServiceResult
                     {
                         Status = Const.WARNING_NO_DATA_CODE,
-                        Message = "Không tìm thấy chủ sở hữu của xe này",
+                        Message = "Can not find the owner",
                     };
                 }
 

@@ -25,7 +25,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork ?? throw new ArgumentException(nameof(unitOfWork));
             _passwordHasher = passwordHasher ?? throw new ArgumentException(nameof(passwordHasher));
         }
-        // Tạo tài khoản mới
+
         public async Task<IServiceResult> CreateAccountAsync(CreateAccountDTO createAccount)
         {
             try
@@ -40,12 +40,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                // map sang entity
+
                 var account = createAccount.MapToEntity();
 
-                // hash password trước khi lưu
+
                 account.Password = _passwordHasher.HashPassword(account, account.Password);
-                account.Status = true; // Mặc định tài khoản mới tạo là active
+                account.Status = true; 
                 await _unitOfWork.AccountRepository.CreateAsync(account);
                 return new ServiceResult
                 {
@@ -59,7 +59,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 throw new Exception(ex.Message);
             }
         }
-        //xóa tài khoản
+
         public async Task<IServiceResult> DeleteAccountAsync(Guid encodedId)
         {
             try
@@ -99,7 +99,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //lấy tài khoản dựa vào tên
+
         public async Task<IServiceResult> GetAccountByNameAsync(string accountName)
         {
             try
@@ -231,7 +231,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        //cập nhật tài khoản
+
         public async Task<IServiceResult> UpdateAccountAsync(UpdateAccountDTO updateAccount)
         {
             try
@@ -272,7 +272,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-        // Xóa mềm tài khoản (chuyển trạng thái sang inactive)
+
         public async Task<IServiceResult> SoftDeleteAsync(Guid encodedId)
         {
             try
