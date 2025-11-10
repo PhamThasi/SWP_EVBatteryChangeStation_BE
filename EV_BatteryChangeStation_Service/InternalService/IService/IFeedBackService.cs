@@ -12,5 +12,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<ServiceResult> CreateAsync(CreateFeedBackDTO dto);
         Task<ServiceResult> UpdateAsync(Guid id, UpdateFeedBackDTO dto);
         Task<ServiceResult> DeleteAsync(Guid id);
+        Task<ServiceResult> GetByAccountIdAsync(Guid accountId);
+
     }
 }

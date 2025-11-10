@@ -88,5 +88,33 @@ namespace EV_BatteryChangeStation.Controllers
                 message = "Feedback deleted successfully"
             });
         }
+        // Lấy feedback theo AccountId
+        [HttpGet("SelectByAccount/{accountId}")]
+        public async Task<IActionResult> GetByAccountId(Guid accountId)
+        {
+            var result = await _feedBackService.GetByAccountIdAsync(accountId);
+
+            if (result.Status == 404)
+                return NotFound(new
+                {
+                    status = 404,
+                    message = $"No feedbacks found for Account ID = {accountId}"
+                });
+
+            if (result.Status != 200)
+                return StatusCode(result.Status, new
+                {
+                    status = result.Status,
+                    message = result.Message
+                });
+
+            return Ok(new
+            {
+                status = 200,
+                message = "Get feedbacks by account successfully",
+                data = result.Data
+            });
+        }
+
     }
 }

@@ -129,5 +129,22 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, "Error while deleting feedback.", ex.Message);
             }
         }
+        public async Task<ServiceResult> GetByAccountIdAsync(Guid accountId)
+        {
+            try
+            {
+                var feedbacks = await _unitOfWork.FeedBackRepository.GetByAccountIdAsync(accountId);
+                if (feedbacks == null || !feedbacks.Any())
+                    return new ServiceResult(404, $"No feedbacks found for Account ID = {accountId}.");
+
+                var data = feedbacks.Select(f => f.ToFeedBackDTO()).ToList();
+                return new ServiceResult(200, "Successfully retrieved feedbacks by account.", data);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error while retrieving feedbacks by account.", ex.Message);
+            }
+        }
+
     }
 }

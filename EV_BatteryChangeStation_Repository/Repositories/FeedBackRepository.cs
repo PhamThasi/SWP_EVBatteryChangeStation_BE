@@ -37,5 +37,12 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         {
             _context.Feedbacks.Remove(feedback);
         }
+        public async Task<IEnumerable<Feedback>> GetByAccountIdAsync(Guid accountId)
+        {
+            return await _context.Feedbacks
+                .Where(f => f.AccountId == accountId)
+                .ToListAsync();
+        }
+
     }
 }
