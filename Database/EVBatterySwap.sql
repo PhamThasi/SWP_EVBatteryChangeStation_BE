@@ -361,6 +361,15 @@ VALUES
 (NEWID(), 800000, N'Credit Card', 1, @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
 
 /*
+Gói Cơ Bản
+"Swap từng lần – trả tiền theo mỗi lượt đổi pin\nPhù hợp với tài xế ít di chuyển hoặc sử dụng không thường xuyên\nKhông cần cam kết tháng – linh hoạt, dùng khi cần\nQuản lý và thanh toán dễ dàng qua ứng dụng"
+Gói Tiết Kiệm
+"Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản\nBao gồm 10–15 lượt swap miễn phí mỗi tháng\nƯu tiên tại trạm khi đổi pin trong giờ cao điểm\nTheo dõi số lần swap còn lại ngay trên app\nThanh toán tự động – có thể gia hạn gói dễ dàng"
+Gói Premium
+"Swap không giới hạn – đổi pin bất cứ lúc nào\nBảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí\nƯu tiên hàng đầu tại mọi trạm trên hệ thống\nHỗ trợ kỹ thuật 24/7 qua hotline hoặc app\nGiảm giá 10–15% khi đăng ký thêm phương tiện khác"
+*/
+
+/*
 USE master;
 GO
 ALTER DATABASE EVBatterySwap SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
