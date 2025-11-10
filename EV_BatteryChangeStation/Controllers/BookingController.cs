@@ -1,6 +1,8 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.BookingDTO;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation.Controllers
 {
@@ -56,20 +58,25 @@ namespace EV_BatteryChangeStation.Controllers
         }
 
         /// <summary>
-        /// Xóa lịch đổi pin
+        /// Hủy (Soft Delete) — chuyển trạng thái IsApproved thành Canceled
         /// </summary>
-        [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("Cancel/{id}")]
+        public async Task<IActionResult> Cancel(Guid id)
         {
             var result = await _bookingService.DeleteAsync(id);
             return StatusCode(result.Status, result);
         }
+
+        /// <summary>
+        /// Xóa cứng lịch đổi pin
+        /// </summary>
         [HttpDelete("HardDelete/{id}")]
         public async Task<IActionResult> HardDelete(Guid id)
         {
             var result = await _bookingService.HardDeleteAsync(id);
             return StatusCode(result.Status, result);
         }
+
         /// <summary>
         /// Lấy danh sách lịch đổi pin theo người dùng
         /// </summary>

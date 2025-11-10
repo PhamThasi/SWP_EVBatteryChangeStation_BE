@@ -20,18 +20,15 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork;
         }
 
-        // Lấy tất cả booking còn hoạt động
+        // Lấy tất cả booking (bao gồm cả đã hủy)
         public async Task<ServiceResult> GetAllAsync()
         {
             try
             {
                 var bookings = await _unitOfWork.BookingRepository.GetAllAsync();
-                var activeBookings = bookings
-                    .Where(b => b.Status == true)
-                    .Select(BookingMapper.ToDTO)
-                    .ToList();
+                var result = bookings.Select(BookingMapper.ToDTO).ToList();
 
-                return new ServiceResult(200, "Success", activeBookings, BookingErrorCode.None);
+                return new ServiceResult(200, "Success", result, BookingErrorCode.None);
             }
             catch (Exception ex)
             {
@@ -45,9 +42,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             try
             {
                 var booking = await _unitOfWork.BookingRepository.GetByIdAsync(id);
-
-                if (booking == null || booking.Status == false)
-                    return new ServiceResult(404, "Booking not found or cancelled", null, BookingErrorCode.BookingNotFound);
+                if (booking == null)
+                    return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
 
                 return new ServiceResult(200, "Success", BookingMapper.ToDTO(booking), BookingErrorCode.None);
             }
@@ -69,14 +65,15 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     return new ServiceResult(400, "Booking time cannot be in the past", null, BookingErrorCode.TimeInPast);
 
                 var existing = (await _unitOfWork.BookingRepository.GetAllAsync())
-                    .FirstOrDefault(b => b.StationId == dto.StationId && b.DateTime == dto.DateTime && (b.Status ?? false));
+                    .FirstOrDefault(b => b.StationId == dto.StationId &&
+                                         b.DateTime == dto.DateTime);
 
                 if (existing != null)
                     return new ServiceResult(409, "Duplicate booking for this time slot", null, BookingErrorCode.DuplicateBooking);
 
                 var entity = BookingMapper.ToEntity(dto);
                 entity.CreatedDate = DateTime.Now;
-                entity.Status = true;
+                entity.IsApproved = Convert.ToString(BookingApprovalStatus.Pending);
 
                 await _unitOfWork.BookingRepository.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
@@ -89,7 +86,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // Cập nhật booking (nếu chưa hủy)
+        // Cập nhật booking (nếu chưa bị hủy)
         public async Task<ServiceResult> UpdateAsync(Guid id, BookingCreateDTO dto)
         {
             try
@@ -98,7 +95,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (existing == null)
                     return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
 
-                if (existing.Status == false)
+                if (existing.IsApproved == Convert.ToString(BookingApprovalStatus.Canceled))
                     return new ServiceResult(400, "Cannot update a cancelled booking", null, BookingErrorCode.BookingAlreadyCancelled);
 
                 BookingMapper.UpdateEntity(existing, dto);
@@ -113,7 +110,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // Xóa mềm (đánh dấu đã hủy)
+        // Soft delete — chuyển trạng thái thành Canceled
         public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
@@ -122,10 +119,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (existing == null)
                     return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
 
-                if (existing.Status == false)
+                if (existing.IsApproved == Convert.ToString(BookingApprovalStatus.Canceled))
                     return new ServiceResult(400, "Booking is already cancelled", null, BookingErrorCode.BookingAlreadyCancelled);
 
-                existing.Status = false;
+                existing.IsApproved = Convert.ToString(BookingApprovalStatus.Canceled);
                 _unitOfWork.BookingRepository.Update(existing);
                 await _unitOfWork.CommitAsync();
 
@@ -137,7 +134,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
-        // Xóa cứng (xóa khỏi DB)
+        // Hard delete — xóa khỏi DB
         public async Task<ServiceResult> HardDeleteAsync(Guid id)
         {
             try
@@ -157,12 +154,12 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
+        // Lấy tất cả booking theo AccountId
         public async Task<ServiceResult> GetByAccountIdAsync(Guid accountId)
         {
             try
             {
                 var bookings = await _unitOfWork.BookingRepository.GetByAccountIdAsync(accountId);
-
                 if (bookings == null || !bookings.Any())
                     return new ServiceResult(404, "No bookings found for this user", null, BookingErrorCode.BookingNotFound);
 
