@@ -13,7 +13,7 @@ public partial class SwappingTransaction
 
     public Guid StaffId { get; set; }
 
-    public Guid OldBatteryId { get; set; }
+    public Guid? OldBatteryId { get; set; }
 
     public Guid VehicleId { get; set; }
 
