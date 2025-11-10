@@ -157,28 +157,37 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             var rnd = new Random();
             return rnd.Next(100000, 999999).ToString();
         }
-
-        private Task SendOtpEmail(string email, string otp)
+         
+        private async Task SendOtpEmail(string email, string otp)
         {
             string fromEmail = _configuration["EmailSettings:Email"];
             string password = _configuration["EmailSettings:AppPassword"];
 
-            using var client = new SmtpClient("smtp.gmail.com", 587)
+            using (var client = new SmtpClient("smtp.gmail.com", 587))
             {
-                Credentials = new NetworkCredential(fromEmail, password),
-                EnableSsl = true
-            };
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential(fromEmail, password);
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-            var mail = new MailMessage(fromEmail, email)
-            {
-                Subject = "Your OTP Code",
-                Body = $"Your OTP code is: {otp}",
-                IsBodyHtml = false
-            };
+                var mail = new MailMessage(fromEmail, email)
+                {
+                    Subject = "Your OTP Code",
+                    Body = $"Your OTP code is: {otp}",
+                    IsBodyHtml = false
+                };
 
-            client.Send(mail);
-            return Task.CompletedTask;
+                try
+                {
+                    await client.SendMailAsync(mail);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine($"SMTP ERROR: {ex.Message}");
+                    throw; // để Swagger hiển thị lỗi chi tiết
+                }
+            }
         }
+
 
         public Task<IServiceResult> LogoutAsync(string token)
         {

@@ -23,13 +23,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var list = await _unitOfWork.SupportRequestRepository.GetAllAsync();
                 if (list == null || list.Count == 0)
-                    return new ServiceResult(404, "Không có yêu cầu hỗ trợ nào.");
+                    return new ServiceResult(404, "No support requests found.");
 
-                return new ServiceResult(200, "Lấy danh sách thành công.", list.ToDTOList());
+                return new ServiceResult(200, "Successfully retrieved support request list.", list.ToDTOList());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy danh sách yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving support request list.", ex.Message);
             }
         }
 
@@ -39,13 +39,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var req = await _unitOfWork.SupportRequestRepository.GetByIdAsync(id);
                 if (req == null)
-                    return new ServiceResult(404, "Không tìm thấy yêu cầu hỗ trợ.");
+                    return new ServiceResult(404, "Support request not found.");
 
-                return new ServiceResult(200, "Lấy yêu cầu thành công.", req.ToDTO());
+                return new ServiceResult(200, "Successfully retrieved support request.", req.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving support request.", ex.Message);
             }
         }
 
@@ -54,11 +54,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             try
             {
                 if (string.IsNullOrWhiteSpace(dto.IssueType))
-                    return new ServiceResult(400, "Loại sự cố (IssueType) không được để trống.");
+                    return new ServiceResult(400, "Issue type (IssueType) cannot be empty.");
 
                 var account = await _unitOfWork.AccountRepository.GetByIdAsync(dto.AccountId);
                 if (account == null)
-                    return new ServiceResult(404, "Không tồn tại tài khoản gửi yêu cầu.");
+                    return new ServiceResult(404, "The account submitting the request does not exist.");
 
                 var entity = dto.ToEntity();
                 entity.CreateDate = DateTime.Now;
@@ -67,11 +67,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 await _unitOfWork.SupportRequestRepository.CreateAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(201, "Tạo yêu cầu hỗ trợ thành công.", entity.ToDTO());
+                return new ServiceResult(201, "Support request created successfully.", entity.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi tạo yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while creating support request.", ex.Message);
             }
         }
 
@@ -81,7 +81,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var req = await _unitOfWork.SupportRequestRepository.GetByIdAsync(id);
                 if (req == null)
-                    return new ServiceResult(404, "Không tìm thấy yêu cầu hỗ trợ để cập nhật.");
+                    return new ServiceResult(404, "Support request not found for update.");
 
                 req.UpdateEntity(dto);
                 req.ResponseDate = DateTime.Now;
@@ -89,14 +89,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 await _unitOfWork.SupportRequestRepository.UpdateAsync(req);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Cập nhật yêu cầu hỗ trợ thành công.", req.ToDTO());
+                return new ServiceResult(200, "Support request updated successfully.", req.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi cập nhật yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while updating support request.", ex.Message);
             }
         }
-
 
         public async Task<ServiceResult> SoftDeleteAsync(Guid id)
         {
@@ -104,17 +103,17 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var req = await _unitOfWork.SupportRequestRepository.GetByIdAsync(id);
                 if (req == null)
-                    return new ServiceResult(404, "Không tìm thấy yêu cầu hỗ trợ để xóa.");
+                    return new ServiceResult(404, "Support request not found for deletion.");
 
                 req.Status = false;
                 await _unitOfWork.SupportRequestRepository.UpdateAsync(req);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Đã vô hiệu hóa yêu cầu hỗ trợ (Soft Delete).");
+                return new ServiceResult(200, "Support request has been deactivated (Soft Delete).");
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi xóa yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while deleting support request.", ex.Message);
             }
         }
 
@@ -124,18 +123,19 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 var req = await _unitOfWork.SupportRequestRepository.GetByIdAsync(id);
                 if (req == null)
-                    return new ServiceResult(404, "Không tìm thấy yêu cầu hỗ trợ để xóa vĩnh viễn.");
+                    return new ServiceResult(404, "Support request not found for permanent deletion.");
 
                 await _unitOfWork.SupportRequestRepository.RemoveAsync(req);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Đã xóa vĩnh viễn yêu cầu hỗ trợ.");
+                return new ServiceResult(200, "Support request permanently deleted.");
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi xóa vĩnh viễn yêu cầu hỗ trợ.", ex.Message);
+                return new ServiceResult(500, "Error while permanently deleting support request.", ex.Message);
             }
         }
+
         public async Task<ServiceResult> GetByAccountIdAsync(Guid accountId)
         {
             try
@@ -146,13 +146,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 var filtered = list.Where(r => r.AccountId == accountId).ToList();
 
                 if (filtered == null || filtered.Count == 0)
-                    return new ServiceResult(404, "Không có yêu cầu hỗ trợ nào cho tài khoản này.");
+                    return new ServiceResult(404, "No support requests found for this account.");
 
-                return new ServiceResult(200, "Lấy danh sách yêu cầu theo AccountId thành công.", filtered.ToDTOList());
+                return new ServiceResult(200, "Successfully retrieved support requests by AccountId.", filtered.ToDTOList());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy danh sách yêu cầu theo AccountId.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving support requests by AccountId.", ex.Message);
             }
         }
 
@@ -166,15 +166,14 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 var filtered = list.Where(r => r.StaffId == staffId).ToList();
 
                 if (filtered == null || filtered.Count == 0)
-                    return new ServiceResult(404, "Không có yêu cầu hỗ trợ nào do nhân viên này phụ trách.");
+                    return new ServiceResult(404, "No support requests found assigned to this staff.");
 
-                return new ServiceResult(200, "Lấy danh sách yêu cầu theo StaffId thành công.", filtered.ToDTOList());
+                return new ServiceResult(200, "Successfully retrieved support requests by StaffId.", filtered.ToDTOList());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy danh sách yêu cầu theo StaffId.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving support requests by StaffId.", ex.Message);
             }
         }
-
     }
 }

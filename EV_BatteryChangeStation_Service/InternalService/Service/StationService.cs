@@ -20,78 +20,78 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             _unitOfWork = unitOfWork;
         }
 
-        //  Lấy tất cả trạm
+        // Get all stations
         public async Task<ServiceResult> GetAllAsync()
         {
             try
             {
                 var stations = await _unitOfWork.StationRepository.GetAllAsync();
                 if (stations == null || !stations.Any())
-                    return new ServiceResult(404, "Không có trạm nào trong hệ thống.");
+                    return new ServiceResult(404, "No stations found in the system.");
 
                 var data = stations.Select(s => s.ToDTO()).ToList();
-                return new ServiceResult(200, "Lấy danh sách trạm thành công.", data);
+                return new ServiceResult(200, "Successfully retrieved station list.", data);
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy danh sách trạm.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving station list.", ex.Message);
             }
         }
 
-        // Lấy trạm theo ID
+        // Get station by ID
         public async Task<ServiceResult> GetByIdAsync(Guid id)
         {
             try
             {
                 var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
                 if (station == null)
-                    return new ServiceResult(404, $"Không tìm thấy trạm với ID = {id}");
+                    return new ServiceResult(404, $"Station with ID = {id} not found.");
 
-                return new ServiceResult(200, "Lấy thông tin trạm thành công.", station.ToDTO());
+                return new ServiceResult(200, "Successfully retrieved station information.", station.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi lấy thông tin trạm.", ex.Message);
+                return new ServiceResult(500, "Error while retrieving station information.", ex.Message);
             }
         }
 
-        // Tạo mới trạm
+        // Create a new station
         public async Task<ServiceResult> CreateAsync(StationCreateDTO dto)
         {
             try
             {
                 if (dto == null)
-                    return new ServiceResult(400, "Dữ liệu trạm không hợp lệ.");
+                    return new ServiceResult(400, "Invalid station data.");
 
                 if (string.IsNullOrWhiteSpace(dto.Address))
-                    return new ServiceResult(400, "Địa chỉ trạm không được để trống.");
+                    return new ServiceResult(400, "Station address cannot be empty.");
                 if (string.IsNullOrWhiteSpace(dto.PhoneNumber))
-                    return new ServiceResult(400, "Số điện thoại không được để trống.");
+                    return new ServiceResult(400, "Phone number cannot be empty.");
 
                 var entity = dto.ToEntity();
 
-                // Nếu repository bạn không có AddAsync thì dùng Add
+                // If your repository doesn't have AddAsync, use Add instead
                 _unitOfWork.StationRepository.Create(entity);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(201, "Tạo trạm mới thành công.", entity.ToDTO());
+                return new ServiceResult(201, "Station created successfully.", entity.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi tạo trạm.", ex.Message);
+                return new ServiceResult(500, "Error while creating station.", ex.Message);
             }
         }
 
-        // Cập nhật trạm
+        // Update station
         public async Task<ServiceResult> UpdateAsync(Guid id, StationCreateDTO dto)
         {
             try
             {
                 var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
                 if (station == null)
-                    return new ServiceResult(404, $"Không tìm thấy trạm có ID = {id}");
+                    return new ServiceResult(404, $"Station with ID = {id} not found.");
 
-                // Cập nhật từng trường có giá trị
+                // Update each field if it has a value
                 if (!string.IsNullOrWhiteSpace(dto.Address))
                     station.Address = dto.Address;
                 if (!string.IsNullOrWhiteSpace(dto.PhoneNumber))
@@ -106,51 +106,51 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 _unitOfWork.StationRepository.Update(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Cập nhật trạm thành công.", station.ToDTO());
+                return new ServiceResult(200, "Station updated successfully.", station.ToDTO());
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi cập nhật trạm.", ex.Message);
+                return new ServiceResult(500, "Error while updating station.", ex.Message);
             }
         }
 
-        // Xóa mềm (hoặc xóa luôn)
+        // Soft delete (or normal delete)
         public async Task<ServiceResult> DeleteAsync(Guid id)
         {
             try
             {
                 var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
                 if (station == null)
-                    return new ServiceResult(404, "Không tìm thấy trạm để xóa.");
+                    return new ServiceResult(404, "Station not found for deletion.");
 
                 _unitOfWork.StationRepository.Delete(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Đã xóa trạm thành công.");
+                return new ServiceResult(200, "Station deleted successfully.");
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi xóa trạm.", ex.Message);
+                return new ServiceResult(500, "Error while deleting station.", ex.Message);
             }
         }
 
-        // Xóa vĩnh viễn
+        // Hard delete
         public async Task<ServiceResult> HardDeleteAsync(Guid id)
         {
             try
             {
                 var station = await _unitOfWork.StationRepository.GetByIdAsync(id);
                 if (station == null)
-                    return new ServiceResult(404, "Không tìm thấy trạm để xóa vĩnh viễn.");
+                    return new ServiceResult(404, "Station not found for permanent deletion.");
 
                 _unitOfWork.StationRepository.Delete(station);
                 await _unitOfWork.CommitAsync();
 
-                return new ServiceResult(200, "Đã xóa trạm vĩnh viễn thành công.");
+                return new ServiceResult(200, "Station permanently deleted successfully.");
             }
             catch (Exception ex)
             {
-                return new ServiceResult(500, "Lỗi khi xóa vĩnh viễn trạm.", ex.Message);
+                return new ServiceResult(500, "Error while permanently deleting station.", ex.Message);
             }
         }
     }

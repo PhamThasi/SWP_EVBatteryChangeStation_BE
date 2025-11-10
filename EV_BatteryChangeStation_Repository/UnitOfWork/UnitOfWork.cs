@@ -21,7 +21,7 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private ISwappingTransactionRepository _swappingTransactionRepository;
         private IPaymentRepository _paymentRepository;
 
-        // ĐÃ XÓA CONSTRUCTOR RỖNG
+        
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
