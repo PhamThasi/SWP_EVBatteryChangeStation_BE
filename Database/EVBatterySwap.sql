@@ -252,11 +252,12 @@ VALUES
 -- Subscription
 DECLARE @subBasic UNIQUEIDENTIFIER = NEWID();
 DECLARE @subPremium UNIQUEIDENTIFIER = NEWID();
-
+DECLARE @subSave UNIQUEIDENTIFIER = NEWID();
 INSERT INTO Subscription (SubscriptionID, Name, Price, ExtraFee, Description, DurationPackage, IsActive, AccountID)
 VALUES
-(@subBasic, N'Gói cơ bản', 500000, 50000, N'Dùng 30 ngày, giới hạn 10 lần đổi pin', 30, 1, @customer),
-(@subPremium, N'Gói nâng cao', 1000000, 100000, N'Dùng 30 ngày, không giới hạn đổi pin', 30, 1, @customer);
+(@subBasic, N'Gói cơ bản', 500000, 50000, N'Swap từng lần – trả tiền theo mỗi lượt đổi pin\nPhù hợp với tài xế ít di chuyển hoặc sử dụng không thường xuyên\nKhông cần cam kết tháng – linh hoạt, dùng khi cần\nQuản lý và thanh toán dễ dàng qua ứng dụng', 30, 1, @customer),
+(@subSave, N'Gói Tiết kiệm', 299000, 350000, N'Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản\nBao gồm 10–15 lượt swap miễn phí mỗi tháng\nƯu tiên tại trạm khi đổi pin trong giờ cao điểm\nTheo dõi số lần swap còn lại ngay trên app\nThanh toán tự động – có thể gia hạn gói dễ dàng', 120, 1, null),
+(@subPremium, N'Gói nâng cao', 1000000, 100000, N'Swap không giới hạn – đổi pin bất cứ lúc nào\nBảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí\nƯu tiên hàng đầu tại mọi trạm trên hệ thống\nHỗ trợ kỹ thuật 24/7 qua hotline hoặc app\nGiảm giá 10–15% khi đăng ký thêm phương tiện khác', 30, 1, @customer);
 
 -- Car
 DECLARE @carE34 UNIQUEIDENTIFIER = NEWID();
