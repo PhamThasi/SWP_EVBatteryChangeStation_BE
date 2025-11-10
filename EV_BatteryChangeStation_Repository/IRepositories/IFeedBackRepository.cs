@@ -14,5 +14,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task AddAsync(Feedback feedback);
         void Update(Feedback feedback);
         void Delete(Feedback feedback);
+        Task<IEnumerable<Feedback>> GetByAccountIdAsync(Guid accountId);
+
     }
 }
