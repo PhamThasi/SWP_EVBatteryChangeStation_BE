@@ -14,8 +14,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.SwappingtransactionDto
 
         public Guid StaffId { get; set; }
 
-        public Guid? OldBatteryId { get; set; }
-
         public Guid VehicleId { get; set; }
 
         public Guid NewBatteryId { get; set; }

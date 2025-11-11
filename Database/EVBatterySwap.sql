@@ -158,13 +158,12 @@ CREATE TABLE SwappingTransaction (
     TransactionID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Notes NVARCHAR(255),
     StaffID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
-    OldBatteryID UNIQUEIDENTIFIER NULL,
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
-    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
     NewBatteryID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
-    CreateDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT CK_Swap_Battery CHECK (OldBatteryID <> NewBatteryID)
+    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
+    CreateDate DATETIME DEFAULT GETDATE()
 );
+
 
 -- Bổ sung Payment liên kết với Transaction
 ALTER TABLE Payment
@@ -342,14 +341,14 @@ DECLARE @trans3 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans5 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans6 UNIQUEIDENTIFIER = NEWID();
-INSERT INTO SwappingTransaction (TransactionID, Notes, StaffID, OldBatteryID, VehicleID, NewBatteryID)
+INSERT INTO SwappingTransaction (TransactionID, Notes, StaffID, VehicleID, NewBatteryID)
 VALUES
-(@trans1, N'Đổi pin thành công', @staffHN, @batt1, @carE34, @batt2),
-(@trans2, N'Đổi pin nhanh chóng', @staffHCM, @batt3, @carTesla, @batt1),
-(@trans3, N'Đổi pin VF8 thành công', @staffDN, @batt4, @carVin, @batt5),
-(@trans4, N'Đổi pin BYD thành công', @staffHP, @batt6, @carBYD, @batt7),
-(@trans5, N'Đổi pin VinFast E34 thành công', @staffDN, @batt2, @carE34, @batt4),
-(@trans6, N'Đổi pin Tesla Model 3 thành công', @staffHP, @batt1, @carTesla, @batt6);
+(@trans1, N'Đổi pin thành công', @staffHN, @carE34, @batt2),
+(@trans2, N'Đổi pin nhanh chóng', @staffHCM, @carTesla, @batt1),
+(@trans3, N'Đổi pin VF8 thành công', @staffDN, @carVin, @batt5),
+(@trans4, N'Đổi pin BYD thành công', @staffHP, @carBYD, @batt7),
+(@trans5, N'Đổi pin VinFast E34 thành công', @staffDN, @carE34, @batt4),
+(@trans6, N'Đổi pin Tesla Model 3 thành công', @staffHP, @carTesla, @batt6);
 
 -- Payment liên kết Transaction
 

@@ -55,11 +55,11 @@ public partial class EVBatterySwapContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__349DA586CD1EDE29");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__349DA58643CCAFEA");
 
             entity.ToTable("Account");
 
-            entity.HasIndex(e => e.Email, "UQ__Account__A9D105345E052629").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Account__A9D10534C5A7EDF3").IsUnique();
 
             entity.Property(e => e.AccountId)
                 .HasDefaultValueSql("(newsequentialid())")
@@ -94,7 +94,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Battery>(entity =>
         {
-            entity.HasKey(e => e.BatteryId).HasName("PK__Battery__5710803E6522D5AF");
+            entity.HasKey(e => e.BatteryId).HasName("PK__Battery__5710803E62A2B77D");
 
             entity.ToTable("Battery", tb =>
                 {
@@ -121,7 +121,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Booking>(entity =>
         {
-            entity.HasKey(e => e.BookingId).HasName("PK__Booking__73951ACDE18A0C63");
+            entity.HasKey(e => e.BookingId).HasName("PK__Booking__73951ACD15FED573");
 
             entity.ToTable("Booking");
 
@@ -159,7 +159,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Car>(entity =>
         {
-            entity.HasKey(e => e.VehicleId).HasName("PK__Car__476B54B22426ADEB");
+            entity.HasKey(e => e.VehicleId).HasName("PK__Car__476B54B28D4A0FB1");
 
             entity.ToTable("Car");
 
@@ -170,7 +170,7 @@ public partial class EVBatterySwapContext : DbContext
             entity.Property(e => e.CreateDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.Images).HasMaxLength(100);
+            entity.Property(e => e.Images).HasMaxLength(1000);
             entity.Property(e => e.Model).HasMaxLength(100);
             entity.Property(e => e.Producer).HasMaxLength(100);
             entity.Property(e => e.Status)
@@ -181,7 +181,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__6A4BEDF6B5C61B33");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__6A4BEDF65E50274D");
 
             entity.ToTable("Feedback");
 
@@ -208,11 +208,11 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__9B556A5881A1384F");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__9B556A586C0AB67D");
 
             entity.ToTable("Payment");
 
-            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A0F10D7F7").IsUnique();
+            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A7F842519").IsUnique();
 
             entity.Property(e => e.PaymentId)
                 .HasDefaultValueSql("(newsequentialid())")
@@ -232,12 +232,12 @@ public partial class EVBatterySwapContext : DbContext
 
             entity.HasOne(d => d.Transaction).WithOne(p => p.Payment)
                 .HasForeignKey<Payment>(d => d.TransactionId)
-                .HasConstraintName("FK__Payment__Transac__74AE54BC");
+                .HasConstraintName("FK__Payment__Transac__73BA3083");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE3A83FB25FE");
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE3A54DB586A");
 
             entity.ToTable("Role");
 
@@ -255,7 +255,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Station>(entity =>
         {
-            entity.HasKey(e => e.StationId).HasName("PK__Station__E0D8A6DDD0CEF8B0");
+            entity.HasKey(e => e.StationId).HasName("PK__Station__E0D8A6DD579CE6D8");
 
             entity.ToTable("Station");
 
@@ -269,7 +269,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<Subscription>(entity =>
         {
-            entity.HasKey(e => e.SubscriptionId).HasName("PK__Subscrip__9A2B24BDF600C449");
+            entity.HasKey(e => e.SubscriptionId).HasName("PK__Subscrip__9A2B24BDED3060D4");
 
             entity.ToTable("Subscription");
 
@@ -296,7 +296,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<SupportRequest>(entity =>
         {
-            entity.HasKey(e => e.RequestId).HasName("PK__SupportR__33A8519AFACD1CCE");
+            entity.HasKey(e => e.RequestId).HasName("PK__SupportR__33A8519A55270675");
 
             entity.ToTable("SupportRequest");
 
@@ -325,7 +325,7 @@ public partial class EVBatterySwapContext : DbContext
 
         modelBuilder.Entity<SwappingTransaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Swapping__55433A4B84FA6A08");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Swapping__55433A4B28FAB53D");
 
             entity.ToTable("SwappingTransaction");
 
@@ -337,7 +337,6 @@ public partial class EVBatterySwapContext : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.NewBatteryId).HasColumnName("NewBatteryID");
             entity.Property(e => e.Notes).HasMaxLength(255);
-            entity.Property(e => e.OldBatteryId).HasColumnName("OldBatteryID");
             entity.Property(e => e.StaffId).HasColumnName("StaffID");
             entity.Property(e => e.Status)
                 .IsRequired()
@@ -348,7 +347,7 @@ public partial class EVBatterySwapContext : DbContext
             entity.HasOne(d => d.NewBattery).WithMany(p => p.SwappingTransactions)
                 .HasForeignKey(d => d.NewBatteryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SwappingT__NewBa__70DDC3D8");
+                .HasConstraintName("FK__SwappingT__NewBa__6FE99F9F");
 
             entity.HasOne(d => d.Staff).WithMany(p => p.SwappingTransactions)
                 .HasForeignKey(d => d.StaffId)
