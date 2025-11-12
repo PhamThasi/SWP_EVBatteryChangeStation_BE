@@ -73,7 +73,7 @@ CREATE TABLE Payment (
     PaymentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Price DECIMAL(18,2),
     Method NVARCHAR(50),
-    Status BIT default (0),
+    Status Nvarchar(100) not null default 'Pending',
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
     SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID)
@@ -115,7 +115,7 @@ CREATE TABLE Booking (
     BookingID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     DateTime DATETIME NOT NULL,
     Notes NVARCHAR(100),
-	IsApproved Nvarchar(50) not null default N'Pending',
+	IsApproved Nvarchar(50) not null,
     CreatedDate DATETIME DEFAULT GETDATE(),
     StationID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Station(StationID),
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
@@ -354,11 +354,11 @@ VALUES
 
 INSERT INTO Payment (PaymentID, Price, Method, Status, SubscriptionID, TransactionID, PaymentGateId)
 VALUES 
-(NEWID(), 500000, N'Credit Card', 0, @subBasic, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 1000000, N'Momo', 0, @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 600000, N'Momo', 0, @subBasic, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 700000, N'VNPAY', 1, @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 800000, N'Credit Card', 1, @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
+(NEWID(), 500000, N'Credit Card', 'Pending', null, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 1000000, N'Momo', 'Successful', @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 600000, N'Momo', 'Pending', null, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 700000, N'VNPAY', 'Successful', @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 800000, N'Credit Card', 'Successful', @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
 
 /*
 Gói Cơ Bản
