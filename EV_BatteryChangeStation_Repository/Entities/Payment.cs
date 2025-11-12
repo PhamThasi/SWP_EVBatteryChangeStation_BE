@@ -13,7 +13,7 @@ public partial class Payment
 
     public string Method { get; set; }
 
-    public bool? Status { get; set; }
+    public string Status { get; set; }
 
     public long? PaymentGateId { get; set; }
 
