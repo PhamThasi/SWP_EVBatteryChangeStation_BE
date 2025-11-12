@@ -70,7 +70,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 
                 var entity = dto.ToEntity();
 
-                // If your repository doesn't have AddAsync, use Add instead
+                
                 _unitOfWork.StationRepository.Create(entity);
                 await _unitOfWork.CommitAsync();
 
@@ -78,6 +78,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"[CreateAsync ERROR] {ex}");
                 return new ServiceResult(500, "Error while creating station.", ex.Message);
             }
         }
