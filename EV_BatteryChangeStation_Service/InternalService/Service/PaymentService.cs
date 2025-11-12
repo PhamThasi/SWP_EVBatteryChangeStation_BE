@@ -69,15 +69,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     var payment = create.toPayment();
                     payment.TransactionId = create.TransactionId;
 
-                    // Nếu có subscription → thanh toán thành công, ngược lại → Pending
+                    // Luôn để trạng thái Pending, không quan tâm subscription
+                    payment.Status = PaymentEnum.Pending.ToString();
+
+                    // Nếu có subscription thì vẫn gán subscriptionId nhưng trạng thái vẫn Pending
                     if (subscription != null)
                     {
                         payment.SubscriptionId = subscription.SubscriptionId;
-                        payment.Status = PaymentEnum.Successful.ToString();
-                    }
-                    else
-                    {
-                        payment.Status = PaymentEnum.Pending.ToString();
                     }
 
                     await _unitOfWork.PaymentRepository.CreateAsync(payment);

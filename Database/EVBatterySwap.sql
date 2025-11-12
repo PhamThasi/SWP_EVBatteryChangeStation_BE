@@ -355,10 +355,10 @@ VALUES
 INSERT INTO Payment (PaymentID, Price, Method, Status, SubscriptionID, TransactionID, PaymentGateId)
 VALUES 
 (NEWID(), 500000, N'Credit Card', 'Pending', null, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 1000000, N'Momo', 'Successful', @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 1000000, N'Momo', 'Pending', @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
 (NEWID(), 600000, N'Momo', 'Pending', null, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 700000, N'VNPAY', 'Successful', @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 800000, N'Credit Card', 'Successful', @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
+(NEWID(), 700000, N'VNPAY', 'Pending', @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 800000, N'Credit Card', 'Pending', @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
 
 /*
 Gói Cơ Bản
