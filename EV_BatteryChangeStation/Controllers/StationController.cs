@@ -13,16 +13,18 @@ public class StationController : ControllerBase
         _stationService = stationService;
     }
 
-    [HttpPost("Create/")]
+    [HttpPost("Create")]
     public async Task<IActionResult> CreateStation([FromBody] StationCreateDTO dto)
     {
         var result = await _stationService.CreateAsync(dto);
-        if (result.Status != 200)
-            return BadRequest(result);
+
+        if (result.Status == 400) return BadRequest(result);
+        if (result.Status == 500) return StatusCode(500, result);
 
         var createdStation = result.Data as StationDTO;
         return CreatedAtAction(nameof(GetStation), new { id = createdStation?.StationId }, createdStation);
     }
+
 
     [HttpPut("Update/{id}")]
     public async Task<IActionResult> UpdateStation(Guid id, [FromBody] StationCreateDTO dto)
