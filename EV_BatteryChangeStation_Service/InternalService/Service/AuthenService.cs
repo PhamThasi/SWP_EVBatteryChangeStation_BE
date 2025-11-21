@@ -132,7 +132,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 {
                     Email = registerDto.Email,
                     AccountName = registerDto.Email.Split('@')[0],
-                    //FullName = registerDto.FullName,
                     Password = _passwordHasher.HashPassword(null, registerDto.Password),
                     RoleId = customerRole.RoleId, // Gán role "Customer" lấy từ DB
                     Status = true
