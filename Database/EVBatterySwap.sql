@@ -254,9 +254,9 @@ DECLARE @subPremium UNIQUEIDENTIFIER = NEWID();
 DECLARE @subSave UNIQUEIDENTIFIER = NEWID();
 INSERT INTO Subscription (SubscriptionID, Name, Price, ExtraFee, Description, DurationPackage, IsActive, AccountID)
 VALUES
-(@subBasic, N'Gói cơ bản', 500000, 50000, N'Swap từng lần – trả tiền theo mỗi lượt đổi pin\nPhù hợp với tài xế ít di chuyển hoặc sử dụng không thường xuyên\nKhông cần cam kết tháng – linh hoạt, dùng khi cần\nQuản lý và thanh toán dễ dàng qua ứng dụng', 30, 1, @customer),
-(@subSave, N'Gói Tiết kiệm', 299000, 350000, N'Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản\nBao gồm 10–15 lượt swap miễn phí mỗi tháng\nƯu tiên tại trạm khi đổi pin trong giờ cao điểm\nTheo dõi số lần swap còn lại ngay trên app\nThanh toán tự động – có thể gia hạn gói dễ dàng', 120, 1, null),
-(@subPremium, N'Gói nâng cao', 1000000, 100000, N'Swap không giới hạn – đổi pin bất cứ lúc nào\nBảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí\nƯu tiên hàng đầu tại mọi trạm trên hệ thống\nHỗ trợ kỹ thuật 24/7 qua hotline hoặc app\nGiảm giá 10–15% khi đăng ký thêm phương tiện khác', 30, 1, @customer);
+(@subBasic, N'Thanh toán trực tiếp', 4500000, 50000, N'Trả tiền thuê pin', 30, 1, null),
+(@subSave, N'Gói Tiết kiệm', 2990000, 350000, N'Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản. Bao gồm 10–15 lượt swap miễn phí mỗi tháng. Ưu tiên tại trạm khi đổi pin trong giờ cao điểm. Theo dõi số lần swap còn lại ngay trên app. Thanh toán tự động – có thể gia hạn gói dễ dàng', 120, 1, null),
+(@subPremium, N'Gói nâng cao', 10000000, 100000, N'Swap không giới hạn – đổi pin bất cứ lúc nào. Bảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí. Ưu tiên hàng đầu tại mọi trạm trên hệ thống. Hỗ trợ kỹ thuật 24/7 qua hotline hoặc app. Giảm giá 10–15% khi đăng ký thêm phương tiện khác', 30, 1, null);
 
 -- Car
 DECLARE @carE34 UNIQUEIDENTIFIER = NEWID();
@@ -334,6 +334,7 @@ VALUES
 (5, N'Rất hài lòng', @customer2, @book3),
 (4, N'Tốt nhưng cần cải thiện', @customer3, @book4);
 
+/*
 -- SwappingTransaction
 DECLARE @trans1 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans2 UNIQUEIDENTIFIER = NEWID();
@@ -349,9 +350,9 @@ VALUES
 (@trans4, N'Đổi pin BYD thành công', @staffHP, @carBYD, @batt7),
 (@trans5, N'Đổi pin VinFast E34 thành công', @staffDN, @carE34, @batt4),
 (@trans6, N'Đổi pin Tesla Model 3 thành công', @staffHP, @carTesla, @batt6);
-
+*/
 -- Payment liên kết Transaction
-
+/*
 INSERT INTO Payment (PaymentID, Price, Method, Status, SubscriptionID, TransactionID, PaymentGateId)
 VALUES 
 (NEWID(), 500000, N'Credit Card', 'Pending', null, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
@@ -359,16 +360,7 @@ VALUES
 (NEWID(), 600000, N'Momo', 'Pending', null, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
 (NEWID(), 700000, N'VNPAY', 'Pending', @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
 (NEWID(), 800000, N'Credit Card', 'Pending', @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
-
-/*
-Gói Cơ Bản
-"Swap từng lần – trả tiền theo mỗi lượt đổi pin\nPhù hợp với tài xế ít di chuyển hoặc sử dụng không thường xuyên\nKhông cần cam kết tháng – linh hoạt, dùng khi cần\nQuản lý và thanh toán dễ dàng qua ứng dụng"
-Gói Tiết Kiệm
-"Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản\nBao gồm 10–15 lượt swap miễn phí mỗi tháng\nƯu tiên tại trạm khi đổi pin trong giờ cao điểm\nTheo dõi số lần swap còn lại ngay trên app\nThanh toán tự động – có thể gia hạn gói dễ dàng"
-Gói Premium
-"Swap không giới hạn – đổi pin bất cứ lúc nào\nBảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí\nƯu tiên hàng đầu tại mọi trạm trên hệ thống\nHỗ trợ kỹ thuật 24/7 qua hotline hoặc app\nGiảm giá 10–15% khi đăng ký thêm phương tiện khác"
 */
-
 /*
 USE master;
 GO
