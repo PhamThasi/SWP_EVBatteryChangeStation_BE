@@ -18,7 +18,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 TransactionId = swappingTransaction.TransactionId,
                 Notes = swappingTransaction.Notes,
                 StaffId = swappingTransaction.StaffId,
-                OldBatteryId = swappingTransaction.OldBatteryId,
                 NewBatteryId = swappingTransaction.NewBatteryId,
                 VehicleId = swappingTransaction.VehicleId,
                 Status = swappingTransaction.Status,
@@ -33,7 +32,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 Notes = createSwappingDto.Notes,
                 StaffId = createSwappingDto.StaffId,
-                OldBatteryId = createSwappingDto.OldBatteryId,   
                 NewBatteryId = createSwappingDto.NewBatteryId,
                 VehicleId = createSwappingDto.VehicleId,
                 Status = createSwappingDto.Status,
@@ -52,10 +50,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             if (updateSwappingDto.StaffId != Guid.Empty)
             {
                 swappingTransaction.StaffId = updateSwappingDto.StaffId;
-            }
-            if (updateSwappingDto.OldBatteryId != Guid.Empty)
-            {
-                swappingTransaction.OldBatteryId = updateSwappingDto.OldBatteryId;
             }
             if (updateSwappingDto.NewBatteryId != Guid.Empty)
             {

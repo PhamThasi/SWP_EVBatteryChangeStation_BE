@@ -34,7 +34,6 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 Price = dto.Price,
                 Method = dto.Method,
-                Status = dto.Status ?? false,
                 PaymentGateId = DateTime.UtcNow.Ticks,
                 CreateDate = DateTime.UtcNow,
                 SubscriptionId = dto.SubscriptionId,
@@ -46,7 +45,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
         {
             if (dto == null || pay == null) return;
             
-            if (dto.Status.HasValue)
+            if (!string.IsNullOrEmpty(dto.Status))
             {
                 pay.Status = dto.Status;
             }
@@ -54,7 +53,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
         
         public static void UpdateToPaymentVNPay(this Payment pay, PaymentResult response)
         {
-            pay.Status = response.IsSuccess ? true : false;
+            pay.Status = response.IsSuccess ? "Successful" : "Failed";
             pay.CreateDate = DateTime.UtcNow;
             pay.Method = "VNPay";
         }

@@ -1,4 +1,5 @@
-﻿using EV_BatteryChangeStation_Common.Enum.ServiceResult;
+﻿using EV_BatteryChangeStation_Common.Enum.PaymentEnum;
+using EV_BatteryChangeStation_Common.Enum.ServiceResult;
 using EV_BatteryChangeStation_Repository.Mapper;
 using EV_BatteryChangeStation_Repository.UnitOfWork;
 using EV_BatteryChangeStation_Service.Base;
@@ -49,6 +50,15 @@ namespace EV_BatteryChangeStation_Service.ExternalService.Service
                         {
                             Status = Const.FAIL_READ_CODE,
                             Message = "Payment transaction not found",
+                            Data = null
+                        };
+                    }
+                    if (payment1.Status == PaymentEnum.Successful.ToString())
+                    {
+                        return new ServiceResult
+                        {
+                            Status = Const.FAIL_CREATE_CODE,
+                            Message = "Payment already successful. Cannot create VNPay URL.",
                             Data = null
                         };
                     }

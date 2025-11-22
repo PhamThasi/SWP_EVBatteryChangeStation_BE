@@ -17,6 +17,9 @@ namespace EV_BatteryChangeStation_Common.DTOs.CarDTO
         public string Producer { get; set; }
 
         public DateTime? CreateDate { get; set; }
+
+        public string Images { get; set; }
+
         public string Status { get; set; } = null!;
     }
 }

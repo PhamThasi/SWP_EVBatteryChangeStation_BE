@@ -73,7 +73,7 @@ CREATE TABLE Payment (
     PaymentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Price DECIMAL(18,2),
     Method NVARCHAR(50),
-    Status BIT default (0),
+    Status Nvarchar(100) not null default 'Pending',
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
     SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID)
@@ -86,6 +86,7 @@ CREATE TABLE Car (
     VehicleID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Model NVARCHAR(100),
     BatteryType NVARCHAR(100),
+	Images Nvarchar(1000),
     Producer NVARCHAR(100),
     Status NVARCHAR(50) NOT NULL DEFAULT 'Available',
     CreateDate DATETIME DEFAULT GETDATE()
@@ -114,7 +115,7 @@ CREATE TABLE Booking (
     BookingID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     DateTime DATETIME NOT NULL,
     Notes NVARCHAR(100),
-	IsApproved Nvarchar(50) not null default N'Pending',
+	IsApproved Nvarchar(50) not null,
     CreatedDate DATETIME DEFAULT GETDATE(),
     StationID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Station(StationID),
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
@@ -157,13 +158,12 @@ CREATE TABLE SwappingTransaction (
     TransactionID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
     Notes NVARCHAR(255),
     StaffID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
-    OldBatteryID UNIQUEIDENTIFIER NULL,
     VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
-    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
     NewBatteryID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
-    CreateDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT CK_Swap_Battery CHECK (OldBatteryID <> NewBatteryID)
+    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
+    CreateDate DATETIME DEFAULT GETDATE()
 );
+
 
 -- Bổ sung Payment liên kết với Transaction
 ALTER TABLE Payment
@@ -251,25 +251,28 @@ VALUES
 -- Subscription
 DECLARE @subBasic UNIQUEIDENTIFIER = NEWID();
 DECLARE @subPremium UNIQUEIDENTIFIER = NEWID();
-
+DECLARE @subSave UNIQUEIDENTIFIER = NEWID();
 INSERT INTO Subscription (SubscriptionID, Name, Price, ExtraFee, Description, DurationPackage, IsActive, AccountID)
 VALUES
-(@subBasic, N'Gói cơ bản', 500000, 50000, N'Dùng 30 ngày, giới hạn 10 lần đổi pin', 30, 1, @customer),
-(@subPremium, N'Gói nâng cao', 1000000, 100000, N'Dùng 30 ngày, không giới hạn đổi pin', 30, 1, @customer);
+(@subBasic, N'Thanh toán trực tiếp', 4500000, 50000, N'Trả tiền thuê pin', 30, 1, null),
+(@subSave, N'Gói Tiết kiệm', 2990000, 350000, N'Thuê pin theo tháng, giá thấp hơn 20–30% so với gói cơ bản. Bao gồm 10–15 lượt swap miễn phí mỗi tháng. Ưu tiên tại trạm khi đổi pin trong giờ cao điểm. Theo dõi số lần swap còn lại ngay trên app. Thanh toán tự động – có thể gia hạn gói dễ dàng', 120, 1, null),
+(@subPremium, N'Gói nâng cao', 10000000, 100000, N'Swap không giới hạn – đổi pin bất cứ lúc nào. Bảo dưỡng & kiểm tra tình trạng pin định kỳ miễn phí. Ưu tiên hàng đầu tại mọi trạm trên hệ thống. Hỗ trợ kỹ thuật 24/7 qua hotline hoặc app. Giảm giá 10–15% khi đăng ký thêm phương tiện khác', 30, 1, null);
 
 -- Car
 DECLARE @carE34 UNIQUEIDENTIFIER = NEWID();
 DECLARE @carTesla UNIQUEIDENTIFIER = NEWID();
 DECLARE @carVin UNIQUEIDENTIFIER = NEWID();
 DECLARE @carBYD UNIQUEIDENTIFIER = NEWID();
+DECLARE @carSolid UNIQUEIDENTIFIER = NEWID();
 
 INSERT INTO Car (VehicleID, Model, BatteryType, Producer)
 VALUES
+
 (@carE34, N'VinFast E34', N'Lithium-ion', N'VinFast'),
 (@carTesla, N'Tesla Model 3', N'Lithium-ion', N'Tesla'),
 (@carVin, N'VinFast VF8', N'Lithium-ion', N'VinFast'),
-(@carBYD, N'BYD Atto 3', N'Lithium-ion', N'BYD');
-
+(@carBYD, N'BYD Atto 3', N'Lithium-ion', N'BYD'),
+(@carSolid, N'SolidCar X1', N'Solid-state', N'SolidCar');
 -- Battery
 DECLARE @batt1 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt2 UNIQUEIDENTIFIER = NEWID();
@@ -278,16 +281,24 @@ DECLARE @batt4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt5 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt6 UNIQUEIDENTIFIER = NEWID();
 DECLARE @batt7 UNIQUEIDENTIFIER = NEWID();
-
+DECLARE @battA UNIQUEIDENTIFIER = NEWID();
+DECLARE @battB UNIQUEIDENTIFIER = NEWID();
+DECLARE @battC UNIQUEIDENTIFIER = NEWID();
+DECLARE @battD UNIQUEIDENTIFIER = NEWID();
 INSERT INTO Battery (BatteryID, Capacity, LastUsed, Status, StateOfHealth, PercentUse, TypeBattery, BatterySwapDate, InsuranceDate, StationID)
 VALUES
+
 (@batt1, 50.0, GETDATE(), 1, 95.5, 70.2, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHN),
 (@batt2, 60.0, GETDATE(), 1, 97.0, 80.1, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHN),
 (@batt3, 55.0, GETDATE(), 1, 90.0, 65.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHCM),
 (@batt4, 45.0, GETDATE(), 1, 92.0, 50.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationDN),
 (@batt5, 55.0, GETDATE(), 1, 95.0, 30.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationDN),
 (@batt6, 60.0, GETDATE(), 1, 97.0, 20.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP),
-(@batt7, 50.0, GETDATE(), 1, 90.0, 40.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP);
+(@batt7, 50.0, GETDATE(), 1, 90.0, 40.0, N'Lithium-ion', GETDATE(), '2026-01-01', @stationHP),
+(@battA, 55.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battB, 60.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battC, 50.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN),
+(@battD, 45.0, GETDATE(), 1, 100.0, 0.0, N'Solid-state', GETDATE(), '2026-01-01', @stationHN);
 
 -- Booking
 DECLARE @book1 UNIQUEIDENTIFIER = NEWID();
@@ -323,6 +334,7 @@ VALUES
 (5, N'Rất hài lòng', @customer2, @book3),
 (4, N'Tốt nhưng cần cải thiện', @customer3, @book4);
 
+/*
 -- SwappingTransaction
 DECLARE @trans1 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans2 UNIQUEIDENTIFIER = NEWID();
@@ -330,25 +342,25 @@ DECLARE @trans3 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans5 UNIQUEIDENTIFIER = NEWID();
 DECLARE @trans6 UNIQUEIDENTIFIER = NEWID();
-INSERT INTO SwappingTransaction (TransactionID, Notes, StaffID, OldBatteryID, VehicleID, NewBatteryID)
+INSERT INTO SwappingTransaction (TransactionID, Notes, StaffID, VehicleID, NewBatteryID)
 VALUES
-(@trans1, N'Đổi pin thành công', @staffHN, @batt1, @carE34, @batt2),
-(@trans2, N'Đổi pin nhanh chóng', @staffHCM, @batt3, @carTesla, @batt1),
-(@trans3, N'Đổi pin VF8 thành công', @staffDN, @batt4, @carVin, @batt5),
-(@trans4, N'Đổi pin BYD thành công', @staffHP, @batt6, @carBYD, @batt7),
-(@trans5, N'Đổi pin VinFast E34 thành công', @staffDN, @batt2, @carE34, @batt4),
-(@trans6, N'Đổi pin Tesla Model 3 thành công', @staffHP, @batt1, @carTesla, @batt6);
-
+(@trans1, N'Đổi pin thành công', @staffHN, @carE34, @batt2),
+(@trans2, N'Đổi pin nhanh chóng', @staffHCM, @carTesla, @batt1),
+(@trans3, N'Đổi pin VF8 thành công', @staffDN, @carVin, @batt5),
+(@trans4, N'Đổi pin BYD thành công', @staffHP, @carBYD, @batt7),
+(@trans5, N'Đổi pin VinFast E34 thành công', @staffDN, @carE34, @batt4),
+(@trans6, N'Đổi pin Tesla Model 3 thành công', @staffHP, @carTesla, @batt6);
+*/
 -- Payment liên kết Transaction
-
+/*
 INSERT INTO Payment (PaymentID, Price, Method, Status, SubscriptionID, TransactionID, PaymentGateId)
 VALUES 
-(NEWID(), 500000, N'Credit Card', 0, @subBasic, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 1000000, N'Momo', 0, @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 600000, N'Momo', 0, @subBasic, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 700000, N'VNPAY', 1, @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
-(NEWID(), 800000, N'Credit Card', 1, @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
-
+(NEWID(), 500000, N'Credit Card', 'Pending', null, @trans1, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 1000000, N'Momo', 'Pending', @subPremium, @trans2, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 600000, N'Momo', 'Pending', null, @trans4, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 700000, N'VNPAY', 'Pending', @subPremium, @trans5, ABS(CHECKSUM(NEWID())) % 10000000000),
+(NEWID(), 800000, N'Credit Card', 'Pending', @subPremium, @trans6, ABS(CHECKSUM(NEWID())) % 10000000000);
+*/
 /*
 USE master;
 GO

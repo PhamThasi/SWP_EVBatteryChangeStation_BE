@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using EV_BatteryChangeStation_Common.Enum.ServiceResult;
 using Microsoft.EntityFrameworkCore;
+using EV_BatteryChangeStation_Common.Enum.PaymentEnum;
 
 namespace EV_BatteryChangeStation_Service.InternalService.Service
 {
@@ -36,28 +37,16 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                // ✅ Validate SubscriptionId và TransactionId
-                if (create.SubscriptionId == Guid.Empty || create.TransactionId == Guid.Empty)
+                if (create.TransactionId == Guid.Empty)
                 {
                     return new ServiceResult
                     {
                         Status = Const.FAIL_CREATE_CODE,
-                        Message = "Invalid Subscription ID or Transaction ID"
+                        Message = "Invalid Transaction ID"
                     };
                 }
 
-                //// ✅ Kiểm tra subscription tồn tại
-                //var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId);
-                //if (subscription == null)
-                //{
-                //    return new ServiceResult
-                //    {
-                //        Status = Const.WARNING_NO_DATA_CODE,
-                //        Message = "Subscription not found"
-                //    };
-                //}
-
-                // ✅ Kiểm tra transaction tồn tại
+                // Kiểm tra transaction tồn tại
                 var transaction = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(create.TransactionId);
                 if (transaction == null)
                 {
@@ -68,12 +57,26 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
+                Subscription subscription = null;
+                if (create.SubscriptionId.HasValue)
+                {
+                    subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId.Value);
+                }
+
                 using var scope = await _unitOfWork.BeginTransactionAsync();
                 try
                 {
-                    // ✅ Tạo payment mới
-                    var payment = create.toPayment(); // không truyền tham số — mapper tự xử lý
+                    var payment = create.toPayment();
                     payment.TransactionId = create.TransactionId;
+
+                    // Luôn để trạng thái Pending, không quan tâm subscription
+                    payment.Status = PaymentEnum.Pending.ToString();
+
+                    // Nếu có subscription thì vẫn gán subscriptionId nhưng trạng thái vẫn Pending
+                    if (subscription != null)
+                    {
+                        payment.SubscriptionId = subscription.SubscriptionId;
+                    }
 
                     await _unitOfWork.PaymentRepository.CreateAsync(payment);
                     await scope.CommitAsync();
@@ -108,7 +111,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
-
 
         // =================== GET ALL ===================
         public async Task<IServiceResult> GetAllPayment()
@@ -393,7 +395,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                payment.Status = false;
+                payment.Status = PaymentEnum.Canceled.ToString();
                 await _unitOfWork.PaymentRepository.UpdateAsync(payment);
 
                 return new ServiceResult

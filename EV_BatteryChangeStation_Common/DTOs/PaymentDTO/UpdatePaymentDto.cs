@@ -11,6 +11,6 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
     {
         public Guid PaymentId { get; set; }
         public Guid AccountId { get; set; }
-        public bool? Status { get; set; }
+        public string Status { get; set; }
     }
 }

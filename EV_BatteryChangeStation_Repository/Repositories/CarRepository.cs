@@ -16,6 +16,26 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             _context = context;
         }
 
+        public async Task<List<Battery>> GetBatteriesByCarAsync(Guid vehicleId)
+        {
+            // Lấy loại pin của xe
+            var batteryType = await _context.Cars
+                .Where(c => c.VehicleId == vehicleId)
+                .Select(c => c.BatteryType)
+                .FirstOrDefaultAsync();
+
+            if (batteryType == null)
+                return new List<Battery>(); // xe không tồn tại
+
+            // Lấy tất cả pin cùng loại
+            var batteries = await _context.Batteries
+                .Where(b => b.TypeBattery == batteryType)
+                .ToListAsync();
+
+            return batteries;
+        }
+
+
         public Task<List<Car>> GetCarByNameAsync(string modelName)
         {
             return _context.Cars
@@ -34,13 +54,12 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             return cars;
         }
 
-        // Lấy chủ sở hữu xe theo VehicleId (bỏ HashIds)
         public async Task<Account?> GetOwnerByCarIdAsync(Guid carId)
         {
             var owner = await _context.Bookings
                 .Include(b => b.Account)
                 .Where(b => b.VehicleId == carId)
-                .OrderByDescending(b => b.CreatedDate) // lấy booking mới nhất
+                .OrderByDescending(b => b.CreatedDate) 
                 .Select(b => b.Account)
                 .FirstOrDefaultAsync();
 

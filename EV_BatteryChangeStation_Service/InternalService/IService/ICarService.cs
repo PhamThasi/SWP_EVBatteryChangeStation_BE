@@ -19,5 +19,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> GetOwnerByCarIdAsync(Guid carid);
         Task<IServiceResult> GetCarByNameAsync(string modelName);
         Task<IServiceResult> GetCarsByOwnerIdAsync(Guid ownerId);
+        Task<IServiceResult> GetBatteriesByCarAsync(Guid vehicle);
     }
 }
