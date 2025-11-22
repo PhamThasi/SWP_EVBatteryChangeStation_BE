@@ -17,5 +17,7 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<ServiceResult> DeleteAsync(Guid id);
         Task<ServiceResult> HardDeleteAsync(Guid id);
         Task<ServiceResult> GetByAccountIdAsync(Guid accountId);
+        // Hiển<Task>: Thêm method để Staff xem booking của Station mà họ đang làm việc
+        Task<ServiceResult> GetByStaffStationAsync(Guid staffAccountId);
     }
 }

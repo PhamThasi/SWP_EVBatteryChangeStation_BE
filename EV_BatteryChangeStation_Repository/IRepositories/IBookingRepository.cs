@@ -15,5 +15,7 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         void Update(Booking booking);
         void Delete(Booking booking);
         Task<List<Booking>> GetByAccountIdAsync(Guid accountId);
+        // Hiển<Task>: Thêm method để lấy booking theo StationId
+        Task<List<Booking>> GetByStationIdAsync(Guid stationId);
     }
 }

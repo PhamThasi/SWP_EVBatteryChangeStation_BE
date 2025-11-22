@@ -1,7 +1,11 @@
 ﻿using EV_BatteryChangeStation_Common.DTOs.BookingDTO;
 using EV_BatteryChangeStation_Service.InternalService.IService;
+// Hiển<Task>: Thêm using cho Authorization và JWT Claims
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EV_BatteryChangeStation.Controllers
@@ -84,6 +88,29 @@ namespace EV_BatteryChangeStation.Controllers
         public async Task<IActionResult> GetByAccountId(Guid accountId)
         {
             var result = await _bookingService.GetByAccountIdAsync(accountId);
+            return StatusCode(result.Status, result);
+        }
+
+        // Hiển<Task>: Endpoint để Staff xem booking của Station mà họ đang làm việc
+        // Lấy AccountId từ JWT Token, validate và chỉ trả về booking của Station đó
+        /// <summary>
+        /// Lấy danh sách booking của Station mà Staff đang làm việc
+        /// Staff chỉ được xem booking của Station được gán cho mình
+        /// </summary>
+        [HttpGet("staff/my-bookings")]
+        [Authorize] // Yêu cầu đăng nhập
+        public async Task<IActionResult> GetMyStationBookings()
+        {
+            // Hiển<Task>: Lấy AccountId từ JWT Token (Claims)
+            var accountIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+                              ?? User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+            if (string.IsNullOrEmpty(accountIdClaim) || !Guid.TryParse(accountIdClaim, out Guid accountId))
+            {
+                return Unauthorized(new { message = "Invalid token", status = 401 });
+            }
+
+            var result = await _bookingService.GetByStaffStationAsync(accountId);
             return StatusCode(result.Status, result);
         }
     }
