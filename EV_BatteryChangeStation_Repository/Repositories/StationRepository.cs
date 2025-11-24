@@ -24,6 +24,19 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         public async Task<Station> GetByIdAsync(Guid id) =>
             await _context.Stations.FindAsync(id);
 
+        public async Task<List<Station>> SearchByNameAsync(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return new List<Station>();
+            }
+
+            keyword = keyword.Trim();
+            return await _context.Stations
+                .Where(s => s.StationName != null && EF.Functions.Like(s.StationName, $"%{keyword}%"))
+                .ToListAsync();
+        }
+
         public void Create(Station station) =>
             _context.Stations.Add(station);
 

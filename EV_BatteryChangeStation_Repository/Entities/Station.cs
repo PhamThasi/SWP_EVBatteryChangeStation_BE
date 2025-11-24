@@ -15,7 +15,7 @@ public partial class Station
 
     public bool? Status { get; set; }
 
-    public string AccountName { get; set; }
+    public string StationName { get; set; }
 
     public int? BatteryQuantity { get; set; }
 

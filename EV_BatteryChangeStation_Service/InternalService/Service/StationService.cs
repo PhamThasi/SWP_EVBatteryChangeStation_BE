@@ -55,6 +55,25 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
+        public async Task<ServiceResult> SearchByNameAsync(string keyword)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(keyword))
+                    return new ServiceResult(400, "Keyword cannot be empty.");
+
+                var stations = await _unitOfWork.StationRepository.SearchByNameAsync(keyword);
+                if (stations == null || !stations.Any())
+                    return new ServiceResult(404, $"No stations found for keyword '{keyword}'.");
+
+                return new ServiceResult(200, "Stations retrieved successfully.", stations.ToDTOList());
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error while searching stations.", ex.Message);
+            }
+        }
+
         // Create a new station
         public async Task<ServiceResult> CreateAsync(StationCreateDTO dto)
         {
@@ -99,8 +118,8 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     station.PhoneNumber = dto.PhoneNumber;
                 if (dto.Status != null)
                     station.Status = dto.Status;
-                if (!string.IsNullOrWhiteSpace(dto.AccountName))
-                    station.AccountName = dto.AccountName;
+                if (!string.IsNullOrWhiteSpace(dto.StationName))
+                    station.StationName = dto.StationName;
                 if (dto.BatteryQuantity != null)
                     station.BatteryQuantity = dto.BatteryQuantity;
 
