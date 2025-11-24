@@ -20,8 +20,8 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         private ISupportRequestRepository _supportRequestRepository;
         private ISwappingTransactionRepository _swappingTransactionRepository;
         private IPaymentRepository _paymentRepository;
+        private IRevenueRepository _revenueRepository;
 
-        
         public UnitOfWork(EVBatterySwapContext context)
         {
             _context = context;
@@ -104,6 +104,14 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
             get
             {
                 return _paymentRepository ??= new PaymentRepository(_context);
+            }
+        }
+
+        public IRevenueRepository RevenueRepository
+        {
+            get
+            {
+                return _revenueRepository ??= new RevenueRepository(_context);
             }
         }
     }
