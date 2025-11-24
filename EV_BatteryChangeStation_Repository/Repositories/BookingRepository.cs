@@ -57,5 +57,17 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .Where(b => b.AccountId == accountId)
                 .ToListAsync();
         }
+
+        // Hiển<Task>: Lấy danh sách booking theo StationId, có Include Station, Vehicle, Account và sắp xếp theo DateTime
+        public async Task<List<Booking>> GetByStationIdAsync(Guid stationId)
+        {
+            return await _context.Bookings
+                .Where(b => b.StationId == stationId)
+                .Include(b => b.Station)
+                .Include(b => b.Vehicle)
+                .Include(b => b.Account)
+                .OrderByDescending(b => b.DateTime)
+                .ToListAsync();
+        }
     }
 }

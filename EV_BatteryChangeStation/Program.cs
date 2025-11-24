@@ -15,7 +15,7 @@ using System.Text;
 using EV_BatteryChangeStation_Repository.Base;
 using VNPAY.NET;
 // hiển_: thêm để đăng ký HttpClient cho VietMap controller
-using EV_BatteryChangeStation_BE.Controllers;
+using EV_BatteryChangeStation.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 //Dang ki SupportRequest

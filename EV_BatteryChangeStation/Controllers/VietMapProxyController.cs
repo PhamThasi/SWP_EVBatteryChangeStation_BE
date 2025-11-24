@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Cors; // hiển_: thêm để có thể bật [Enable
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace EV_BatteryChangeStation_BE.Controllers
+namespace EV_BatteryChangeStation.Controllers
 {
     [EnableCors("AllowFrontend")] // hiển_: bật policy cho controller này
     [Route("api/[controller]")]

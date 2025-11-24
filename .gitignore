@@ -574,3 +574,6 @@ FodyWeavers.xsd
 *.msp
 # Railway deploy config
 !railway.toml
+
+#vscode
+.vscode/

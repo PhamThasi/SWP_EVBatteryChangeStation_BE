@@ -171,5 +171,41 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, "Error fetching user bookings", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
         }
+
+        // Hiển<Task>: Lấy booking theo Station của Staff - Validate Role và StationID
+        // Lấy booking theo Station của Staff
+        public async Task<ServiceResult> GetByStaffStationAsync(Guid staffAccountId)
+        {
+            try
+            {
+                // 1. Lấy Account của Staff (có Include Role và Station)
+                var staff = await _unitOfWork.AccountRepository.GetAllWithRoleAndStation(staffAccountId);
+                if (staff == null)
+                    return new ServiceResult(404, "Staff not found", null, BookingErrorCode.BookingNotFound);
+
+                // 2. Validate: Phải là Staff
+                if (staff.Role?.RoleName != "Staff")
+                    return new ServiceResult(403, "Only Staff can access this endpoint", null, BookingErrorCode.BookingNotFound);
+
+                // 3. Validate: Staff phải có StationID
+                if (staff.StationId == null)
+                    return new ServiceResult(400, "Staff is not assigned to any station", null, BookingErrorCode.BookingNotFound);
+
+                // 4. Lấy Booking theo StationID
+                var stationId = staff.StationId.Value;
+                var bookings = await _unitOfWork.BookingRepository.GetByStationIdAsync(stationId);
+                
+                if (bookings == null || !bookings.Any())
+                    return new ServiceResult(404, "No bookings found for this station", null, BookingErrorCode.BookingNotFound);
+
+                // 5. Map sang DTO và trả về
+                var result = bookings.Select(BookingMapper.ToDTO).ToList();
+                return new ServiceResult(200, "Success", result, BookingErrorCode.None);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error fetching bookings", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
+            }
+        }
     }
 }

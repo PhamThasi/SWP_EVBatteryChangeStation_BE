@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Threading.Tasks;
 
-namespace EV_BatteryChangeStation_BE.Controllers
+namespace EV_BatteryChangeStation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
