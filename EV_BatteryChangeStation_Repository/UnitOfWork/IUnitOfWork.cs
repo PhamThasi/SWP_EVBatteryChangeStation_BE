@@ -18,6 +18,8 @@ namespace EV_BatteryChangeStation_Repository.UnitOfWork
         ISupportRequestRepository SupportRequestRepository { get; }
         ISwappingTransactionRepository SwappingTransactionRepository { get; }
         IPaymentRepository PaymentRepository { get; }
+        IRevenueRepository RevenueRepository { get; }
         Task<IDbContextTransaction> BeginTransactionAsync();
+
     }
 }

@@ -45,6 +45,9 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ISwappingService, SwappingService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>, PasswordHasher<EV_BatteryChangeStation_Repository.Entities.Account>>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IRevenueRepository, RevenueRepository>();
+
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
