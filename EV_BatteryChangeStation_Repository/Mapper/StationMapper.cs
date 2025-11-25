@@ -17,7 +17,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Address = station.Address,
                 PhoneNumber = station.PhoneNumber,
                 Status = station.Status,
-                AccountName = station.AccountName,
+                StationName = station.StationName,
                 BatteryQuantity = station.BatteryQuantity
             };
         }
@@ -31,7 +31,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 Address = dto.Address,
                 PhoneNumber = dto.PhoneNumber,
                 Status = dto.Status ?? true,
-                AccountName = dto.AccountName,
+                StationName = dto.StationName,
                 BatteryQuantity = dto.BatteryQuantity
             };
         }

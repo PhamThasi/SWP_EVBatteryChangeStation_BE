@@ -264,7 +264,7 @@ public partial class EVBatterySwapContext : DbContext
             entity.Property(e => e.StationId)
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("StationID");
-            entity.Property(e => e.AccountName).HasMaxLength(100);
+            entity.Property(e => e.StationName).HasMaxLength(100);
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.PhoneNumber).HasMaxLength(20);
         });

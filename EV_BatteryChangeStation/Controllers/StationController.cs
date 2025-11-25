@@ -13,6 +13,19 @@ public class StationController : ControllerBase
         _stationService = stationService;
     }
 
+    [HttpGet("{keyword}")]
+    public async Task<IActionResult> SearchStationsByName(string keyword)
+    {
+        var result = await _stationService.SearchByNameAsync(keyword);
+        return result.Status switch
+        {
+            200 => Ok(result),
+            400 => BadRequest(result),
+            404 => NotFound(result),
+            _ => StatusCode(500, result)
+        };
+    }
+
     [HttpPost("Create")]
     public async Task<IActionResult> CreateStation([FromBody] StationCreateDTO dto)
     {

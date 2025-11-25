@@ -26,7 +26,7 @@ CREATE TABLE Station (
     Address NVARCHAR(255),
     PhoneNumber NVARCHAR(20),
     Status BIT,
-    AccountName NVARCHAR(100),
+    StationName NVARCHAR(100),
     BatteryQuantity INT
 );
 
@@ -220,7 +220,7 @@ DECLARE @stationHCM UNIQUEIDENTIFIER = NEWID();
 DECLARE @stationDN UNIQUEIDENTIFIER = NEWID();
 DECLARE @stationHP UNIQUEIDENTIFIER = NEWID();
 
-INSERT INTO Station (StationID, Address, PhoneNumber, Status, AccountName, BatteryQuantity)
+INSERT INTO Station (StationID, Address, PhoneNumber, Status, StationName, BatteryQuantity)
 VALUES
 (@stationHN,  N'115 Hữu Nghị, Ngọc Hà, Ba Đình, Hà Nội', '0901234567', 1, N'StationHN01', 2),
 (@stationHCM, N'53 Nguyễn Huệ, Bến Nghé, Quận 1, TP. Hồ Chí Minh',  '0902345678', 1, N'StationHCM01', 1),

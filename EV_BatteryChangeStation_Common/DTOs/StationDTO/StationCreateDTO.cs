@@ -11,7 +11,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.StationDTO
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public bool? Status { get; set; }
-        public string? AccountName { get; set; }
+        public string? StationName { get; set; }
         public int? BatteryQuantity { get; set; }
     }
 }
