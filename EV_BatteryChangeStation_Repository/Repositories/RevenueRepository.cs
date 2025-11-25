@@ -36,14 +36,14 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                    (pb, st) => new
                    {
                        st.StationId,
-                       st.Address,
+                       st.StationName,
                        pb.p.Price
                    })
-             .GroupBy(x => new { x.StationId, x.Address })
+             .GroupBy(x => new { x.StationId, x.StationName })
              .Select(g => new RevenueByStationDto
              {
                  StationId = g.Key.StationId,
-                 StationName = g.Key.Address,
+                 StationName = g.Key.StationName,
                  TotalRevenue = g.Sum(x => x.Price) ?? 0,
                  TotalTransaction = g.Count().ToString()
              })
