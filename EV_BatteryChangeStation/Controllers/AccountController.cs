@@ -95,7 +95,7 @@ namespace EV_BatteryChangeStation.Controllers
         /// <response code="400">Dữ liệu đầu vào không hợp lệ</response>
         /// <response code="500">Lỗi server khi xử lý yêu cầu</response>
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] UpdateAccountDTO update)
         {
             if (update == null)
