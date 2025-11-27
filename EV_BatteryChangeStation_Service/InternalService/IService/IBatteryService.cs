@@ -24,5 +24,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> SoftDeleteBattery(Guid BatteryId);
         Task<IServiceResult> GetBatteriesByType(string typeBattery);
         Task<IServiceResult> GetBatteriesByStaffStationAsync(Guid staffAccountId);
+        Task<IServiceResult> PreviewBatteryForBookingAsync(Guid stationId, Guid vehicleId);
     }
 }

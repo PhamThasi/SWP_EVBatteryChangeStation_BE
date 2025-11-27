@@ -164,6 +164,24 @@ namespace EV_BatteryChangeStation.Controllers
         }
 
         /// <summary>
+        /// Preview pin sẽ được gán khi tạo booking
+        /// Frontend gọi API này để hiển thị cho user biết pin nào sẽ được gán trước khi tạo booking
+        /// </summary>
+        /// <param name="stationId">ID của trạm được chọn</param>
+        /// <param name="vehicleId">ID của xe được chọn</param>
+        [HttpGet("PreviewForBooking")]
+        public async Task<IActionResult> PreviewBatteryForBooking([FromQuery] Guid stationId, [FromQuery] Guid vehicleId)
+        {
+            if (stationId == Guid.Empty)
+                return BadRequest("StationId is required");
+            if (vehicleId == Guid.Empty)
+                return BadRequest("VehicleId is required");
+
+            var result = await _batteryService.PreviewBatteryForBookingAsync(stationId, vehicleId);
+            return StatusCode(result.Status, result);
+        }
+
+        /// <summary>
         /// Lấy danh sách pin của Station mà Staff đang làm việc
         /// Staff chỉ được xem pin của Station được gán cho mình
         /// </summary>

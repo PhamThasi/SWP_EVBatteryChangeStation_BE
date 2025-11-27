@@ -63,20 +63,12 @@ CREATE TABLE Subscription (
     IsActive BIT DEFAULT 1,
     CreateDate DATETIME DEFAULT GETDATE(),
     UpdateDate DATETIME NULL,
+    -- Ngày bắt đầu và ngày hết hạn của gói khi gắn với một Account cụ thể
+    StartDate DATETIME NULL,
+    EndDate DATETIME NULL,
+    -- Số lượt swap còn lại (nếu gói có giới hạn lượt)
+    RemainingSwaps INT NULL,
     AccountID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Account(AccountID)
-);
-
--- ========================
--- Table: Payment
--- ========================
-CREATE TABLE Payment (
-    PaymentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-    Price DECIMAL(18,2),
-    Method NVARCHAR(50),
-    Status Nvarchar(100) not null default 'Pending',
-	PaymentGateId BigInt,
-    CreateDate DATETIME DEFAULT GETDATE(),
-    SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID)
 );
 
 -- ========================
@@ -124,6 +116,35 @@ CREATE TABLE Booking (
 );
 
 -- ========================
+-- Table: SwappingTransaction
+-- ========================
+CREATE TABLE SwappingTransaction (
+    TransactionID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+    Notes NVARCHAR(255),
+    StaffID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
+    VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
+    NewBatteryID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
+    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
+    CreateDate DATETIME DEFAULT GETDATE()
+);
+
+-- ========================
+-- Table: Payment
+-- ========================
+CREATE TABLE Payment (
+    PaymentID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
+    Price DECIMAL(18,2),
+    Method NVARCHAR(50),
+    Status Nvarchar(100) not null default 'Pending',
+	PaymentGateId BigInt,
+    CreateDate DATETIME DEFAULT GETDATE(),
+    SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID),
+    TransactionID UNIQUEIDENTIFIER UNIQUE NULL FOREIGN KEY REFERENCES SwappingTransaction(TransactionID),
+    -- AccountId để lưu user mua subscription (bắt buộc nếu có SubscriptionId)
+    AccountID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Account(AccountID)
+);
+
+-- ========================
 -- Table: SupportRequest
 -- ========================
 CREATE TABLE SupportRequest (
@@ -151,24 +172,6 @@ CREATE TABLE Feedback (
     AccountID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
     BookingID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Booking(BookingID)
 );
-
--- ========================
--- Table: SwappingTransaction
--- ========================
-CREATE TABLE SwappingTransaction (
-    TransactionID UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
-    Notes NVARCHAR(255),
-    StaffID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Account(AccountID),
-    VehicleID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Car(VehicleID),
-    NewBatteryID UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Battery(BatteryID),
-    Status NVARCHAR(50) NOT NULL DEFAULT 'Active',
-    CreateDate DATETIME DEFAULT GETDATE()
-);
-
-
--- Bổ sung Payment liên kết với Transaction
-ALTER TABLE Payment
-ADD TransactionID UNIQUEIDENTIFIER UNIQUE FOREIGN KEY REFERENCES SwappingTransaction(TransactionID);
 GO
 
 -- ========================

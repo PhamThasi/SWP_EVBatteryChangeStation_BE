@@ -15,5 +15,11 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<List<Payment?>> GetPaymentHistoryByAccountIdAsync(Guid accountId);
         Task<Payment?> GetByGatewayIdAsync(long gatewayId);
         Task<bool> CheckPaymentOwnerAsync(Guid accountId, Payment payment);
+        
+        /// <summary>
+        /// Lấy payment thành công có subscription còn hạn của account
+        /// Dùng để check xem user có cần redirect đến trang thanh toán hay không
+        /// </summary>
+        Task<Payment?> GetActiveSubscriptionPaymentByAccountIdAsync(Guid accountId);
     }
 }

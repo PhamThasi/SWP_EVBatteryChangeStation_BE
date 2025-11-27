@@ -23,7 +23,8 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 PaymentGateId = payment.PaymentGateId,
                 CreateDate = payment.CreateDate,
                 SubscriptionId = payment.SubscriptionId,
-                TransactionId = payment.TransactionId
+                TransactionId = payment.TransactionId,
+                AccountId = payment.AccountId
             };
         }
 
@@ -34,10 +35,11 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 Price = dto.Price,
                 Method = dto.Method,
-                PaymentGateId = DateTime.UtcNow.Ticks,
-                CreateDate = DateTime.UtcNow,
+                PaymentGateId = dto.PaymentGateId != 0 ? dto.PaymentGateId : DateTime.UtcNow.Ticks,
+                CreateDate = dto.CreateDate ?? DateTime.UtcNow,
                 SubscriptionId = dto.SubscriptionId,
-                TransactionId = dto.TransactionId
+                TransactionId = dto.TransactionId,
+                AccountId = dto.AccountId
             };
         }
 

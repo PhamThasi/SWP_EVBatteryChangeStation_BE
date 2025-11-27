@@ -20,5 +20,11 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> GetPaymentByTransactionId(Guid transactionId);
         //Task<IServiceResult> ValidatePayment(ValidatePaymentDto validate);
         Task<IServiceResult> GetByGateWayId(long gateway);
+        
+        /// <summary>
+        /// Check subscription status dựa vào payment để quyết định có cần redirect đến trang thanh toán hay không
+        /// Nếu user đã có payment thành công với subscription active và còn hạn thì không cần redirect
+        /// </summary>
+        Task<IServiceResult> CheckSubscriptionStatus(Guid accountId);
     }
 }

@@ -35,12 +35,70 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                         Message = Const.ERROR_INVALID_DATA_MSG,
                     };
                 }
+
+                // 1. Kiểm tra pin có tồn tại và khả dụng không
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(createSwappingDto.NewBatteryId);
+                if (battery == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Battery not found"
+                    };
+                }
+
+                if (battery.Status != true)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "Battery is not available for swapping"
+                    };
+                }
+
+                // 2. Lấy thông tin Station để trừ số lượng pin
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(battery.StationId);
+                if (station == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Station not found"
+                    };
+                }
+
+                // 3. Tạo SwappingTransaction
                 var swapping = createSwappingDto.MaptoCreate();
                 await _unitOfWork.SwappingTransactionRepository.CreateAsync(swapping);
+
+                // 4. Đánh dấu pin đã được sử dụng (Status = false) → không hiển thị trong danh sách
+                battery.Status = false;
+                battery.LastUsed = DateTime.Now;
+                battery.BatterySwapDate = DateTime.Now;
+                await _unitOfWork.BatteryRepository.UpdateAsync(battery);
+
+                // 5. Trừ số lượng pin trong Station
+                if (station.BatteryQuantity.HasValue && station.BatteryQuantity > 0)
+                {
+                    station.BatteryQuantity -= 1;
+                    _unitOfWork.StationRepository.Update(station);
+                }
+
+                // 6. Commit tất cả thay đổi
+                await _unitOfWork.CommitAsync();
+
                 return new ServiceResult
                 {
                     Status = Const.SUCCESS_CREATE_CODE,
-                    Message = Const.SUCCESS_CREATE_MSG,
+                    Message = "Swapping transaction created successfully. Battery has been removed from station inventory.",
+                    Data = new
+                    {
+                        TransactionId = swapping.TransactionId,
+                        BatteryId = battery.BatteryId,
+                        StationId = station.StationId,
+                        StationName = station.StationName,
+                        RemainingBatteries = station.BatteryQuantity
+                    }
                 };
             }
             catch (Exception ex)
@@ -274,6 +332,225 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 {
                     Status = Const.ERROR_EXCEPTION,
                     Message = ex.Message,
+                };
+            }
+        }
+
+        /// <summary>
+        /// Staff xác nhận đổi pin sau khi kiểm tra payment đã thành công
+        /// Flow: Booking (Approved) + Payment (Successful) → SwappingTransaction + Trừ pin khỏi kho
+        /// </summary>
+        public async Task<IServiceResult> ConfirmAndSwapAsync(ConfirmSwapDTO dto)
+        {
+            try
+            {
+                // 1. Validate input
+                if (dto == null || dto.BookingId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "BookingId is required"
+                    };
+                }
+
+                if (dto.StaffId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "StaffId is required"
+                    };
+                }
+
+                // 2. Kiểm tra Staff có tồn tại và có quyền không
+                var staff = await _unitOfWork.AccountRepository.GetAllWithRoleAndStation(dto.StaffId);
+                if (staff == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Staff not found"
+                    };
+                }
+
+                if (staff.Role?.RoleName != "Staff")
+                {
+                    return new ServiceResult
+                    {
+                        Status = 403,
+                        Message = "Only Staff can confirm swapping"
+                    };
+                }
+
+                // 3. Lấy thông tin Booking
+                var booking = await _unitOfWork.BookingRepository.GetByIdAsync(dto.BookingId);
+                if (booking == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Booking not found"
+                    };
+                }
+
+                // 4. Kiểm tra Staff có thuộc Station của Booking không
+                if (staff.StationId != booking.StationId)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 403,
+                        Message = "Staff can only process bookings at their assigned station"
+                    };
+                }
+
+                // 5. Kiểm tra trạng thái Booking phải là Approved hoặc Pending
+                if (booking.IsApproved == "Canceled" || booking.IsApproved == "Completed")
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = $"Cannot process booking with status '{booking.IsApproved}'"
+                    };
+                }
+
+                // 6. Kiểm tra Booking có BatteryId không
+                if (!booking.BatteryId.HasValue)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "Booking does not have a battery assigned"
+                    };
+                }
+
+                // 7. Lấy thông tin Battery
+                var battery = await _unitOfWork.BatteryRepository.GetByIdAsync(booking.BatteryId.Value);
+                if (battery == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Battery not found"
+                    };
+                }
+
+                if (battery.Status != true)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "Battery is no longer available"
+                    };
+                }
+
+                // 8. Kiểm tra Subscription (gói) của user còn hiệu lực không
+                // Logic: Kiểm tra qua Payment thay vì Subscription trực tiếp
+                var activePayment = await _unitOfWork.PaymentRepository.GetActiveSubscriptionPaymentByAccountIdAsync(booking.AccountId);
+                if (activePayment == null || activePayment.Subscription == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "User does not have an active subscription or no remaining swaps"
+                    };
+                }
+
+                var subscription = activePayment.Subscription;
+
+                // Nếu gói có giới hạn lượt thì trừ 1 lượt
+                if (subscription.RemainingSwaps.HasValue)
+                {
+                    if (subscription.RemainingSwaps <= 0)
+                    {
+                        return new ServiceResult
+                        {
+                            Status = 400,
+                            Message = "No remaining swaps in current subscription"
+                        };
+                    }
+
+                    subscription.RemainingSwaps -= 1;
+
+                    // Nếu cần, có thể tự động inactive khi hết lượt
+                    if (subscription.RemainingSwaps == 0)
+                    {
+                        subscription.IsActive = false;
+                    }
+
+                    _unitOfWork.SubscriptionRepository.Update(subscription);
+                }
+
+                // 9. Lấy thông tin Station
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(booking.StationId);
+                if (station == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Station not found"
+                    };
+                }
+
+                // 10. Tạo SwappingTransaction
+                var swappingTransaction = new SwappingTransaction
+                {
+                    TransactionId = Guid.NewGuid(),
+                    StaffId = dto.StaffId,
+                    VehicleId = booking.VehicleId,
+                    NewBatteryId = booking.BatteryId.Value,
+                    Notes = dto.Notes ?? $"Swap from Booking #{booking.BookingId}",
+                    Status = SwappingEnum.Active.ToString(),
+                    CreateDate = DateTime.Now
+                };
+
+                await _unitOfWork.SwappingTransactionRepository.CreateAsync(swappingTransaction);
+
+                // 11. Đánh dấu pin đã được sử dụng (Status = false) → không hiển thị trong danh sách
+                battery.Status = false;
+                battery.LastUsed = DateTime.Now;
+                battery.BatterySwapDate = DateTime.Now;
+                await _unitOfWork.BatteryRepository.UpdateAsync(battery);
+
+                // 12. Trừ số lượng pin trong Station
+                if (station.BatteryQuantity.HasValue && station.BatteryQuantity > 0)
+                {
+                    station.BatteryQuantity -= 1;
+                    _unitOfWork.StationRepository.Update(station);
+                }
+
+                // 13. Cập nhật trạng thái Booking thành Completed
+                booking.IsApproved = "Completed";
+                _unitOfWork.BookingRepository.Update(booking);
+
+                // 14. Commit tất cả thay đổi
+                await _unitOfWork.CommitAsync();
+
+                return new ServiceResult
+                {
+                    Status = 200,
+                    Message = "Swapping completed successfully. Battery has been removed from station inventory.",
+                    Data = new
+                    {
+                        TransactionId = swappingTransaction.TransactionId,
+                        BookingId = booking.BookingId,
+                        BatteryId = battery.BatteryId,
+                        VehicleId = booking.VehicleId,
+                        StationId = station.StationId,
+                        StationName = station.StationName,
+                        StaffId = dto.StaffId,
+                        StaffName = staff.FullName,
+                        RemainingBatteries = station.BatteryQuantity,
+                        CompletedAt = DateTime.Now
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message
                 };
             }
         }

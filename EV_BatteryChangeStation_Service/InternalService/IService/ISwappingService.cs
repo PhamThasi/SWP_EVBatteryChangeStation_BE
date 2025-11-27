@@ -17,5 +17,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> DeleteTransactionAsync(Guid transactionId);
         Task<IServiceResult> SoftDeleteTransactionAsync(Guid transactionid);
         Task<IServiceResult> GetTransactionByCarIdAsync(Guid carid);
+        
+        /// <summary>
+        /// Staff xác nhận đổi pin sau khi payment thành công
+        /// </summary>
+        Task<IServiceResult> ConfirmAndSwapAsync(ConfirmSwapDTO dto);
     }
 }

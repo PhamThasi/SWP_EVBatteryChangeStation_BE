@@ -32,7 +32,9 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                     .ThenInclude(t => t.Vehicle)
                 .Include(p => p.Transaction)
                     .ThenInclude(t => t.Staff)
+                .Include(p => p.Account)
                 .Where(p =>
+                    p.AccountId == accountId ||
                     (p.Subscription != null && p.Subscription.AccountId == accountId) ||
                     (p.Transaction != null &&
                      _context.Bookings.Any(b => b.VehicleId == p.Transaction.VehicleId && b.AccountId == accountId))
@@ -86,6 +88,30 @@ namespace EV_BatteryChangeStation_Repository.Repositories
             }
 
             return isOwner;
+        }
+
+        /// <summary>
+        /// Lấy payment thành công có subscription còn hạn của account
+        /// Dùng để check xem user có cần redirect đến trang thanh toán hay không
+        /// </summary>
+        public async Task<Payment?> GetActiveSubscriptionPaymentByAccountIdAsync(Guid accountId)
+        {
+            var now = DateTime.Now;
+
+            return await _context.Payments
+                .Include(p => p.Subscription)
+                .Where(p =>
+                    p.Status == "Successful" &&
+                    p.SubscriptionId.HasValue &&
+                    p.Subscription != null &&
+                    (p.AccountId == accountId || p.Subscription.AccountId == accountId) &&
+                    p.Subscription.IsActive == true &&
+                    (p.Subscription.StartDate == null || p.Subscription.StartDate <= now) &&
+                    (p.Subscription.EndDate == null || p.Subscription.EndDate >= now) &&
+                    (!p.Subscription.RemainingSwaps.HasValue || p.Subscription.RemainingSwaps > 0)
+                )
+                .OrderByDescending(p => p.CreateDate)
+                .FirstOrDefaultAsync();
         }
 
     }

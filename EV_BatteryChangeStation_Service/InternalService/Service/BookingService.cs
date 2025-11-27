@@ -64,6 +64,28 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (dto.DateTime < DateTime.Now)
                     return new ServiceResult(400, "Booking time cannot be in the past", null, BookingErrorCode.TimeInPast);
 
+                // Kiểm tra user có payment thành công với subscription active không
+                // Logic: Kiểm tra qua Payment thay vì Subscription trực tiếp
+                var activePayment = await _unitOfWork.PaymentRepository.GetActiveSubscriptionPaymentByAccountIdAsync(dto.AccountId);
+                if (activePayment == null || activePayment.Subscription == null)
+                {
+                    return new ServiceResult(400, "You must have an active subscription to create a booking. Please purchase a subscription first.", null, BookingErrorCode.MissingRequiredField);
+                }
+
+                var subscription = activePayment.Subscription;
+
+                // Kiểm tra subscription còn hiệu lực (đã được check trong GetActiveSubscriptionPaymentByAccountIdAsync nhưng double check)
+                if (subscription.EndDate.HasValue && subscription.EndDate < DateTime.Now)
+                {
+                    return new ServiceResult(400, "Your subscription has expired. Please renew your subscription.", null, BookingErrorCode.MissingRequiredField);
+                }
+
+                // Kiểm tra còn lượt swap không (nếu có giới hạn)
+                if (subscription.RemainingSwaps.HasValue && subscription.RemainingSwaps <= 0)
+                {
+                    return new ServiceResult(400, "You have no remaining swaps in your subscription. Please renew your subscription.", null, BookingErrorCode.MissingRequiredField);
+                }
+
                 var existing = (await _unitOfWork.BookingRepository.GetAllAsync())
                     .FirstOrDefault(b => b.StationId == dto.StationId &&
                                          b.DateTime == dto.DateTime);

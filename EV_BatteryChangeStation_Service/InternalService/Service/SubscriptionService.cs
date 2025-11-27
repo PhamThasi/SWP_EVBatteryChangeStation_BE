@@ -163,5 +163,24 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 return new ServiceResult(500, $"Error while restoring subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
             }
         }
+
+        /// <summary>
+        /// Lấy subscription đang active của user (nếu có)
+        /// </summary>
+        public async Task<ServiceResult> GetActiveByAccountIdAsync(Guid accountId)
+        {
+            try
+            {
+                var subscription = await _unitOfWork.SubscriptionRepository.GetActiveByAccountIdAsync(accountId);
+                if (subscription == null)
+                    return new ServiceResult(404, "No active subscription found for this account", null, SubscriptionErrorCode.SubscriptionNotFound);
+
+                return new ServiceResult(200, "Active subscription retrieved successfully", subscription.ToDTO(), SubscriptionErrorCode.None);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, $"Error while getting active subscription: {ex.Message}", null, SubscriptionErrorCode.DatabaseError);
+            }
+        }
     }
 }

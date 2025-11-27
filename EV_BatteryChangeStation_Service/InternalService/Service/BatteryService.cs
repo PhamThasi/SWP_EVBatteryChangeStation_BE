@@ -353,6 +353,102 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
+        // Preview pin sẽ được gán khi tạo booking (dựa vào stationId và vehicleId)
+        public async Task<IServiceResult> PreviewBatteryForBookingAsync(Guid stationId, Guid vehicleId)
+        {
+            try
+            {
+                // 1. Validate input
+                if (stationId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "StationId is required"
+                    };
+                }
+
+                if (vehicleId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "VehicleId is required"
+                    };
+                }
+
+                // 2. Lấy thông tin xe để biết loại pin
+                var car = await _unitOfWork.CarRepository.GetByIdAsync(vehicleId);
+                if (car == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Vehicle not found"
+                    };
+                }
+
+                // 3. Lấy thông tin trạm
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(stationId);
+                if (station == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Station not found"
+                    };
+                }
+
+                // 4. Tìm pin khả dụng phù hợp với loại xe tại trạm
+                var battery = await _unitOfWork.BatteryRepository.GetAvailableBatteryAsync(stationId, car.BatteryType);
+                
+                if (battery == null)
+                {
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = $"No available battery of type '{car.BatteryType}' at station '{station.StationName}'",
+                        Data = new
+                        {
+                            StationId = stationId,
+                            StationName = station.StationName,
+                            VehicleId = vehicleId,
+                            VehicleModel = car.Model,
+                            RequiredBatteryType = car.BatteryType,
+                            AvailableBattery = (object)null,
+                            IsAvailable = false
+                        }
+                    };
+                }
+
+                // 5. Trả về thông tin pin sẽ được gán
+                var batteryDto = battery.MapToEntity();
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = "Battery preview retrieved successfully",
+                    Data = new
+                    {
+                        StationId = stationId,
+                        StationName = station.StationName,
+                        VehicleId = vehicleId,
+                        VehicleModel = car.Model,
+                        RequiredBatteryType = car.BatteryType,
+                        AvailableBattery = batteryDto,
+                        IsAvailable = true
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message
+                };
+            }
+        }
+
         // Lấy danh sách pin của Station mà Staff đang làm việc
         public async Task<IServiceResult> GetBatteriesByStaffStationAsync(Guid staffAccountId)
         {

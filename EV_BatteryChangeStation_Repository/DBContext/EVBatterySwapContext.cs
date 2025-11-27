@@ -232,6 +232,7 @@ public partial class EVBatterySwapContext : DbContext
                 .HasDefaultValue("Pending");
             entity.Property(e => e.SubscriptionId).HasColumnName("SubscriptionID");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
+            entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
             entity.HasOne(d => d.Subscription).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.SubscriptionId)
@@ -240,6 +241,10 @@ public partial class EVBatterySwapContext : DbContext
             entity.HasOne(d => d.Transaction).WithOne(p => p.Payment)
                 .HasForeignKey<Payment>(d => d.TransactionId)
                 .HasConstraintName("FK__Payment__Transac__73BA3083");
+
+            entity.HasOne(d => d.Account).WithMany()
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK__Payment__Account__PaymentAccount");
         });
 
         modelBuilder.Entity<Role>(entity =>

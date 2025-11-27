@@ -63,5 +63,17 @@ namespace EV_BatteryChangeStation.Controllers
             return StatusCode(result.Status, result);
         }
 
+        /// <summary>
+        /// Lấy subscription đang active của user (nếu có)
+        /// </summary>
+        [HttpGet("my-active")]
+        public async Task<IActionResult> GetMyActiveSubscription([FromQuery] Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+                return BadRequest("AccountId is required");
+
+            var result = await _subscriptionService.GetActiveByAccountIdAsync(accountId);
+            return StatusCode(result.Status, result);
+        }
     }
 }

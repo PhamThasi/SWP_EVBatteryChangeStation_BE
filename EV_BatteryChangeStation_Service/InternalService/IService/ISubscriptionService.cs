@@ -17,5 +17,9 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<ServiceResult> SoftDeleteAsync(Guid id);
         Task<ServiceResult> HardDeleteAsync(Guid id);
         Task<ServiceResult> RestoreAsync(Guid id);
+        /// <summary>
+        /// Lấy subscription đang active của user (nếu có)
+        /// </summary>
+        Task<ServiceResult> GetActiveByAccountIdAsync(Guid accountId);
     }
 }
