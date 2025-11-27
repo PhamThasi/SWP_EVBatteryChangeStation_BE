@@ -14,5 +14,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         public Task<ServiceResult> DeleteAsync(Guid id);
         public Task<ServiceResult> HardDeleteAsync(Guid id);
         public Task<ServiceResult> SearchByNameAsync(string keyword);
+        public Task<ServiceResult> GetByNameAsync(string name);
     }
 }

@@ -19,7 +19,8 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 CreatedDate = entity.CreatedDate,
                 StationId = entity.StationId,
                 VehicleId = entity.VehicleId,
-                AccountId = entity.AccountId
+                AccountId = entity.AccountId,
+                BatteryId = entity.BatteryId
             };
         }
 
@@ -35,6 +36,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
                 StationId = dto.StationId,
                 VehicleId = dto.VehicleId,
                 AccountId = dto.AccountId,
+                BatteryId = dto.BatteryId,
                 IsApproved= dto.IsApproved
             };
 
@@ -51,6 +53,7 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             entity.StationId = dto.StationId;
             entity.VehicleId = dto.VehicleId;
             entity.AccountId = dto.AccountId;
+            entity.BatteryId = dto.BatteryId;
             entity.IsApproved = dto.IsApproved;
         }
 

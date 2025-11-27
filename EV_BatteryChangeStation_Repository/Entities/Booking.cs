@@ -23,7 +23,11 @@ public partial class Booking
 
     public Guid AccountId { get; set; }
 
+    public Guid? BatteryId { get; set; }
+
     public virtual Account Account { get; set; }
+
+    public virtual Battery Battery { get; set; }
 
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
