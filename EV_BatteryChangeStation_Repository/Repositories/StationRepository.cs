@@ -37,6 +37,11 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Station> GetByNameAsync(string name)
+        {
+            return await _context.Stations.FirstOrDefaultAsync(s => s.StationName == name);
+        }
+
         public void Create(Station station) =>
             _context.Stations.Add(station);
 

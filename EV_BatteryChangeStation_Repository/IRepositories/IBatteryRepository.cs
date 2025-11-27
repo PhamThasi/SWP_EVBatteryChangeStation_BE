@@ -15,5 +15,6 @@ namespace EV_BatteryChangeStation_Repository.IRepositories
         Task<List<Battery>> GetBatteryByStationId(Guid stationId); 
         Task<List<Battery>> GetAllBattery();
         Task<List<Battery?>> GetBatteriesByType(string typeBattery);
+        Task<Battery?> GetAvailableBatteryAsync(Guid stationId, string typeBattery);
     }
 }

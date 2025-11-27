@@ -71,6 +71,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 if (existing != null)
                     return new ServiceResult(409, "Duplicate booking for this time slot", null, BookingErrorCode.DuplicateBooking);
 
+                var batteryAssignment = await TryAssignBatteryAsync(dto.StationId, dto.VehicleId);
+                if (!batteryAssignment.IsSuccess)
+                {
+                    return batteryAssignment.ErrorResult;
+                }
+                dto.BatteryId = batteryAssignment.BatteryId;
+
                 var entity = BookingMapper.ToEntity(dto);
                 entity.CreatedDate = DateTime.Now;
                 entity.IsApproved = Convert.ToString(BookingApprovalStatus.Pending);
@@ -97,6 +104,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
 
                 if (existing.IsApproved == Convert.ToString(BookingApprovalStatus.Canceled))
                     return new ServiceResult(400, "Cannot update a cancelled booking", null, BookingErrorCode.BookingAlreadyCancelled);
+
+                var batteryAssignment = await TryAssignBatteryAsync(dto.StationId, dto.VehicleId);
+                if (!batteryAssignment.IsSuccess)
+                {
+                    return batteryAssignment.ErrorResult;
+                }
+                dto.BatteryId = batteryAssignment.BatteryId;
 
                 BookingMapper.UpdateEntity(existing, dto);
                 _unitOfWork.BookingRepository.Update(existing);
@@ -206,6 +220,27 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             {
                 return new ServiceResult(500, "Error fetching bookings", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
             }
+        }
+
+        private async Task<(bool IsSuccess, Guid BatteryId, ServiceResult ErrorResult)> TryAssignBatteryAsync(Guid stationId, Guid vehicleId)
+        {
+            var car = await _unitOfWork.CarRepository.GetByIdAsync(vehicleId);
+            if (car == null)
+            {
+                return (false,
+                        Guid.Empty,
+                        new ServiceResult(404, "Vehicle not found", null, BookingErrorCode.VehicleNotFound));
+            }
+
+            var battery = await _unitOfWork.BatteryRepository.GetAvailableBatteryAsync(stationId, car.BatteryType);
+            if (battery == null)
+            {
+                return (false,
+                        Guid.Empty,
+                        new ServiceResult(404, "No available battery matches this vehicle at the station", null, BookingErrorCode.StationNotAvailable));
+            }
+
+            return (true, battery.BatteryId, null);
         }
     }
 }

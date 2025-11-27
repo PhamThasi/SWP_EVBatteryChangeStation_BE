@@ -91,6 +91,10 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             {
                 account.Gender = updateAccount.Gender;
             }
+            if (updateAccount.StationId.HasValue && updateAccount.StationId.Value != Guid.Empty)
+            {
+                account.StationId = updateAccount.StationId.Value;
+            }
             account.UpdateDate = DateTime.UtcNow;
         }
         public static List<ViewAccountDTOs> MapToDTO(this List<Account> accounts)

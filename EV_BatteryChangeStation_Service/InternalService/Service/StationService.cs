@@ -74,6 +74,30 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
+        public async Task<ServiceResult> GetByNameAsync(string name)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                    return new ServiceResult(400, "Station name cannot be empty.");
+
+                var station = await _unitOfWork.StationRepository.GetByNameAsync(name);
+                if (station == null)
+                    return new ServiceResult(404, $"Station '{name}' not found.");
+
+                var dto = new StationDTO
+                {
+                    StationId = station.StationId,
+                    StationName = station.StationName
+                };
+                return new ServiceResult(200, "Found station.", dto);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error while looking up station.", ex.Message);
+            }
+        }
+
         // Create a new station
         public async Task<ServiceResult> CreateAsync(StationCreateDTO dto)
         {

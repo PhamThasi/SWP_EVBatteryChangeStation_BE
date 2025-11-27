@@ -16,6 +16,7 @@ namespace EV_BatteryChangeStation_Common.DTOs.BookingDTO
         public Guid StationId { get; set; }
         public Guid VehicleId { get; set; }
         public Guid AccountId { get; set; }
+        public Guid? BatteryId { get; set; }
     }
 
 }

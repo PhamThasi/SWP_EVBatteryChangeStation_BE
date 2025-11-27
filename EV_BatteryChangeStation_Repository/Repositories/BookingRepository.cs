@@ -24,6 +24,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .Include(b => b.Station)
                 .Include(b => b.Vehicle)
                 .Include(b => b.Account)
+                .Include(b => b.Battery)
                 .ToListAsync();
         }
 
@@ -33,6 +34,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .Include(b => b.Station)
                 .Include(b => b.Vehicle)
                 .Include(b => b.Account)
+                .Include(b => b.Battery)
                 .FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
@@ -66,6 +68,7 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .Include(b => b.Station)
                 .Include(b => b.Vehicle)
                 .Include(b => b.Account)
+                .Include(b => b.Battery)
                 .OrderByDescending(b => b.DateTime)
                 .ToListAsync();
         }

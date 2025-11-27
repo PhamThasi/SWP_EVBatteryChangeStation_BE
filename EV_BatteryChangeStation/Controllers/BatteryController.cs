@@ -1,4 +1,5 @@
-﻿using EV_BatteryChangeStation_Common.DTOs.BatteryDTO;
+﻿using System;
+using EV_BatteryChangeStation_Common.DTOs.BatteryDTO;
 using EV_BatteryChangeStation_Service.InternalService.IService;
 using Microsoft.AspNetCore.Mvc;
 

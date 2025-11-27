@@ -30,4 +30,6 @@ public partial class Battery
     public virtual Station Station { get; set; }
 
     public virtual ICollection<SwappingTransaction> SwappingTransactions { get; set; } = new List<SwappingTransaction>();
+
+    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }

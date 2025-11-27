@@ -52,5 +52,23 @@ namespace EV_BatteryChangeStation_Repository.Repositories
                 .AnyAsync(b => b.BatteryId == batteryId && b.Status == true && b.StateOfHealth > 80);
             return isAvailable;
         }
+
+        public async Task<Battery?> GetAvailableBatteryAsync(Guid stationId, string typeBattery)
+        {
+            if (string.IsNullOrWhiteSpace(typeBattery))
+            {
+                return null;
+            }
+
+            return await _context.Batteries
+                .Where(b => b.StationId == stationId
+                            && b.TypeBattery != null
+                            && b.Status == true
+                            && b.StateOfHealth >= 80
+                            && b.TypeBattery.ToLower() == typeBattery.ToLower())
+                .OrderByDescending(b => b.StateOfHealth)
+                .ThenBy(b => b.PercentUse)
+                .FirstOrDefaultAsync();
+        }
     }
 }

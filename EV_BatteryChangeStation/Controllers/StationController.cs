@@ -74,6 +74,17 @@ public class StationController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("GetIdByName")]
+    public async Task<IActionResult> GetStationIdByName([FromBody] StationDTO dto)
+    {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.StationName))
+            return BadRequest(new { message = "StationName is required." });
+        var result = await _stationService.GetByNameAsync(dto.StationName);
+        if (result.Status == 404) return NotFound(result);
+        if (result.Status != 200) return BadRequest(result);
+        return Ok(result);
+    }
+
     [HttpDelete("HardDelete/{id}")]
     public async Task<IActionResult> HardDeleteStation(Guid id)
     {

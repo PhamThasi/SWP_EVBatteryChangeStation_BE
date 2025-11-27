@@ -128,6 +128,7 @@ public partial class EVBatterySwapContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("BookingID");
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
+            entity.Property(e => e.BatteryId).HasColumnName("BatteryID");
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -144,6 +145,10 @@ public partial class EVBatterySwapContext : DbContext
                 .HasForeignKey(d => d.AccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Booking__Account__5DCAEF64");
+
+            entity.HasOne(d => d.Battery).WithMany(p => p.Bookings)
+                .HasForeignKey(d => d.BatteryId)
+                .HasConstraintName("FK__Booking__Battery__5EBF139D");
 
             entity.HasOne(d => d.Station).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.StationId)
