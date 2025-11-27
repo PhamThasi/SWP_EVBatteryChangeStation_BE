@@ -23,5 +23,6 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<IServiceResult> DeleteBattery(Guid batteryId);
         Task<IServiceResult> SoftDeleteBattery(Guid BatteryId);
         Task<IServiceResult> GetBatteriesByType(string typeBattery);
+        Task<IServiceResult> GetBatteriesByStaffStationAsync(Guid staffAccountId);
     }
 }

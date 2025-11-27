@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using EV_BatteryChangeStation_Common.DTOs.BatteryDTO;
 using EV_BatteryChangeStation_Service.InternalService.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EV_BatteryChangeStation.Controllers
@@ -158,6 +161,27 @@ namespace EV_BatteryChangeStation.Controllers
                 return Ok(result);
             return StatusCode(result.Status, result.Message);
 
+        }
+
+        /// <summary>
+        /// Lấy danh sách pin của Station mà Staff đang làm việc
+        /// Staff chỉ được xem pin của Station được gán cho mình
+        /// </summary>
+        [HttpGet("staff/my-station-batteries")]
+        [Authorize]
+        public async Task<IActionResult> GetMyStationBatteries()
+        {
+            // Lấy AccountId từ JWT Token (Claims)
+            var accountIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                              ?? User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+            if (string.IsNullOrEmpty(accountIdClaim) || !Guid.TryParse(accountIdClaim, out Guid accountId))
+            {
+                return Unauthorized(new { message = "Invalid token", status = 401 });
+            }
+
+            var result = await _batteryService.GetBatteriesByStaffStationAsync(accountId);
+            return StatusCode(result.Status, result);
         }
     }
 }

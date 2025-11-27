@@ -353,6 +353,75 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
         }
+        // Lấy danh sách pin của Station mà Staff đang làm việc
+        public async Task<IServiceResult> GetBatteriesByStaffStationAsync(Guid staffAccountId)
+        {
+            try
+            {
+                // 1. Lấy Account của Staff (có Include Role và Station)
+                var staff = await _unitOfWork.AccountRepository.GetAllWithRoleAndStation(staffAccountId);
+                if (staff == null)
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "Staff not found"
+                    };
+
+                // 2. Validate: Phải là Staff
+                if (staff.Role?.RoleName != "Staff")
+                    return new ServiceResult
+                    {
+                        Status = 403,
+                        Message = "Only Staff can access this endpoint"
+                    };
+
+                // 3. Validate: Staff phải có StationID
+                if (staff.StationId == null)
+                    return new ServiceResult
+                    {
+                        Status = 400,
+                        Message = "Staff is not assigned to any station"
+                    };
+
+                // 4. Lấy danh sách Battery theo StationID
+                var stationId = staff.StationId.Value;
+                var batteries = await _unitOfWork.BatteryRepository.GetBatteryByStationId(stationId);
+
+                // 5. Lấy thông tin Station để trả về kèm
+                var station = await _unitOfWork.StationRepository.GetByIdAsync(stationId);
+
+                if (batteries == null || !batteries.Any())
+                    return new ServiceResult
+                    {
+                        Status = 404,
+                        Message = "No batteries found for this station"
+                    };
+
+                // 6. Map sang DTO và trả về kèm thông tin station
+                var batteryDtos = batteries.Select(b => b.MapToEntity()).ToList();
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = Const.SUCCESS_READ_MSG,
+                    Data = new
+                    {
+                        StationId = stationId,
+                        StationName = station?.StationName,
+                        BatteryCount = batteries.Count,
+                        Batteries = batteryDtos
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.Message
+                };
+            }
+        }
+
         // Cập nhật thông tin pin
         public async Task<IServiceResult> UpdateBatteryAsync(UpdateBattery updateDTO)
         {
