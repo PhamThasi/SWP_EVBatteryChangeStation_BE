@@ -2,7 +2,7 @@
 -- DATABASE: EVBatterySwap (GUID VERSION)
 -- ========================================
 
-drop DATABASE EVBatterySwap;
+create DATABASE EVBatterySwap;
 GO
 USE EVBatterySwap;
 GO
