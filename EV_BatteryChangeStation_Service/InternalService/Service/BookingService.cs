@@ -244,6 +244,74 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
             }
         }
 
+        /// <summary>
+        /// Staff xác nhận hoặc từ chối booking (chuyển trạng thái Pending → Approved/Rejected)
+        /// </summary>
+        public async Task<ServiceResult> UpdateBookingStatusAsync(Guid bookingId, string status, Guid staffId, string? notes = null)
+        {
+            try
+            {
+                // 1. Validate status phải là Approved hoặc Rejected
+                if (status != "Approved" && status != "Rejected")
+                {
+                    return new ServiceResult(400, "Status must be 'Approved' or 'Rejected'", null, BookingErrorCode.MissingRequiredField);
+                }
+
+                // 2. Kiểm tra Staff có tồn tại và có quyền không
+                var staff = await _unitOfWork.AccountRepository.GetAllWithRoleAndStation(staffId);
+                if (staff == null)
+                {
+                    return new ServiceResult(404, "Staff not found", null, BookingErrorCode.BookingNotFound);
+                }
+
+                if (staff.Role?.RoleName != "Staff")
+                {
+                    return new ServiceResult(403, "Only Staff can approve/reject bookings", null, BookingErrorCode.BookingNotFound);
+                }
+
+                // 3. Lấy thông tin Booking
+                var booking = await _unitOfWork.BookingRepository.GetByIdAsync(bookingId);
+                if (booking == null)
+                {
+                    return new ServiceResult(404, "Booking not found", null, BookingErrorCode.BookingNotFound);
+                }
+
+                // 4. Kiểm tra Staff có thuộc Station của Booking không
+                if (staff.StationId != booking.StationId)
+                {
+                    return new ServiceResult(403, "Staff can only process bookings at their assigned station", null, BookingErrorCode.BookingNotFound);
+                }
+
+                // 5. Kiểm tra trạng thái Booking phải là Pending
+                if (booking.IsApproved != "Pending")
+                {
+                    return new ServiceResult(400, $"Cannot update booking with status '{booking.IsApproved}'. Only 'Pending' bookings can be approved/rejected.", null, BookingErrorCode.BookingAlreadyCancelled);
+                }
+
+                // 6. Cập nhật trạng thái Booking
+                booking.IsApproved = status;
+                if (!string.IsNullOrEmpty(notes))
+                {
+                    booking.Notes = string.IsNullOrEmpty(booking.Notes) 
+                        ? notes 
+                        : $"{booking.Notes}\n[Staff Note]: {notes}";
+                }
+
+                _unitOfWork.BookingRepository.Update(booking);
+                await _unitOfWork.CommitAsync();
+
+                var message = status == "Approved" 
+                    ? "Booking approved successfully" 
+                    : "Booking rejected successfully";
+
+                return new ServiceResult(200, message, BookingMapper.ToDTO(booking), BookingErrorCode.None);
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(500, "Error updating booking status", new List<string> { ex.Message }, BookingErrorCode.DatabaseError);
+            }
+        }
+
         private async Task<(bool IsSuccess, Guid BatteryId, ServiceResult ErrorResult)> TryAssignBatteryAsync(Guid stationId, Guid vehicleId)
         {
             var car = await _unitOfWork.CarRepository.GetByIdAsync(vehicleId);

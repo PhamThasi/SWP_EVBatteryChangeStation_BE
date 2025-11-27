@@ -19,5 +19,10 @@ namespace EV_BatteryChangeStation_Service.InternalService.IService
         Task<ServiceResult> GetByAccountIdAsync(Guid accountId);
         // Hiển<Task>: Thêm method để Staff xem booking của Station mà họ đang làm việc
         Task<ServiceResult> GetByStaffStationAsync(Guid staffAccountId);
+        
+        /// <summary>
+        /// Staff xác nhận hoặc từ chối booking (chuyển trạng thái Pending → Approved/Rejected)
+        /// </summary>
+        Task<ServiceResult> UpdateBookingStatusAsync(Guid bookingId, string status, Guid staffId, string? notes = null);
     }
 }

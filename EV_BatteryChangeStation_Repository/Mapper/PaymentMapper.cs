@@ -33,12 +33,14 @@ namespace EV_BatteryChangeStation_Repository.Mapper
             if (dto == null) return new Payment();
             return new Payment
             {
+                PaymentId = Guid.NewGuid(), // Tạo PaymentId mới
                 Price = dto.Price,
                 Method = dto.Method,
                 PaymentGateId = dto.PaymentGateId != 0 ? dto.PaymentGateId : DateTime.UtcNow.Ticks,
                 CreateDate = dto.CreateDate ?? DateTime.UtcNow,
                 SubscriptionId = dto.SubscriptionId,
-                TransactionId = dto.TransactionId,
+                // Chỉ set TransactionId nếu có giá trị (tránh conflict với UNIQUE constraint khi NULL)
+                TransactionId = dto.TransactionId.HasValue && dto.TransactionId.Value != Guid.Empty ? dto.TransactionId : null,
                 AccountId = dto.AccountId
             };
         }

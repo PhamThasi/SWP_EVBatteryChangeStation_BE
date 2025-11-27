@@ -404,13 +404,13 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                // 5. Kiểm tra trạng thái Booking phải là Approved hoặc Pending
-                if (booking.IsApproved == "Canceled" || booking.IsApproved == "Completed")
+                // 5. Kiểm tra trạng thái Booking phải là Approved (đã được staff xác nhận)
+                if (booking.IsApproved != "Approved")
                 {
                     return new ServiceResult
                     {
                         Status = 400,
-                        Message = $"Cannot process booking with status '{booking.IsApproved}'"
+                        Message = $"Cannot process booking with status '{booking.IsApproved}'. Booking must be 'Approved' before swapping."
                     };
                 }
 

@@ -139,10 +139,16 @@ CREATE TABLE Payment (
 	PaymentGateId BigInt,
     CreateDate DATETIME DEFAULT GETDATE(),
     SubscriptionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Subscription(SubscriptionID),
-    TransactionID UNIQUEIDENTIFIER UNIQUE NULL FOREIGN KEY REFERENCES SwappingTransaction(TransactionID),
+    TransactionID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES SwappingTransaction(TransactionID),
     -- AccountId để lưu user mua subscription (bắt buộc nếu có SubscriptionId)
     AccountID UNIQUEIDENTIFIER NULL FOREIGN KEY REFERENCES Account(AccountID)
 );
+
+-- Tạo filtered unique index cho TransactionID (chỉ áp dụng UNIQUE cho giá trị không NULL)
+-- Cho phép nhiều NULL nhưng mỗi giá trị khác NULL phải unique
+CREATE UNIQUE NONCLUSTERED INDEX UQ__Payment__55433A4A4B1B216D 
+ON Payment(TransactionID) 
+WHERE TransactionID IS NOT NULL;
 
 -- ========================
 -- Table: SupportRequest

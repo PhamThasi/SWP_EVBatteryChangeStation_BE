@@ -216,7 +216,10 @@ public partial class EVBatterySwapContext : DbContext
 
             entity.ToTable("Payment");
 
-            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A4B1B216D").IsUnique();
+            // UNIQUE constraint trên TransactionId - cho phép nhiều NULL nhưng mỗi giá trị khác NULL phải unique
+            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A4B1B216D")
+                .IsUnique()
+                .HasFilter("[TransactionID] IS NOT NULL"); // Chỉ áp dụng UNIQUE cho giá trị không NULL
 
             entity.Property(e => e.PaymentId)
                 .HasDefaultValueSql("(newsequentialid())")
