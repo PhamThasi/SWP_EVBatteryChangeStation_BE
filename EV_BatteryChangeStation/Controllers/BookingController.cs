@@ -62,6 +62,29 @@ namespace EV_BatteryChangeStation.Controllers
         }
 
         /// <summary>
+        /// Staff xác nhận hoặc từ chối booking (chuyển trạng thái Pending → Approved/Rejected)
+        /// </summary>
+        [HttpPut("UpdateStatus")]
+        [Authorize]
+        public async Task<IActionResult> UpdateBookingStatus([FromBody] UpdateBookingStatusDTO dto)
+        {
+            if (dto == null || dto.BookingId == Guid.Empty)
+                return BadRequest("BookingId and Status are required");
+
+            // Lấy StaffId từ JWT Token
+            var staffIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                            ?? User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+            if (string.IsNullOrEmpty(staffIdClaim) || !Guid.TryParse(staffIdClaim, out Guid staffId))
+            {
+                return Unauthorized(new { message = "Invalid token", status = 401 });
+            }
+
+            var result = await _bookingService.UpdateBookingStatusAsync(dto.BookingId, dto.Status, staffId, dto.Notes);
+            return StatusCode(result.Status, result);
+        }
+
+        /// <summary>
         /// Hủy (Soft Delete) — chuyển trạng thái IsApproved thành Canceled
         /// </summary>
         [HttpDelete("Cancel/{id}")]

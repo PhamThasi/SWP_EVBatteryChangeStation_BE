@@ -17,22 +17,26 @@ namespace EV_BatteryChangeStation_Repository.Repositories
 
         public Task<List<Battery>> GetAllBattery()
         {
-            var battery = _context.Batteries.ToListAsync();
+            // Chỉ lấy pin còn khả dụng (Status = true)
+            var battery = _context.Batteries
+                .Where(b => b.Status == true)
+                .ToListAsync();
             return battery;
         }
 
         public Task<List<Battery?>> GetBatteriesByType(string typeBattery)
         {
+            // Chỉ lấy pin còn khả dụng (Status = true)
             return _context.Batteries
-                .Where(b => b.TypeBattery.Contains(typeBattery))
+                .Where(b => b.TypeBattery.Contains(typeBattery) && b.Status == true)
                 .ToListAsync();
         }
 
-        //lấy tất cả pin trong trạm
+        //lấy tất cả pin trong trạm (chỉ lấy pin còn khả dụng)
         public async Task<List<Battery>> GetBatteryByStationId(Guid stationId)
         {
             var battery = await _context.Batteries
-                .Where(b => b.StationId == stationId)
+                .Where(b => b.StationId == stationId && b.Status == true)
                 .ToListAsync();
             return battery;
         }

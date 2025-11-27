@@ -117,5 +117,20 @@ namespace EV_BatteryChangeStation.Controllers
             return result.ContinueWith(task => (IActionResult)StatusCode(task.Result.Status, task.Result));
         }
 
+        // =================== CHECK SUBSCRIPTION STATUS ===================
+        /// <summary>
+        /// Check subscription status dựa vào payment để quyết định có cần redirect đến trang thanh toán hay không
+        /// Nếu user đã có payment thành công với subscription active và còn hạn thì không cần redirect (needsRedirect = false)
+        /// </summary>
+        [HttpGet("check-subscription-status")]
+        public async Task<IActionResult> CheckSubscriptionStatus([FromQuery] Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+                return BadRequest("Account ID is required.");
+
+            var result = await _paymentService.CheckSubscriptionStatus(accountId);
+            return StatusCode(result.Status, result);
+        }
+
     }
 }

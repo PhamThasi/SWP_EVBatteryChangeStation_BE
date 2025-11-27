@@ -23,7 +23,14 @@ public partial class Payment
 
     public Guid? TransactionId { get; set; }
 
+    /// <summary>
+    /// AccountId của user mua subscription (bắt buộc nếu có SubscriptionId)
+    /// </summary>
+    public Guid? AccountId { get; set; }
+
     public virtual Subscription Subscription { get; set; }
 
     public virtual SwappingTransaction Transaction { get; set; }
+
+    public virtual Account Account { get; set; }
 }

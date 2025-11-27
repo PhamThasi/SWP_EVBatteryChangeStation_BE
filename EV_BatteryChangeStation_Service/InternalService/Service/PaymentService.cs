@@ -37,46 +37,60 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                     };
                 }
 
-                if (create.TransactionId == Guid.Empty)
+                // Validate: Phải có SubscriptionId HOẶC TransactionId (không thể cả hai đều null)
+                if (!create.SubscriptionId.HasValue && !create.TransactionId.HasValue)
                 {
                     return new ServiceResult
                     {
                         Status = Const.FAIL_CREATE_CODE,
-                        Message = "Invalid Transaction ID"
+                        Message = "Either SubscriptionId or TransactionId is required"
                     };
                 }
 
-                // Kiểm tra transaction tồn tại
-                var transaction = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(create.TransactionId);
-                if (transaction == null)
+                // Nếu có SubscriptionId → Phải có AccountId
+                if (create.SubscriptionId.HasValue && !create.AccountId.HasValue)
                 {
                     return new ServiceResult
                     {
-                        Status = Const.WARNING_NO_DATA_CODE,
-                        Message = "Transaction not found"
+                        Status = Const.FAIL_CREATE_CODE,
+                        Message = "AccountId is required when purchasing subscription"
                     };
                 }
 
+                // Nếu có TransactionId → Kiểm tra transaction tồn tại
+                if (create.TransactionId.HasValue)
+                {
+                    var transaction = await _unitOfWork.SwappingTransactionRepository.GetByIdAsync(create.TransactionId.Value);
+                    if (transaction == null)
+                    {
+                        return new ServiceResult
+                        {
+                            Status = Const.WARNING_NO_DATA_CODE,
+                            Message = "Transaction not found"
+                        };
+                    }
+                }
+
+                // Nếu có SubscriptionId → Kiểm tra subscription tồn tại
                 Subscription subscription = null;
                 if (create.SubscriptionId.HasValue)
                 {
                     subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(create.SubscriptionId.Value);
+                    if (subscription == null)
+                    {
+                        return new ServiceResult
+                        {
+                            Status = Const.WARNING_NO_DATA_CODE,
+                            Message = "Subscription not found"
+                        };
+                    }
                 }
 
                 using var scope = await _unitOfWork.BeginTransactionAsync();
                 try
                 {
                     var payment = create.toPayment();
-                    payment.TransactionId = create.TransactionId;
-
-                    // Luôn để trạng thái Pending, không quan tâm subscription
                     payment.Status = PaymentEnum.Pending.ToString();
-
-                    // Nếu có subscription thì vẫn gán subscriptionId nhưng trạng thái vẫn Pending
-                    if (subscription != null)
-                    {
-                        payment.SubscriptionId = subscription.SubscriptionId;
-                    }
 
                     await _unitOfWork.PaymentRepository.CreateAsync(payment);
                     await scope.CommitAsync();
@@ -483,6 +497,54 @@ namespace EV_BatteryChangeStation_Service.InternalService.Service
                 };
             }
             catch(Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Status = Const.ERROR_EXCEPTION,
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+            }
+        }
+
+        // =================== CHECK SUBSCRIPTION STATUS ===================
+        /// <summary>
+        /// Check subscription status dựa vào payment để quyết định có cần redirect đến trang thanh toán hay không
+        /// Nếu user đã có payment thành công với subscription active và còn hạn thì không cần redirect
+        /// </summary>
+        public async Task<IServiceResult> CheckSubscriptionStatus(Guid accountId)
+        {
+            try
+            {
+                if (accountId == Guid.Empty)
+                {
+                    return new ServiceResult
+                    {
+                        Status = Const.FAIL_READ_CODE,
+                        Message = "Account ID is required"
+                    };
+                }
+
+                var payment = await _unitOfWork.PaymentRepository.GetActiveSubscriptionPaymentByAccountIdAsync(accountId);
+                
+                var statusCheck = new SubscriptionStatusCheckDto
+                {
+                    HasActiveSubscription = payment != null,
+                    NeedsRedirect = payment == null, // Nếu không có payment thành công với subscription active thì cần redirect
+                    Payment = payment?.PaymentRespondDto()
+                };
+
+                var message = payment != null 
+                    ? "User has active subscription from successful payment, no redirect needed" 
+                    : "User does not have active subscription, redirect to payment page needed";
+
+                return new ServiceResult
+                {
+                    Status = Const.SUCCESS_READ_CODE,
+                    Message = message,
+                    Data = statusCheck
+                };
+            }
+            catch (Exception ex)
             {
                 return new ServiceResult
                 {

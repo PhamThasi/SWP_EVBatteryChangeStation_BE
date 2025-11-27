@@ -15,6 +15,10 @@ namespace EV_BatteryChangeStation_Common.DTOs.PaymentDTO
         public long PaymentGateId { get; set; }
         public DateTime? CreateDate { get; set; }
         public Guid? SubscriptionId { get; set; }
-        public Guid TransactionId { get; set; }
+        public Guid? TransactionId { get; set; }
+        /// <summary>
+        /// AccountId của user mua subscription (bắt buộc nếu SubscriptionId có giá trị)
+        /// </summary>
+        public Guid? AccountId { get; set; }
     }
 }

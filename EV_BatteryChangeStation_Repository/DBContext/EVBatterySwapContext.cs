@@ -216,7 +216,10 @@ public partial class EVBatterySwapContext : DbContext
 
             entity.ToTable("Payment");
 
-            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A4B1B216D").IsUnique();
+            // UNIQUE constraint trên TransactionId - cho phép nhiều NULL nhưng mỗi giá trị khác NULL phải unique
+            entity.HasIndex(e => e.TransactionId, "UQ__Payment__55433A4A4B1B216D")
+                .IsUnique()
+                .HasFilter("[TransactionID] IS NOT NULL"); // Chỉ áp dụng UNIQUE cho giá trị không NULL
 
             entity.Property(e => e.PaymentId)
                 .HasDefaultValueSql("(newsequentialid())")
@@ -232,6 +235,7 @@ public partial class EVBatterySwapContext : DbContext
                 .HasDefaultValue("Pending");
             entity.Property(e => e.SubscriptionId).HasColumnName("SubscriptionID");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
+            entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
             entity.HasOne(d => d.Subscription).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.SubscriptionId)
@@ -240,6 +244,10 @@ public partial class EVBatterySwapContext : DbContext
             entity.HasOne(d => d.Transaction).WithOne(p => p.Payment)
                 .HasForeignKey<Payment>(d => d.TransactionId)
                 .HasConstraintName("FK__Payment__Transac__73BA3083");
+
+            entity.HasOne(d => d.Account).WithMany()
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK__Payment__Account__PaymentAccount");
         });
 
         modelBuilder.Entity<Role>(entity =>

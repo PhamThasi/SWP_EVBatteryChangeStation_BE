@@ -25,6 +25,15 @@ public partial class Subscription
 
     public DateTime? UpdateDate { get; set; }
 
+    // Ngày bắt đầu hiệu lực gói cho user (khi gắn với Account)
+    public DateTime? StartDate { get; set; }
+
+    // Ngày hết hạn gói cho user
+    public DateTime? EndDate { get; set; }
+
+    // Số lượt swap còn lại (nếu gói có giới hạn lượt)
+    public int? RemainingSwaps { get; set; }
+
     public Guid? AccountId { get; set; }
 
     public virtual Account Account { get; set; }

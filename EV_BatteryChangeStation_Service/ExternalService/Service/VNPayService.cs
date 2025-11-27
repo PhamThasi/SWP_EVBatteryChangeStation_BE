@@ -133,6 +133,44 @@ namespace EV_BatteryChangeStation_Service.ExternalService.Service
                 {
                     transaction.UpdateToPaymentVNPay(paymentResult);
                     await _unitOfWork.PaymentRepository.UpdateAsync(transaction);
+
+                    // Nếu payment thành công cho subscription → Gắn subscription với AccountId
+                    if (transaction.SubscriptionId.HasValue && transaction.AccountId.HasValue)
+                    {
+                        var subscription = await _unitOfWork.SubscriptionRepository.GetByIdAsync(transaction.SubscriptionId.Value);
+                        if (subscription != null)
+                        {
+                            // Gắn subscription với AccountId
+                            subscription.AccountId = transaction.AccountId.Value;
+                            subscription.StartDate = DateTime.Now;
+                            
+                            // Tính EndDate dựa trên DurationPackage (ngày)
+                            if (subscription.DurationPackage.HasValue)
+                            {
+                                subscription.EndDate = DateTime.Now.AddDays(subscription.DurationPackage.Value);
+                            }
+
+                            // Set RemainingSwaps dựa trên loại gói
+                            // Premium (unlimited) → RemainingSwaps = null
+                            // Save (10-15 lượt) → RemainingSwaps = 15
+                            // Basic (trả tiền trực tiếp) → RemainingSwaps = 0 hoặc null
+                            if (subscription.Name?.Contains("nâng cao") == true || subscription.Name?.Contains("Premium") == true)
+                            {
+                                subscription.RemainingSwaps = null; // Unlimited
+                            }
+                            else if (subscription.Name?.Contains("Tiết kiệm") == true || subscription.Name?.Contains("Save") == true)
+                            {
+                                subscription.RemainingSwaps = 15; // 10-15 lượt
+                            }
+                            else
+                            {
+                                subscription.RemainingSwaps = null; // Basic - không giới hạn hoặc 0
+                            }
+
+                            subscription.IsActive = true;
+                            _unitOfWork.SubscriptionRepository.Update(subscription);
+                        }
+                    }
                 }
                 else
                 {
