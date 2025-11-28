@@ -20,35 +20,24 @@ namespace EV_BatteryChangeStation_Repository.Repositories
         }
         public async Task<List<RevenueByStationDto>> GetRevenueRawAsync()
         {
-                    var data = await _context.Payments
-             .Where(p => p.Status == "Successful")
-             .Join(_context.SwappingTransactions,
-                   p => p.TransactionId,
-                   s => s.TransactionId,
-                   (p, s) => new { p, s })
-             .Join(_context.Batteries,
-                   ps => ps.s.NewBatteryId,
-                   b => b.BatteryId,
-                   (ps, b) => new { ps.p, b.StationId })
-             .Join(_context.Stations,
-                   pb => pb.StationId,
-                   st => st.StationId,
-                   (pb, st) => new
-                   {
-                       st.StationId,
-                       st.StationName,
-                       pb.p.Price
-                   })
-             .GroupBy(x => new { x.StationId, x.StationName })
-             .Select(g => new RevenueByStationDto
-             {
-                 StationId = g.Key.StationId,
-                 StationName = g.Key.StationName,
-                 TotalRevenue = g.Sum(x => x.Price) ?? 0,
-                 TotalTransaction = g.Count().ToString()
-             })
-             .ToListAsync();
-            return data;
+            var totalRevenue = await _context.Payments
+                .Where(p => p.Status == "Successful")
+                .SumAsync(p => p.Price ?? 0);
+
+            var totalTransaction = await _context.Payments
+                .Where(p => p.Status == "Successful")
+                .CountAsync();
+
+            return new List<RevenueByStationDto>
+    {
+        new RevenueByStationDto
+        {
+            StationId = Guid.Empty,           // Không dùng station nữa
+            StationName = "All System", // Tên mô tả hệ thống
+            TotalRevenue = totalRevenue,
+            TotalTransaction = totalTransaction.ToString()
+        }
+    };
         }
     }
 }
